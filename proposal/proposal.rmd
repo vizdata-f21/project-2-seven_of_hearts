@@ -64,6 +64,13 @@ between buildings.
   + econ.csv: Economics Class info (class, meeting builing, times, credits, capacity, etc.) 
   + building_dist.csv: Distances between each building group 
   + building_group.csv: grouping each building into regional groups 
+  + README.md for data folder
   
-
-
+- Proposal Folder : 
+  + proposal.rmd 
+  + README.md 
+  
+- DukeHub3.0 
+  + ui.R 
+  + server.R 
+  
