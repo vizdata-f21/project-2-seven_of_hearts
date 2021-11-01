@@ -1,0 +1,69 @@
+---
+title: "Project 2 Proposal" 
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### High Level Overview 
+
+Create an R Shiny app that allows students to build their academic schedule and provides additional insights to their schedule through data visualization.
+
+### Project Description/Goals/Motivation
+
+Dukehub is an academic portal used by students, faculty, and advisors to view courses, make tuition payments, and view transcripts. Each semester students spend countless crafting their schedules and back-up schedules. Students can find classes using a “simple search” by term and subject area. Students can also find classes using an “advanced class search” inputting the course attributes, meeting times, instructor name, location, or the number of units. Duke launched DukeHub 2.0 in 2020 to improve user experience and add more features. DukeHub 2.0 is very useful, but our team wishes it would provide more information about our courseload. Our team’s goal is to create an improved DukeHub using a shiny app which allows students to select courses for their schedule and provides additional information about their schedule based on their selection. Specifically, we hope to create three visualzations based on student class selection: 
+	
+- Course schedule in a calendar (classes colored based on student selection). If there is overlapping class times, an error will occur (visually). 
+  
+- Geospatial visualzation showing the distance traveled during a specific day or week. 
+	
+- Visualization showing the population density in each building on campus during a given time.
+
+To complete our project, we will be creating datasets using course catalog in
+DukeHub. We are going to start by only including course information for three 
+popular STEM majors:  Computer Science, Statistics, and Economics. We will add
+more classes to this dataset once our R shiny app is developed. There will be 
+one dataset called class information which will contain the course name, 
+subject area, the meeting times/days, and the location of the class. 
+Additonally, we are creating a distance dataframe which describes the distance
+between buildings. 
+
+
+### Weekly Plan of Attack
+
+  - Week 1 of project (week of Mon, Oct 18): Kate, Yihan, and Kartik contributed 3 potential ideas each and we chose one that would be the most interested. We decided to build a R Shiny app similar to Dukehub.
+  - Week 2 of project (week of Mon, Oct 25):
+      + Kate: project proposal motivation and goal. 
+      + Yihan: project proposal (introduce brief description of each dataset including the reason why you         chose the particular dataset, its dataset, its dimensions and any other relevant metadata)
+      + Kartik: weekly plans
+- Week 3 of project (week of Mon, Nov 1): 
+  + Kate: Finish proposal; finish creating computer science data
+  + Yihan: Finish creation of repository;finish creating dataset
+  + Kartik: Finish proposal;finish creating dataset
+  
+- Week 4 of project (week of Mon, Nov 8): Conduct peer review on project proposals, and optionally, submit in an updated version of your proposal.
+  + Kate: work on peer review and update proposal; work on UI
+  + Yihan: work on peer review and update proposal; work on UI
+  + Kartik: work on peer review and update proposal; work on UI
+
+- Week 5 of project (week of Mon, Nov 15): Continue working on your project.
+
+- Week 6 of project (week of Mon, Nov 22): Continue working on your project.
+- Week 7 of project (week of Mon, Nov 29): Conduct another round of peer review.
+- Week 8 of Project(Due Date): Present our project
+
+### Organization of Project Repository: 
+
+- Data folder contains 5 datasets: 
+  + cs.csv: Computer Science Class Info (class, building, meeting times, credits, capacity, etc.)
+  + stat.csv: Computer Science Class Info (class, building, meeting times, credits, capacity, etc.) 
+  + econ.csv: Economics Class info (class, meeting builing, times, credits, capacity, etc.) 
+  + building_dist.csv: Distances between each building group 
+  + building_group.csv: grouping each building into regional groups 
+  
+
+
