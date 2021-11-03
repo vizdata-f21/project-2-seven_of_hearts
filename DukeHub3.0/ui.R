@@ -1,7 +1,7 @@
 ui <- fluidPage(
 
     # App title ----
-    titlePanel("Shiny Text"),
+    titlePanel("DukeHub 3.0"),
 
     # Sidebar layout with a input and output definitions ----
     sidebarLayout(
@@ -12,7 +12,7 @@ ui <- fluidPage(
             # Input: Selector for choosing dataset ----
             selectInput(inputId = "dataset",
                         label = "Choose a Subject Area:",
-                        choices = c("Computer", "pressure", "cars")),
+                        choices = c("Computer Science", "Statistics", "Economics")),
 
             # Input: Numeric entry for number of obs to view ----
             numericInput(inputId = "obs",

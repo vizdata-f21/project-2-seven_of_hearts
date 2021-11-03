@@ -1,0 +1,19 @@
+Subject,Class Number,Units,Start Time,End Time ,Days ,Building,Group,Class Size,Section #
+STA,101,1,15:30,16:45,TuTh,LSRC,3,180,1
+STA,102,1,15:30,16:45,MoWe,Reuben-Cooke,4,90,1
+STA ,199,1,10:15,11:30,TuTh,Reuben-Cooke,4,90,1
+STA ,199,1,15:30,16:45,TuTh,French Science Building,3,90,2
+STA ,199,1,10:15,11:30,WeFr,Reuben-Cooke,4,90,3
+STA ,210,1,13:45,15:00,TuTh,Reuben-Cooke,4,90,1
+STA ,211,1,15:30,16:45,Tu,Gross Hall,5,50,1
+STA ,230,1,13:45,15:00,WeFr,Social Science,4,40,1
+STA ,230,1,15:30,16:45,WeFr,Gray,4,40,2
+STA ,230,1,13:45,15:00,TuTh,Gray,4,40,3
+STA ,230,1,15:30,16:45,TuTh,,,40,4
+STA,231,1,17:15,18:30,TuTh,Physics,3,30,1
+STA,240,1,10:15,11:30,MoWe,Perkins,4,30,1
+STA ,310,1,15:30,16:45,MoWe,Perkins,4,30,1
+STA,323,1,12:00,13:15,WeFr,Reuben-Cooke,4,60,1
+STA,360,1,13:45,15:00,TuTh,Physics,3,60,1
+STA,440,1,10:15,11:30,TuTh,Old Chemistry,4,30,1
+STA ,470,1,12:00,13:15,TuTh,Old Chemistry,4,18,1
