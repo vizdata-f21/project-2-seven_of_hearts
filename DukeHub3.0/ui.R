@@ -1,33 +1,34 @@
-#
-# This is the user-interface definition of a Shiny web application. You can
-# run the application by clicking 'Run App' above.
-#
-# Find out more about building applications with Shiny here:
-#
-#    http://shiny.rstudio.com/
-#
+ui <- fluidPage(
 
-library(shiny)
+    # App title ----
+    titlePanel("Shiny Text"),
 
-# Define UI for application that draws a histogram
-shinyUI(fluidPage(
-
-    # Application title
-    titlePanel("DukeHub 3.0"),
-
-    # Sidebar with a slider input for number of bins
+    # Sidebar layout with a input and output definitions ----
     sidebarLayout(
+
+        # Sidebar panel for inputs ----
         sidebarPanel(
-            sliderInput("bins",
-                        "Number of bins:",
-                        min = 1,
-                        max = 50,
-                        value = 30)
+
+            # Input: Selector for choosing dataset ----
+            selectInput(inputId = "dataset",
+                        label = "Choose a Subject Area:",
+                        choices = c("Computer", "pressure", "cars")),
+
+            # Input: Numeric entry for number of obs to view ----
+            numericInput(inputId = "obs",
+                         label = "Number of observations to view:",
+                         value = 10)
         ),
 
-        # Show a plot of the generated distribution
+        # Main panel for displaying outputs ----
         mainPanel(
-            plotOutput("distPlot")
+
+            # Output: Verbatim text for data summary ----
+            verbatimTextOutput("summary"),
+
+            # Output: HTML table with requested number of observations ----
+            tableOutput("view")
+
         )
     )
-))
+)
