@@ -8,6 +8,8 @@
 #
 
 library(shiny)
+library(readr)
+library(tidyverse)
 
 stat_data <-  read_csv(here::here("data/stat_data.csv"))
 cs_data <- read_csv(here::here("data/CS_data.csv"))
@@ -16,17 +18,20 @@ cs_data <- read_csv(here::here("data/CS_data.csv"))
 shinyServer(function(input, output) {
     datasetInput <- reactive({
         switch(input$dataset,
-               "Computer Science" = cs_data,
-               "Statistics" = stat_data,
+               "Computer Science" = cs_data%>%select("Subject", "Class Number", "Start Time",
+                                                     "End Time"),
+               "Statistics" = stat_data%>%select("Subject", "Class Number", "Start Time",
+                                                 "End Time"),
                "Economics" = cars)
     })
 
-    # Generate a summary of the dataset ----
-   # output$summary <- renderPrint({
-#        dataset <- datasetInput()
-#        summary(dataset)
- #   })
 
+    Dataframe2 <- reactive({
+        mtcars[,input$Columns]
+    })
+    output$dfStr <- renderPrint({
+        str(Dataframe2())
+    })
     # Show the first "n" observations ----
     output$view <- renderTable({
         head(datasetInput(), n = input$obs)
