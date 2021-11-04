@@ -1,7 +1,3 @@
----
-title: "README"
-output: html_document
----
 
 ### DukeHub 3.0 Data 
 
