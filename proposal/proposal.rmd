@@ -9,6 +9,101 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+### Load Packages 
+```{r load_packages}
+library(dplyr)
+library(readr)
+```
+### Load Course Data 
+
+```{r course_data_load, `show_col_types` = FALSE}
+
+course_data <-  read_csv(here::here("data/course_catalog.csv"))
+
+```
+
+
+```{r data_cleanup}
+
+course_data <- course_data %>%
+  rename(location = `Descr 1`, 
+         class_identifier = `Unique Class Identifier`, 
+         catalog_number = Catalog,
+         enroll_cap =`Cap Enrl`,
+         days = `Pat`, 
+         mtg_start = `Mtg Start`, 
+         mtg_end = `Mtg End`, 
+         term = `Term Descr`) %>%
+  filter(location != "NA", 
+         Descr != "NA", 
+         !grepl('ML', location),
+         !grepl('406 Oregon St 0114', location), 
+         !grepl('See Instructor/Department', location), 
+         !grepl('Thesis',  Descr), 
+         Descr != 'FIRST-YEAR SEMINAR (TOP)') 
+```
+
+
+```{r location_cleanup}
+
+course_data <- course_data %>%
+  mutate(location = case_when(
+    grepl('Classroom Building', location ) ~ 'Classroom Buiding',
+    grepl('Allen', location) ~ 'Allen', 
+    grepl('Art Building', location) ~ 'Art Building', 
+    grepl('Bell Tower', location) ~ 'Bell Tower', 
+    grepl('Biddle', location) ~ 'Biddle',
+    grepl('Biological Sciences', location) ~ 'Biological Sciences', 
+    grepl('Bivins', location) ~ 'Bivins', 
+    grepl('Branson Hall', location) ~ 'Branson Hall', 
+    grepl('Bridges House', location) ~ 'Bridges House', 
+    grepl('Brodie', location) ~ 'Brodie', 
+    grepl('Bryan Center', location) ~ 'Bryan Center', 
+    grepl('Chesterfield', location) ~ 'Chesterfield', 
+    grepl('Crowell', location) ~ 'Crowell', 
+    grepl('Divinity', location) ~ 'Divinity School', 
+    grepl('Duke Chapel', location) ~ 'Duke Chapel', 
+    grepl('East Duke', location) ~ 'East Duke', 
+    grepl('FITZPATRICK', location) ~ 'Fitzpatrick', 
+    grepl('Fitzpatrick', location) ~ 'Fitzpatrick', 
+    grepl('Franklin Center', location) ~ 'Franklin Center', 
+    grepl('French Science', location) ~ 'French Science',
+    grepl('Friedl Bldg', location) ~ 'Friedl', 
+    grepl('Fuqua', location) ~ 'Fuqua', 
+    grepl('Grainger Hal', location) ~ 'Grainger Hall', 
+    grepl('Gray', location) ~ 'Gray', 
+    grepl('Gross Hall', location) ~ 'Gross Hall',
+    grepl('Hudson Hall', location) ~ 'Hudson Hall', 
+    grepl('Languages', location) ~ 'Languages', 
+    grepl('LSRC', location) ~ 'LSRC', 
+    grepl('Nanaline', location) ~ 'Nanaline', 
+    grepl('Nasher', location) ~ 'Nasher', 
+    grepl('Old Chemistry', location) ~ 'Old Chemistry', 
+    grepl('Page', location) ~ 'Page', 
+    grepl('Perkins', location) ~ 'Perkins', 
+    grepl('Physics', location) ~ 'Physics', 
+    grepl('Reuben-Cooke', location) ~ 'Reuben-Cooke', 
+    grepl('Rubenstein Hall', location) ~ 'Sanford', 
+    grepl('Rubenstein Arts', location) ~ 'Rubenstein Arts Center', 
+    grepl('Sanford', location) ~ 'Sanford', 
+    grepl('Smith Warehouse', location) ~ 'Smith Warehouse', 
+    grepl('Social Sciences', location) ~ 'Social Sciences', 
+    grepl('Teer', location) ~ 'Teer', 
+    grepl('The Ark', location) ~ 'The Ark', 
+    grepl('Trent', location) ~ 'Trent Hall', 
+    grepl('West Duke', location) ~ 'West Duke', 
+    grepl('White', location) ~ 'White Lecture Hall', 
+    grepl('Wilkinson', location) ~ 'Wilkinson', 
+    grepl('Wilson Center', location) ~ 'Wilson Center',
+    TRUE ~ location))
+
+locations <- course_data %>%
+  distinct(location)
+
+glimpse(course_data)
+
+```
+
 ### High Level Overview 
 
 Create an R Shiny app that allows students to build their academic schedule and provides additional insights to their schedule through data visualization.
@@ -23,12 +118,14 @@ Dukehub is an academic portal used by students, faculty, and advisors to view co
 	
 - Visualization showing the population density in each building on campus during a given time.
 
-To complete our project, we will be creating datasets using course catalog in
-DukeHub. We are going to start by only including course information for three 
-popular STEM majors:  Computer Science, Statistics, and Economics. We will add
-more classes to this dataset once our R shiny app is developed. There will be 
-one dataset called class information which will contain the course name, 
-subject area, the meeting times/days, and the location of the class. 
+To complete our project, we will be using a course catalog data set 
+that we requested from the Duke University Registrar's Office. This data 
+set contains 2,408 observations of 13 variables. Each observation in the data
+set represents a course which is offere to undergraduates during the 
+Spring 2022 term. There are 13 variables in the dataset: `class_identifier`, 
+`Subject`, `catalog_number`, `Descr`, `Section`, `enroll_cap`, `days`, `mtg_start`, 
+`mtg_end`, `Mode`, `location`, `career`,  `term`. 
+
 Additonally, we are creating a distance dataframe which describes the distance
 between buildings. 
 
@@ -59,9 +156,7 @@ between buildings.
 ### Organization of Project Repository: 
 
 - Data folder contains 5 datasets: 
-  + cs.csv: Computer Science Class Info (class, building, meeting times, credits, capacity, etc.)
-  + stat.csv: Computer Science Class Info (class, building, meeting times, credits, capacity, etc.) 
-  + econ.csv: Economics Class info (class, meeting builing, times, credits, capacity, etc.) 
+  + course_catalog.csv: All classes offered to undergraduates at Duke Unversity in the Spring 2022 term. 
   + building_dist.csv: Distances between each building group 
   + building_group.csv: grouping each building into regional groups 
   + README.md for data folder
