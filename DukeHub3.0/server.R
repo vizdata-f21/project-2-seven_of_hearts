@@ -10,7 +10,6 @@
 library(shiny)
 library(readr)
 library(tidyverse)
-
 stat_data <-  read_csv(here::here("data/stat_data.csv"))
 cs_data <- read_csv(here::here("data/CS_data.csv"))
 

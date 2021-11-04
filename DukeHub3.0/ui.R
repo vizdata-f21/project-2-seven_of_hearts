@@ -9,7 +9,7 @@ ui <- fluidPage(
         # Sidebar panel for inputs ----
         sidebarPanel(
 
-            selectInput(inputId = "hosuing",
+            selectInput(inputId = "housing",
                         label = "Where do you live?",
                         choices  = c("East Campus", "West Campus",
                                      "9th Street (Off Campus)", "Off Campus")),
