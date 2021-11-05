@@ -240,11 +240,8 @@ with different functionalities:
 
 Here is an image of DukeHub 3.0.
 
-``` r
-knitr::include_graphics("/home/guest/R/project-2-seven_of_hearts/data/DukeHub3.0.png")
-```
-
-<img src="/home/guest/R/project-2-seven_of_hearts/data/DukeHub3.0.png" width="2814" />
+![DukeHub3.0
+Screenshot](https://raw.githubusercontent.com/vizdata-f21/project-2-seven_of_hearts/main/data/DukeHub3.0.png?token=ANUMAPPQ2QYAUE4AEX4LCMTBR3BHI)
 
 To complete our project, we will be using a course catalog data set that
 we requested from the Duke University Registrar’s Office (thank you Dr. 
