@@ -10,18 +10,112 @@
 library(shiny)
 library(readr)
 library(tidyverse)
-stat_data <-  read_csv(here::here("data/stat_data.csv"))
-cs_data <- read_csv(here::here("data/CS_data.csv"))
+
+course_data <- read_csv(here::here("data/course_catalog.csv"))
+
+course_data <- course_data %>%
+    rename(location = `Descr 1`,
+           class_identifier = `Unique Class Identifier`,
+           catalog_number = Catalog,
+           enroll_cap =`Cap Enrl`,
+           days = `Pat`,
+           mtg_start = `Mtg Start`,
+           mtg_end = `Mtg End`,
+           term = `Term Descr`) %>%
+    filter(location != "NA",
+           Descr != "NA",
+           !grepl('ML', location),
+           !grepl('406 Oregon St 0114', location),
+           !grepl('See Instructor/Department', location),
+           !grepl('Thesis',  Descr),
+           Descr != 'FIRST-YEAR SEMINAR (TOP)')
+
+course_data <- course_data %>%
+    mutate(location = case_when(
+        grepl('Classroom Building', location ) ~ 'Classroom Buiding',
+        grepl('Allen', location) ~ 'Allen',
+        grepl('Art Building', location) ~ 'Art Building',
+        grepl('Bell Tower', location) ~ 'Bell Tower',
+        grepl('Biddle', location) ~ 'Biddle',
+        grepl('Biological Sciences', location) ~ 'Biological Sciences',
+        grepl('Bivins', location) ~ 'Bivins',
+        grepl('Branson Hall', location) ~ 'Branson Hall',
+        grepl('Bridges House', location) ~ 'Bridges House',
+        grepl('Brodie', location) ~ 'Brodie',
+        grepl('Bryan Center', location) ~ 'Bryan Center',
+        grepl('Chesterfield', location) ~ 'Chesterfield',
+        grepl('Crowell', location) ~ 'Crowell',
+        grepl('Divinity', location) ~ 'Divinity School',
+        grepl('Duke Chapel', location) ~ 'Duke Chapel',
+        grepl('East Duke', location) ~ 'East Duke',
+        grepl('FITZPATRICK', location) ~ 'Fitzpatrick',
+        grepl('Fitzpatrick', location) ~ 'Fitzpatrick',
+        grepl('Franklin Center', location) ~ 'Franklin Center',
+        grepl('French Science', location) ~ 'French Science',
+        grepl('Friedl Bldg', location) ~ 'Friedl',
+        grepl('Fuqua', location) ~ 'Fuqua',
+        grepl('Grainger Hal', location) ~ 'Grainger Hall',
+        grepl('Gray', location) ~ 'Gray',
+        grepl('Gross Hall', location) ~ 'Gross Hall',
+        grepl('Hudson Hall', location) ~ 'Hudson Hall',
+        grepl('Languages', location) ~ 'Languages',
+        grepl('LSRC', location) ~ 'LSRC',
+        grepl('Nanaline', location) ~ 'Nanaline',
+        grepl('Nasher', location) ~ 'Nasher',
+        grepl('Old Chemistry', location) ~ 'Old Chemistry',
+        grepl('Page', location) ~ 'Page',
+        grepl('Perkins', location) ~ 'Perkins',
+        grepl('Physics', location) ~ 'Physics',
+        grepl('Reuben-Cooke', location) ~ 'Reuben-Cooke',
+        grepl('Rubenstein Hall', location) ~ 'Sanford',
+        grepl('Rubenstein Arts', location) ~ 'Rubenstein Arts Center',
+        grepl('Sanford', location) ~ 'Sanford',
+        grepl('Smith Warehouse', location) ~ 'Smith Warehouse',
+        grepl('Social Sciences', location) ~ 'Social Sciences',
+        grepl('Teer', location) ~ 'Teer',
+        grepl('The Ark', location) ~ 'The Ark',
+        grepl('Trent', location) ~ 'Trent Hall',
+        grepl('West Duke', location) ~ 'West Duke',
+        grepl('White', location) ~ 'White Lecture Hall',
+        grepl('Wilkinson', location) ~ 'Wilkinson',
+        grepl('Wilson Center', location) ~ 'Wilson Center',
+        TRUE ~ location))
+
+
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
     datasetInput <- reactive({
         switch(input$dataset,
-               "Computer Science" = cs_data%>%select("Subject", "Class Number", "Start Time",
-                                                     "End Time"),
-               "Statistics" = stat_data%>%select("Subject", "Class Number", "Start Time",
-                                                 "End Time"),
-               "Economics" = cars)
+               "Statistics" = course_data%>%filter(Subject == 'STA') %>%
+                   select("Subject", "catalog_number", "Descr", "Section",
+                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
+                          "location"),
+               "Computer Science" = course_data%>%filter(Subject == 'COMPSCI') %>%
+                   select("Subject", "catalog_number", "Descr", "Section",
+                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
+                          "location"),
+               "Economics" = course_data%>%filter(Subject == "ECON") %>%
+                   select("Subject", "catalog_number", "Descr", "Section",
+                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
+                          "location"),
+               "English" = course_data %>% filter(Subject == "ENGLISH") %>%
+                   select("Subject", "catalog_number", "Descr", "Section",
+                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
+                          "location"),
+               "Asian & Middle Eastern Studies" = course_data %>% filter(Subject == "AMES") %>%
+                   select("Subject", "catalog_number", "Descr", "Section",
+                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
+                          "location"),
+               "Literature" = course_data %>% filter(Subject == "LIT") %>%
+                   select("Subject", "catalog_number", "Descr", "Section",
+                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
+                          "location"),
+               "Cinema" = course_data %>% filter(Subject == "CINE") %>%
+                   select("Subject", "catalog_number", "Descr", "Section",
+                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
+                          "location")
+               )
     })
 
 

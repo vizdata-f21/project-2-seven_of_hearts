@@ -95,6 +95,9 @@ course_data <- course_data %>%
 locations <- course_data %>%
   distinct(location)
 
+class_types <- course_data %>%
+  distinct(Subject)
+
 glimpse(course_data)
 ```
 
@@ -153,7 +156,8 @@ grouped together.
       + Kartik: weekly plans
       
   - Week 3 of project (week of Mon, Nov 1): 
-      + Kate: Finish proposal, retrieving dataset from registrar
+      + Kate:Request Course data from Registrar's office, 
+      data cleanup. 
       + Yihan: Finish proposal and organization of repo
       + Kartik: Finish proposal;finish creating datasets
   

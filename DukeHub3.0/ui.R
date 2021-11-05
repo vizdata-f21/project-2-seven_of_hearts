@@ -26,7 +26,9 @@ ui <- fluidPage(
             # Input: Selector for choosing dataset ----
             selectInput(inputId = "dataset",
                         label = "Choose a Subject Area:",
-                        choices = c("Computer Science", "Statistics", "Economics")),
+                        choices = c("Computer Science", "Statistics", "Economics",
+                                    "English", "Asian & Middle Eastern Studies",
+                                    "Literature", "Cinema")),
 
             # Input: Numeric entry for number of obs to view ----
             numericInput(inputId = "obs",
