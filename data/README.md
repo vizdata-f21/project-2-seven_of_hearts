@@ -19,7 +19,7 @@
 |Career  | character | career the class is offered in|
 |term  | character | term the class is offered |
 
-## Name: STA 313 Team 7 data set - Building groups.csv
+## Name: building_groups.csv
 
 |Variable         |Data         |Description |
 |:----------------|:-----------|:--------------------|
@@ -27,7 +27,7 @@
 |Group Number|integer | quantitative grouping of nearby buildings|
 |Group Category|character| qualitative grouping of nearby buildings|
 
-## Name: building_distance.csv
+## Name: Building_Distance.csv
 |Variable         |Data         |Description |
 |:----------------|:-----------|:--------------------|
 |dist_1|double|distance to group 1|
