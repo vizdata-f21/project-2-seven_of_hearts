@@ -21,6 +21,7 @@ library(knitr)
 course_data <-  read_csv(here::here("data/course_catalog.csv"))
 building_distance <- read_csv(here::here("data/Building_Distance.csv"))
 building_groups <- read_csv(here::here("data/building_groups.csv"))
+
 ```
 
 ### Data Cleanup 
@@ -150,7 +151,9 @@ what days they are most available to get meals with friends.
 
 Here is an image of DukeHub 3.0. 
 
-![DukeHub3.0 Screenshot](/home/guest/R/project-2-seven_of_hearts/data/DukeHub3.0.png)
+```{r include_image}
+knitr::include_graphics("/home/guest/R/project-2-seven_of_hearts/data/DukeHub3.0.png")
+```
 
 To complete our project, we will be using a course catalog data set 
 that we requested from the Duke University Registrar's Office (thank you Dr. 
