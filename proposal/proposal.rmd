@@ -150,10 +150,7 @@ what days they are most available to get meals with friends.
 
 Here is an image of DukeHub 3.0. 
 
-
-```{r app_screenshot, echo=FALSE, fig.align='center', fig.cap='DukeHub 3.0'}
-knitr::include_graphics(here::here("data/DukeHub3.0.png"))
-```
+![DukeHub3.0 Screenshot](/home/guest/R/project-2-seven_of_hearts/data/DukeHub3.0.png)
 
 To complete our project, we will be using a course catalog data set 
 that we requested from the Duke University Registrar's Office (thank you Dr. 
