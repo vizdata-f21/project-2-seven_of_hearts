@@ -241,7 +241,7 @@ with different functionalities:
 Here is an image of DukeHub 3.0.
 
 ![DukeHub3.0
-Screenshot](/home/guest/R/project-2-seven_of_hearts/data/DukeHub3.0.png)
+Screenshot](https://github.com/vizdata-f21/project-2-seven_of_hearts/data/DukeHub3.0.png)
 
 To complete our project, we will be using a course catalog data set that
 we requested from the Duke University Registrar’s Office (thank you Dr. 
