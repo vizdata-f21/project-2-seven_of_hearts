@@ -42,6 +42,35 @@ course_data <-  read_csv(here::here("data/course_catalog.csv"))
     ## ℹ Use `spec()` to retrieve the full column specification for this data.
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
+``` r
+building_distance <- read_csv(here::here("data/STA 313 Team 7 data set - Building groups.csv"))
+```
+
+    ## Rows: 54 Columns: 3
+
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (2): Location, Group Category
+    ## dbl (1): Group Number
+
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+building_groups <- read_csv(here::here("data/STA 313 Team 7 data set - Building Distance.csv"))
+```
+
+    ## Rows: 10 Columns: 11
+
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## dbl (11): group, dist_1, dist_2, dist_3, dist_4, dist_5, dist_6, dist_7, dis...
+
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
 ### Data Cleanup
 
 ``` r
@@ -137,6 +166,34 @@ glimpse(course_data)
     ## $ location         <chr> "Classroom Buiding", "Classroom Buiding", "Classroom …
     ## $ Career           <chr> "UGRD", "UGRD", "UGRD", "UGRD", "UGRD", "UGRD", "UGRD…
     ## $ term             <chr> "2022 Spring Term", "2022 Spring Term", "2022 Spring …
+
+``` r
+glimpse(building_distance)
+```
+
+    ## Rows: 54
+    ## Columns: 3
+    ## $ Location         <chr> "Art Building", "Baldwin Auditorium", "Bell Tower", "…
+    ## $ `Group Number`   <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3,…
+    ## $ `Group Category` <chr> "EC-Back", "EC-Back", "EC-Back", "EC-Back", "EC-Back"…
+
+``` r
+glimpse(building_groups)
+```
+
+    ## Rows: 10
+    ## Columns: 11
+    ## $ group   <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+    ## $ dist_1  <dbl> 0.2, 0.4, 2.2, 1.6, 2.3, 1.5, 1.3, 2.8, 2.1, 4.1
+    ## $ dist_2  <dbl> 0.4, 0.2, 1.8, 1.2, 1.9, 1.1, 0.9, 2.4, 1.7, 3.7
+    ## $ dist_3  <dbl> 2.2, 1.8, 0.4, 0.6, 0.6, 0.4, 1.0, 1.1, 0.7, 2.5
+    ## $ dist_4  <dbl> 1.6, 1.2, 0.6, 0.4, 0.5, 0.6, 0.5, 1.0, 0.5, 2.6
+    ## $ dist_5  <dbl> 2.3, 1.9, 0.6, 0.5, 0.4, 0.8, 1.1, 0.5, 0.4, 1.9
+    ## $ dist_6  <dbl> 1.5, 1.1, 0.4, 0.6, 0.8, 0.4, 0.7, 1.3, 0.8, 2.8
+    ## $ dist_7  <dbl> 1.3, 0.9, 1.0, 0.5, 1.1, 0.7, 0.4, 1.5, 0.8, 3.0
+    ## $ dist_8  <dbl> 2.8, 2.4, 1.1, 1.0, 0.5, 1.3, 1.5, 0.4, 0.7, 1.9
+    ## $ dist_9  <dbl> 2.1, 1.7, 0.7, 0.2, 0.4, 0.8, 0.8, 0.7, 0.1, 2.2
+    ## $ dist_10 <dbl> 4.1, 3.7, 2.5, 2.6, 1.9, 2.8, 3.0, 1.9, 2.2, 0.1
 
 ### High Level Overview
 
@@ -269,7 +326,7 @@ each other are grouped together.
 -   Week 8 of Project(Due Date): Present our project
 
     -   All team members: practice presentation leading up to final
-        presnetaiton.
+        presentation
 
 ### Organization of Project Repository:
 

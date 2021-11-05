@@ -3,7 +3,7 @@
 
 ## Name: course_catalog.csv
 
-|Variable         |Data type   |Description |
+|Variable         |Data         |Description |
 |:----------------|:-----------|:--------------------|
 |class_identifier| double| unique identifier for each class|
 |Subject    | character|class subject area| 
@@ -19,20 +19,24 @@
 |Career  | character | career the class is offered in|
 |term  | character | term the class is offered |
 
+## Name: STA 313 Team 7 data set - Building groups.csv
 
-## Name: building_dist.csv
-|Variable         |Data type   |Description |
+|Variable         |Data         |Description |
 |:----------------|:-----------|:--------------------|
-|group| integer| group number of buildings|
-|dist_1| integer| time to travel from group 1|
-|dist_2| integer| time to travel from group 2|
-|dist_3| integer| time to travel from group 3|
-|dist_4| integer| time to travel from group 4|
-|dist_5| integer| time to travel from group 5|
+|Location| character | physical building|
+|Group Number|integer | quantitative grouping of nearby buildings|
+|Group Category|character| qualitative grouping of nearby buildings|
 
-
-## Name: building_group.csv
-|Variable         |Data type   |Description |
+## Name: building_distance.csv
+|Variable         |Data         |Description |
 |:----------------|:-----------|:--------------------|
-|group| integer| group number of building|
-|location| character | the name of building|
+|dist_1|double|distance to group 1|
+|dist_2|double|distance to group 2|
+|dist_3|double|distance to group 3|
+|dist_4|double|distance to group 4|
+|dist_5|double|distance to group 5|
+|dist_6|double|distance to group 6|
+|dist_7|double|distance to group 7|
+|dist_8|double|distance to group 8|
+|dist_9|double|distance to group 9|
+|dist_10|double|distance to group 10|

@@ -19,6 +19,8 @@ library(knitr)
 
 ```{r course_data_load, `show_col_types` = FALSE}
 course_data <-  read_csv(here::here("data/course_catalog.csv"))
+building_distance <- read_csv(here::here("data/STA 313 Team 7 data set - Building groups.csv"))
+building_groups <- read_csv(here::here("data/STA 313 Team 7 data set - Building Distance.csv"))
 ```
 
 ### Data Cleanup 
@@ -102,6 +104,9 @@ course_data <- course_data %>%
 
 glimpse(course_data)
 
+glimpse(building_distance)
+
+glimpse(building_groups)
 ```
 
 ### High Level Overview 
@@ -210,7 +215,7 @@ grouped together.
     + Kartik:  UI enhancements to recommendations tab, distance tab,
     
   - Week 8 of Project(Due Date): Present our project
-    + All team members: practice presentation leading up to final presnetaiton. 
+    + All team members: practice presentation leading up to final presentation 
 
 ### Organization of Project Repository: 
 
