@@ -185,7 +185,7 @@ Here is an image of DukeHub 3.0.
 
 <div class="figure" style="text-align: center">
 
-<img src="/home/guest/R/project-2-seven_of_hearts/data/DukeHub3.0.png" alt="DukeHub 3.0" width="2814" />
+<img src="/home/guest/STA_313L_hw/project-2-seven_of_hearts/data/DukeHub3.0.png" alt="DukeHub 3.0" width="2814" />
 <p class="caption">
 DukeHub 3.0
 </p>
@@ -229,10 +229,10 @@ each other are grouped together.
 
 -   Week 3 of project (week of Mon, Nov 1):
 
-    -   Kate:Request Course data from Registrar’s office and cleans
-        data.
-    -   Yihan: Finish proposal and organization of repo
-    -   Kartik: Finish proposal;finish creating datasets
+    -   Kate: Request Course data from Registrar’s office and cleans
+        data
+    -   Yihan: Finish proposal and organize repo
+    -   Kartik: Finish proposal and creating datasets
 
 -   Week 4 of project (week of Mon, Nov 8): Conduct peer review on
     project proposals, and optionally, submit in an updated version of
@@ -240,7 +240,7 @@ each other are grouped together.
 
     -   All members: discuss peeer review; make any necessary
         modifications.
-    -   Kate: course builder tab
+    -   Kate: Course builder tab
     -   Yihan: Class information tab
     -   Kartik: Weekly Calendar tab
 
@@ -248,22 +248,22 @@ each other are grouped together.
     project, identify issues and consult TA/professor
 
     -   Kate: Distance tab
-    -   Yihan: reccomendations tab
-    -   Kartik: distance tab and reccomendations tab
+    -   Yihan: Reccomendations tab
+    -   Kartik: Distance tab and reccomendations tab
 
 -   Week 6 of project (week of Mon, Nov 22): Continue working on the
     project.
 
-    -   Kate: End user testing: scheudle builder tab and distance tab.
-    -   Yihan: End user testing: class information tab, reccommendation
-    -   Kartik: End user testing: recommendations tab, distance tab,
+    -   Kate: End user testing: scheudule builder tab and distance tab.
+    -   Yihan: End user testing: class information tab, recommendation
+    -   Kartik: End user testing: recommendations tab, distance tab
 
 -   Week 7 of project (week of Mon, Nov 29): Conduct another round of
     peer review.
 
     -   Make any adjustments based on peer review or end user testing.
-    -   Kate: UI enhancements to scheudle builder tab and distance tab.
-    -   Yihan: UI enhancements to class information tab, reccommendation
+    -   Kate: UI enhancements to schedule builder tab and distance tab.
+    -   Yihan: UI enhancements to class information tab, recommendation
     -   Kartik: UI enhancements to recommendations tab, distance tab,
 
 -   Week 8 of Project(Due Date): Present our project
