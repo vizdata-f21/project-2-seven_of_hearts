@@ -47,8 +47,8 @@ ui <- fluidPage(
                 "Schedule Builder",
 
             # Output: Verbatim text for data summary ----
-            verbatimTextOutput("summary"),
-            verbatimTextOutput("dfStr"),
+            #verbatimTextOutput("summary"),
+            #verbatimTextOutput("dfStr"),
 
             # Output: HTML table with requested number of observations ----
             tableOutput("view")

@@ -1,6 +1,6 @@
-Project 2 Proposal
+DukeHub 3.0 Proposal
 ================
-Seven of Hearts: Yihan, Kartik, Kate
+Seven of Hearts: Yihan, Kartik, Kate Straneva
 
 ### Load Packages
 
@@ -21,6 +21,7 @@ library(dplyr)
 
 ``` r
 library(readr)
+library(knitr)
 ```
 
 ### Load Course Data
@@ -40,6 +41,8 @@ course_data <-  read_csv(here::here("data/course_catalog.csv"))
     ## 
     ## ℹ Use `spec()` to retrieve the full column specification for this data.
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+### Data Cleanup
 
 ``` r
 course_data <- course_data %>%
@@ -111,10 +114,11 @@ course_data <- course_data %>%
     grepl('Wilkinson', location) ~ 'Wilkinson', 
     grepl('Wilson Center', location) ~ 'Wilson Center',
     TRUE ~ location))
+```
 
-locations <- course_data %>%
-  distinct(location)
+### Glimpse Data
 
+``` r
 glimpse(course_data)
 ```
 
@@ -140,7 +144,7 @@ Create an R Shiny app that allows students to build their academic
 schedule and provides additional insights to their schedule through data
 visualization.
 
-### Project Description/Goals/Motivation
+### Project Description, Goals, & Motivation
 
 Dukehub is an academic portal used by students, faculty, and advisers to
 view courses, make tuition payments, and view transcripts. Each semester
@@ -154,35 +158,61 @@ useful, but our team wishes it would provide more information beyond
 schedule building. Our team’s goal is to create an improved DukeHub
 using a shiny app which allows students to select courses for their
 schedule and provides additional information about their schedule based
-on their selection. Specifically, we hope to create three visualizations
-based on student class selection:
+on their selection. This will include information regarding estimated
+commute times, distance traveled, and recommendations for studying and
+relaxing based on their selection. There are 5 tabs in our R shiny app
+with different functionalities:
 
--   Course schedule in a calendar (classes colored based on student
-    selection). If there is overlapping class times, an error will occur
+-   **Schedule Builder**: allows students to add classes to their
+    schedule by Subject Area or Course Name.
+
+-   **Weekly Calendar** course schedule in a calendar based on student
+    selection. If there is overlapping class times, an error will occur
     (visually).
 
--   Geo-spatial visualization showing the distance traveled during a
-    specific day or week.
+-   **Class Info**: Visualzations on the number of people in courses and
+    types of courses the student is taking.
 
--   Visualization showing the population density in each building on
-    campus during a given time.
+-   **Distance** : Geo-spatial visualization showing the distance
+    traveled during a specific day or week; and commute times between
+    buildings.
+
+-   **Reccomendations**: Based on inputted schedule, the app will
+    provide reccomendations on where and when a student should study and
+    what days they are most available to get meals with friends.
+
+Here is an image of DukeHub 3.0.
+
+<div class="figure" style="text-align: center">
+
+<img src="/home/guest/R/project-2-seven_of_hearts/data/DukeHub3.0.png" alt="DukeHub 3.0" width="2814" />
+<p class="caption">
+DukeHub 3.0
+</p>
+
+</div>
 
 To complete our project, we will be using a course catalog data set that
-we requested from the Duke University Registrar’s Office. This data set
-contains 2,408 observations of 13 variables. Each observation in the
-data set represents a course which is offered to undergraduates during
-the Spring 2022 term. There are 13 variables in the dataset:
-`class_identifier`, `Subject`, `catalog_number`, `Descr`, `Section`,
-`enroll_cap`, `days`, `mtg_start`, `mtg_end`, `Mode`, `location`,
-`career`, `term`. We cleaned some of the variable names to make them
-more straighforward, for example, `Descr` is renamed to `location`,
-`Pat` is renamed to `days`, etc.
+we requested from the Duke University Registrar’s Office (thank you Dr. 
+Blalark). This data set contains 2,408 observations of 13 variables.
+Each observation in the dataset represents a course which is offered to
+undergraduates during the Spring 2022 term. There are 13 variables in
+the dataset: `class_identifier`, `Subject`, `catalog_number`, `Descr`,
+`Section`, `enroll_cap`, `days`, `mtg_start`, `mtg_end`, `Mode`,
+`location`, `career`, `term`. We cleaned some of the variable names to
+make them more straighforward, for example, `Descr` is renamed to
+`location`, `Pat` is renamed to `days`, etc. Additionally, we filtered
+coures which are reserved for seniors theses, reservered for freshmen,
+take place at Duke’s marine lab, or do not have location listed,
 
 Additionally, we are creating a distance data frame which describes the
 distance between buildings. For convenience, buildings that are close to
 each other are grouped together.
 
 ### Weekly Plan of Attack
+
+-   Our team is available to meet on Tuesdays and Thursdays from 10:30
+    AM to 12:00 PM.
 
 -   Week 1 of project (week of Mon, Oct 18): Kate, Yihan, and Kartik
     contributed 3 potential ideas each and we chose one that would be
@@ -191,14 +221,16 @@ each other are grouped together.
 
 -   Week 2 of project (week of Mon, Oct 25):
 
-    -   Kate: project proposal - motivation and goal.
+    -   Kate: project proposal - motivation and goal; create basic R
+        shiny app with UI and server files.
     -   Yihan: project proposal - introduction and description of each
         dataset
     -   Kartik: weekly plans
 
 -   Week 3 of project (week of Mon, Nov 1):
 
-    -   Kate: Finish proposal, retrieving dataset from registrar
+    -   Kate:Request Course data from Registrar’s office and cleans
+        data.
     -   Yihan: Finish proposal and organization of repo
     -   Kartik: Finish proposal;finish creating datasets
 
@@ -206,20 +238,38 @@ each other are grouped together.
     project proposals, and optionally, submit in an updated version of
     your proposal.
 
-    -   Kate: work on peer review and update proposal; work on UI
-    -   Yihan: work on peer review and update proposal; work on UI
-    -   Kartik: work on peer review and update proposal; work on UI
+    -   All members: discuss peeer review; make any necessary
+        modifications.
+    -   Kate: course builder tab
+    -   Yihan: Class information tab
+    -   Kartik: Weekly Calendar tab
 
 -   Week 5 of project (week of Mon, Nov 15): Continue working on the
     project, identify issues and consult TA/professor
 
+    -   Kate: Distance tab
+    -   Yihan: reccomendations tab
+    -   Kartik: distance tab and reccomendations tab
+
 -   Week 6 of project (week of Mon, Nov 22): Continue working on the
     project.
+
+    -   Kate: End user testing: scheudle builder tab and distance tab.
+    -   Yihan: End user testing: class information tab, reccommendation
+    -   Kartik: End user testing: recommendations tab, distance tab,
 
 -   Week 7 of project (week of Mon, Nov 29): Conduct another round of
     peer review.
 
+    -   Make any adjustments based on peer review or end user testing.
+    -   Kate: UI enhancements to scheudle builder tab and distance tab.
+    -   Yihan: UI enhancements to class information tab, reccommendation
+    -   Kartik: UI enhancements to recommendations tab, distance tab,
+
 -   Week 8 of Project(Due Date): Present our project
+
+    -   All team members: practice presentation leading up to final
+        presnetaiton.
 
 ### Organization of Project Repository:
 
@@ -231,6 +281,7 @@ each other are grouped together.
     -   building\_dist.csv: Distances between each building group
     -   building\_group.csv: The groups each building belongs to
     -   README.md for data folder
+    -   DukeHub3.0.png: Screenshot of our app
 -   Proposal Folder :
     -   proposal.rmd
 -   DukeHub3.0
