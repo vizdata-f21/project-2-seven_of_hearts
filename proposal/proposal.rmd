@@ -19,8 +19,8 @@ library(knitr)
 
 ```{r course_data_load, `show_col_types` = FALSE}
 course_data <-  read_csv(here::here("data/course_catalog.csv"))
-building_distance <- read_csv(here::here("data/STA 313 Team 7 data set - Building groups.csv"))
-building_groups <- read_csv(here::here("data/STA 313 Team 7 data set - Building Distance.csv"))
+building_distance <- read_csv(here::here("data/Building_Distance.csv"))
+building_groups <- read_csv(here::here("data/building_groups.csv"))
 ```
 
 ### Data Cleanup 
@@ -168,7 +168,7 @@ are reserved for seniors theses, reservered for freshmen, take place
 at Duke's marine lab, or do not have location listed, 
 
 Additionally, we are creating a distance data frame which describes the distance
-between buildings. For convenience, buildings that are close to each other are 
+between building. For convenience, buildings that are close to each other are 
 grouped together.
 
 ### Weekly Plan of Attack
@@ -225,8 +225,8 @@ grouped together.
 - Data folder contains 3 data sets and a README file: 
   + course_catalog.csv: All classes offered to undergraduates at Duke University
   in the Spring 2022 term. 
-  + building_dist.csv: Distances between each building group 
-  + building_group.csv: The groups each building belongs to
+  + building_distance.csv: Distances between each building group 
+  + building_groups.csv: The groups each building belongs to
   + README.md for data folder
   + DukeHub3.0.png: Screenshot of our app 
   

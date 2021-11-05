@@ -43,22 +43,7 @@ course_data <-  read_csv(here::here("data/course_catalog.csv"))
     ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
 ``` r
-building_distance <- read_csv(here::here("data/STA 313 Team 7 data set - Building groups.csv"))
-```
-
-    ## Rows: 54 Columns: 3
-
-    ## ── Column specification ────────────────────────────────────────────────────────
-    ## Delimiter: ","
-    ## chr (2): Location, Group Category
-    ## dbl (1): Group Number
-
-    ## 
-    ## ℹ Use `spec()` to retrieve the full column specification for this data.
-    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-
-``` r
-building_groups <- read_csv(here::here("data/STA 313 Team 7 data set - Building Distance.csv"))
+building_distance <- read_csv(here::here("data/Building_Distance.csv"))
 ```
 
     ## Rows: 10 Columns: 11
@@ -66,6 +51,21 @@ building_groups <- read_csv(here::here("data/STA 313 Team 7 data set - Building 
     ## ── Column specification ────────────────────────────────────────────────────────
     ## Delimiter: ","
     ## dbl (11): group, dist_1, dist_2, dist_3, dist_4, dist_5, dist_6, dist_7, dis...
+
+    ## 
+    ## ℹ Use `spec()` to retrieve the full column specification for this data.
+    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+
+``` r
+building_groups <- read_csv(here::here("data/building_groups.csv"))
+```
+
+    ## Rows: 54 Columns: 3
+
+    ## ── Column specification ────────────────────────────────────────────────────────
+    ## Delimiter: ","
+    ## chr (2): Location, Group_Category
+    ## dbl (1): Group_Number
 
     ## 
     ## ℹ Use `spec()` to retrieve the full column specification for this data.
@@ -171,16 +171,6 @@ glimpse(course_data)
 glimpse(building_distance)
 ```
 
-    ## Rows: 54
-    ## Columns: 3
-    ## $ Location         <chr> "Art Building", "Baldwin Auditorium", "Bell Tower", "…
-    ## $ `Group Number`   <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3,…
-    ## $ `Group Category` <chr> "EC-Back", "EC-Back", "EC-Back", "EC-Back", "EC-Back"…
-
-``` r
-glimpse(building_groups)
-```
-
     ## Rows: 10
     ## Columns: 11
     ## $ group   <dbl> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
@@ -194,6 +184,16 @@ glimpse(building_groups)
     ## $ dist_8  <dbl> 2.8, 2.4, 1.1, 1.0, 0.5, 1.3, 1.5, 0.4, 0.7, 1.9
     ## $ dist_9  <dbl> 2.1, 1.7, 0.7, 0.2, 0.4, 0.8, 0.8, 0.7, 0.1, 2.2
     ## $ dist_10 <dbl> 4.1, 3.7, 2.5, 2.6, 1.9, 2.8, 3.0, 1.9, 2.2, 0.1
+
+``` r
+glimpse(building_groups)
+```
+
+    ## Rows: 54
+    ## Columns: 3
+    ## $ Location       <chr> "Art Building", "Baldwin Auditorium", "Bell Tower", "Bi…
+    ## $ Group_Number   <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 3, 3, 3…
+    ## $ Group_Category <chr> "EC-Back", "EC-Back", "EC-Back", "EC-Back", "EC-Back", …
 
 ### High Level Overview
 
@@ -242,7 +242,7 @@ Here is an image of DukeHub 3.0.
 
 <div class="figure" style="text-align: center">
 
-<img src="/home/guest/STA_313L_hw/project-2-seven_of_hearts/data/DukeHub3.0.png" alt="DukeHub 3.0" width="2814" />
+<img src="/home/guest/R/project-2-seven_of_hearts/data/DukeHub3.0.png" alt="DukeHub 3.0" width="2814" />
 <p class="caption">
 DukeHub 3.0
 </p>
@@ -263,7 +263,7 @@ coures which are reserved for seniors theses, reservered for freshmen,
 take place at Duke’s marine lab, or do not have location listed,
 
 Additionally, we are creating a distance data frame which describes the
-distance between buildings. For convenience, buildings that are close to
+distance between building. For convenience, buildings that are close to
 each other are grouped together.
 
 ### Weekly Plan of Attack
@@ -335,8 +335,8 @@ each other are grouped together.
 -   Data folder contains 3 data sets and a README file:
     -   course\_catalog.csv: All classes offered to undergraduates at
         Duke University in the Spring 2022 term.
-    -   building\_dist.csv: Distances between each building group
-    -   building\_group.csv: The groups each building belongs to
+    -   building\_distance.csv: Distances between each building group
+    -   building\_groups.csv: The groups each building belongs to
     -   README.md for data folder
     -   DukeHub3.0.png: Screenshot of our app
 -   Proposal Folder :
