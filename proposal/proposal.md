@@ -140,9 +140,9 @@ glimpse(course_data)
 
 ### High Level Overview
 
-Create an R Shiny app that allows students to build their academic
-schedule and provides additional insights to their schedule through data
-visualization.
+Create DukeHub 3.0, an R Shiny app that allows students to build their
+academic schedule and provides additional insights to their schedule
+through data visualization.
 
 ### Project Description, Goals, & Motivation
 
