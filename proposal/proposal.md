@@ -240,14 +240,8 @@ with different functionalities:
 
 Here is an image of DukeHub 3.0.
 
-<div class="figure" style="text-align: center">
-
-<img src="/home/guest/R/project-2-seven_of_hearts/data/DukeHub3.0.png" alt="DukeHub 3.0" width="2814" />
-<p class="caption">
-DukeHub 3.0
-</p>
-
-</div>
+![DukeHub3.0
+Screenshot](https://raw.githubusercontent.com/vizdata-f21/project-2-seven_of_hearts/main/data/DukeHub3.0.png?token=ANUMAPPQ2QYAUE4AEX4LCMTBR3BHI)
 
 To complete our project, we will be using a course catalog data set that
 we requested from the Duke University Registrar’s Office (thank you Dr. 
