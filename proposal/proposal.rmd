@@ -136,7 +136,8 @@ with different functionalities:
 Subject Area or Course Name. 
 	
 - **Weekly Calendar** course schedule in a calendar based on student selection. If 
-there is overlapping class times, an error will occur (visually). 
+there is overlapping class times, a notification will pop up that there is 
+an error with adding classes due to overlap. 
 
 - **Class Info**: Visualzations on the number of people in courses and types of courses
 the student is taking. 
