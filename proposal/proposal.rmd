@@ -139,14 +139,15 @@ Subject Area or Course Name.
 there is overlapping class times, a notification will pop up that there is 
 an error with adding classes due to overlap. 
 
-- **Class Info**: Visualzations on the number of people in courses and types of courses
+- **Class Info**: Visualizations on the number of people in courses and types of courses
 the student is taking. 
   
 - **Distance** : Geo-spatial visualization showing the distance traveled 
 during a specific day or week; and commute times between buildings.  
 	
-- **Reccomendations**: Based on inputted schedule, the app will 
-provide reccomendations on where and when a student should study and 
+- **Recommendations**: Based on inputted class schedule, the app will 
+provide recommendations on where and when a student should study (based on how 
+populated each building is?) and 
 what days they are most available to get meals with friends. 
 
 
