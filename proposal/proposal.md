@@ -224,8 +224,8 @@ with different functionalities:
     schedule by Subject Area or Course Name.
 
 -   **Weekly Calendar** course schedule in a calendar based on student
-    selection. If there is overlapping class times, an error will occur
-    (visually).
+    selection. If there is overlapping class times, a notification will
+    pop up that there is an error with adding classes due to overlap.
 
 -   **Class Info**: Visualzations on the number of people in courses and
     types of courses the student is taking.
@@ -258,7 +258,16 @@ take place at Duke’s marine lab, or do not have location listed,
 
 Additionally, we are creating a distance data frame which describes the
 distance between building. For convenience, buildings that are close to
-each other are grouped together.
+each other are grouped together. For grouping building together, we have
+found a facebook post that has already grouped buildings together based
+on proximity. However, we have updated the grouping based on the most
+recent Duke map. The distance data comes from finding the individual
+distances from each group’s midpoint. For instance, finding the distance
+from group 1 to group 3 was found by finding the distance between the
+middle of group 1 and the middle of group 3.
+
+Link:
+<https://www.facebook.com/notes/official-duke-university-class-of-2015/travel-time-between-buildings/247245255285707/>
 
 ### Weekly Plan of Attack
 
