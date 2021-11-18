@@ -220,28 +220,31 @@ commute times, distance traveled, and recommendations for studying and
 relaxing based on their selection. There are 5 tabs in our R shiny app
 with different functionalities:
 
--   **Schedule Builder**: allows students to add classes to their
-    schedule by Subject Area or Course Name.
+-   **Schedule Builder**: Allows students to add classes to their
+    schedule by Subject Area or Course Name. Students can also customize
+    their lab or discussion choices.
 
--   **Weekly Calendar** course schedule in a calendar based on student
+-   **Weekly Calendar** Course schedule in a calendar based on student
     selection. If there is overlapping class times, a notification will
     pop up that there is an error with adding classes due to overlap.
 
--   **Class Info**: Visualzations on the number of people in courses and
-    types of courses the student is taking.
+-   **Class Info**: A sorted bar chart of the number of people in
+    different courses selected by users and types of courses (by Subject
+    Area) in different colors.
 
 -   **Distance** : Geo-spatial visualization showing the distance
     traveled during a specific day or week; and commute times between
     buildings.
 
--   **Reccomendations**: Based on inputted schedule, the app will
-    provide reccomendations on where and when a student should study and
-    what days they are most available to get meals with friends.
+-   **Recommendations**: Based on input class schedule, the app will
+    provide recommendations on where and when a student should study
+    based on the locations of their current and next class and what days
+    they are most available to get meals with friends.
 
 Here is an image of DukeHub 3.0.
 
 ![DukeHub3.0
-Screenshot](https://raw.githubusercontent.com/vizdata-f21/project-2-seven_of_hearts/main/data/DukeHub3.0.png?token=ANUMAPPQ2QYAUE4AEX4LCMTBR3BHI)
+Screenshot](https://raw.githubusercontent.com/vizdata-f21/project-2-seven_of_hearts/main/data/DukeHub3.0.png)
 
 To complete our project, we will be using a course catalog data set that
 we requested from the Duke University Registrar’s Office (thank you Dr. 
