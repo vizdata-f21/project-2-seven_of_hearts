@@ -169,17 +169,6 @@ with different functionalities:
 
 -   **Schedule Builder**: Allows students to add classes to their
     schedule by Subject Area or Course Name. Students can also customize
-<<<<<<< HEAD
-    their lab or discussion choices.
-
--   **Weekly Calendar** Course schedule in a calendar based on student
-    selection. If there is overlapping class times, a notification will
-    pop up that there is an error with adding classes due to overlap.
-
--   **Class Info**: A sorted bar chart of the number of people in
-    different courses selected by users and types of courses (by Subject
-    Area) in different colors.
-=======
     their lab or discussion choices. There will be some sort of message
     that makes sure people sign up for their labs and discussions, if it
     is a part of the course.
@@ -194,7 +183,6 @@ with different functionalities:
     different courses selected by users and types of courses (by Subject
     Area) in different colors based on subject. This will help students
     know how many people to expect in a classroom at a given time.
->>>>>>> ec20ab87c24d6b100d0f03beec92e4eb686599d3
 
 -   **Distance** : Geo-spatial visualization showing the distance
     traveled during a specific day or week; and commute times between
@@ -204,17 +192,13 @@ with different functionalities:
 -   **Recommendations**: Based on input class schedule, the app will
     provide recommendations on where and when a student should study
     based on the locations of their current and next class and what days
-<<<<<<< HEAD
-    they are most available to get meals with friends.
-=======
     they are most available to get meals with friends. There could and
     option to add custom times for sports practice or clubs to alow for
     better reccomendations for when to choose certain classes.
->>>>>>> ec20ab87c24d6b100d0f03beec92e4eb686599d3
 
 Here is an image of DukeHub 3.0.
 
-![DukeHub3.0
+![DukeHub3\_0
 Screenshot](https://raw.githubusercontent.com/vizdata-f21/project-2-seven_of_hearts/main/data/DukeHub3.0.png)
 
 Note that the image of DukeHub 3.0 is just the start and that it will be

@@ -161,7 +161,7 @@ clubs to alow for better reccomendations for when to choose certain classes.
 
 Here is an image of DukeHub 3.0. 
 
-![DukeHub3.0 Screenshot](https://raw.githubusercontent.com/vizdata-f21/project-2-seven_of_hearts/main/data/DukeHub3.0.png)
+![DukeHub3_0 Screenshot](https://raw.githubusercontent.com/vizdata-f21/project-2-seven_of_hearts/main/data/DukeHub3.0.png)
 
 Note that the image of DukeHub 3.0 is just the start and that it will be 
 a lot more accessible and visually pleasing. 
