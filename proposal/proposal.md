@@ -6,20 +6,6 @@ Seven of Hearts: Yihan, Kartik, Kate Straneva
 
 ``` r
 library(dplyr)
-```
-
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
-``` r
 library(readr)
 library(knitr)
 ```
@@ -27,49 +13,10 @@ library(knitr)
 ### Load Course Data
 
 ``` r
-course_data <-  read_csv(here::here("data/course_catalog.csv"))
+course_data <-  read_csv(here::here("data/course_catalog.csv"),col_types = cols())
+building_distance <- read_csv(here::here("data/Building_Distance.csv"),col_types = cols())
+building_groups <- read_csv(here::here("data/building_groups.csv"),col_types = cols())
 ```
-
-    ## Rows: 2703 Columns: 13
-
-    ## ── Column specification ────────────────────────────────────────────────────────
-    ## Delimiter: ","
-    ## chr  (9): Subject, Catalog, Descr, Section, Pat, Mode, Descr 1, Career, Term...
-    ## dbl  (2): Unique Class Identifier, Cap Enrl
-    ## time (2): Mtg Start, Mtg End
-
-    ## 
-    ## ℹ Use `spec()` to retrieve the full column specification for this data.
-    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-
-``` r
-building_distance <- read_csv(here::here("data/Building_Distance.csv"))
-```
-
-    ## Rows: 10 Columns: 11
-
-    ## ── Column specification ────────────────────────────────────────────────────────
-    ## Delimiter: ","
-    ## dbl (11): group, dist_1, dist_2, dist_3, dist_4, dist_5, dist_6, dist_7, dis...
-
-    ## 
-    ## ℹ Use `spec()` to retrieve the full column specification for this data.
-    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
-
-``` r
-building_groups <- read_csv(here::here("data/building_groups.csv"))
-```
-
-    ## Rows: 54 Columns: 3
-
-    ## ── Column specification ────────────────────────────────────────────────────────
-    ## Delimiter: ","
-    ## chr (2): Location, Group_Category
-    ## dbl (1): Group_Number
-
-    ## 
-    ## ℹ Use `spec()` to retrieve the full column specification for this data.
-    ## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
 
 ### Data Cleanup
 
@@ -222,6 +169,7 @@ with different functionalities:
 
 -   **Schedule Builder**: Allows students to add classes to their
     schedule by Subject Area or Course Name. Students can also customize
+<<<<<<< HEAD
     their lab or discussion choices.
 
 -   **Weekly Calendar** Course schedule in a calendar based on student
@@ -231,20 +179,46 @@ with different functionalities:
 -   **Class Info**: A sorted bar chart of the number of people in
     different courses selected by users and types of courses (by Subject
     Area) in different colors.
+=======
+    their lab or discussion choices. There will be some sort of message
+    that makes sure people sign up for their labs and discussions, if it
+    is a part of the course.
+
+-   **Weekly Calendar** Course schedule in a calendar(using the ‘serg’
+    package) based on student selection. If there is overlapping class
+    times, a notification will pop up that there is an error with adding
+    classes due to overlap. We will sort classes by color based on the
+    subject.
+
+-   **Class Info**: A sorted bar chart of the number of people in
+    different courses selected by users and types of courses (by Subject
+    Area) in different colors based on subject. This will help students
+    know how many people to expect in a classroom at a given time.
+>>>>>>> ec20ab87c24d6b100d0f03beec92e4eb686599d3
 
 -   **Distance** : Geo-spatial visualization showing the distance
     traveled during a specific day or week; and commute times between
-    buildings.
+    buildings. Based on the timing of classes, we can plot different
+    paths with different linetypes/colors.
 
 -   **Recommendations**: Based on input class schedule, the app will
     provide recommendations on where and when a student should study
     based on the locations of their current and next class and what days
+<<<<<<< HEAD
     they are most available to get meals with friends.
+=======
+    they are most available to get meals with friends. There could and
+    option to add custom times for sports practice or clubs to alow for
+    better reccomendations for when to choose certain classes.
+>>>>>>> ec20ab87c24d6b100d0f03beec92e4eb686599d3
 
 Here is an image of DukeHub 3.0.
 
 ![DukeHub3.0
 Screenshot](https://raw.githubusercontent.com/vizdata-f21/project-2-seven_of_hearts/main/data/DukeHub3.0.png)
+
+Note that the image of DukeHub 3.0 is just the start and that it will be
+a lot more accessible and visually pleasing.
 
 To complete our project, we will be using a course catalog data set that
 we requested from the Duke University Registrar’s Office (thank you Dr. 
