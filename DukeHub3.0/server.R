@@ -507,6 +507,21 @@ shinyServer(function(input, output) {
                )
     })
 
+    # make selection based on previous input
+    # switch_function <- function(course_data$catalog_number){
+    #     parse(
+    #         eval
+    #     )
+    # }
+
+
+    observeEvent(input$Subject,{
+        req(input$Subject)
+        updateSelectInput(session, "Class code",
+                          choices =  course_data$catalog_number[course_data$Subject %in% input$Subject],
+                          selected = course_data$Subject[1])
+    })
+
     # datasetInput_code <- reactive({
     #     switch(input$dataset,
     #            course_data$catalog_number <- course_data %>%
