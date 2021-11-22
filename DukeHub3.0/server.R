@@ -478,7 +478,7 @@ shinyServer(function(input, output) {
              "Writing" = course_data%>%filter(Subject == "WRITING") %>%
                  select("Subject", "catalog_number", "Descr", "Section",
                         "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                        "location"),
+                        "location")
 
                )
     })
@@ -495,4 +495,5 @@ shinyServer(function(input, output) {
         head(datasetInput(), n = input$obs)
     })
 
-})
+    })
+

@@ -126,12 +126,13 @@ ui <- fluidPage(
                                     "Writing"
                                     ),
                         multiple = FALSE),
-
+            selectizeInput(inputId = "dataset",
+                           label = "Choose a Course Code: ",
+                           choices = course_data$catalog_number),
             # Input: Numeric entry for number of obs to view ----
             numericInput(inputId = "obs",
                          label = "Number of observations to view:",
-                         value = 10),
-
+                         value = 10)
             # Show only certain columns from dataframe
           #  $selectInput("Columns","Columns",
                        # names(mtcars), multiple = TRUE)
