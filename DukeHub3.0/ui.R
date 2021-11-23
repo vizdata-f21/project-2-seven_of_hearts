@@ -150,7 +150,8 @@ ui <- fluidPage(
                    #verbatimTextOutput("dfStr"),
 
                    # Output: HTML table with requested number of observations ----
-                   DT::dataTableOutput("view")
+                   DT::dataTableOutput("view"),
+                   verbatimTextOutput('x4'),
 
                  ),
                  tabPanel("Weekly Calendar",

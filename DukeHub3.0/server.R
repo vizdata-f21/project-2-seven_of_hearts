@@ -10,6 +10,7 @@
 library(shiny)
 library(readr)
 library(tidyverse)
+library(DT)
 
 course_data <- read_csv(here::here("data/course_catalog.csv"))
 
@@ -497,6 +498,8 @@ shinyServer(function(session, input, output) {
         )
     })
 
+
+
     shinyServer(function(session, input, output) {
     observe({
         print(input$dataset)
@@ -517,9 +520,38 @@ shinyServer(function(session, input, output) {
         str(Dataframe2())
     })
 
+
+    output$x4 = renderPrint({
+        s = input$view_rows_selected
+        if (length(s)) {
+            cat('These rows were selected:\n\n')
+            cat(s, sep = ', ')
+        }
+    })
+
     # Show the first "n" observations ----
-    output$view <- DT::renderDataTable({
-        datasetInput
+    output$view <- renderDT(
+            datatable(datasetInput(),
+                  extensions = 'Buttons',
+                  options = list(
+                      dom = 'Bfrtip',
+                      buttons = list(
+                          "copy",
+                          list(
+                              extend = "collection",
+                              text = 'test',
+                              action = DT::JS("function ( e, dt, node, config ) {
+                                      Shiny.setInputValue('test', true, {priority: 'event'});
+                                   }")
+                          )
+                      )
+                  )
+        ))
+
+    observeEvent(input$test, {
+        if(input$test){
+            print("hello")
+        }
     })
 
 })
