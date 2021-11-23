@@ -110,6 +110,7 @@ course_data <- course_data %>%
 a <- c("Subject", "catalog_number", "Descr", "Section",
           "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
           "location")
+
 # Define server logic required to draw a histogram
 shinyServer(function(session, input, output) {
     datasetInput <- reactive({
@@ -496,12 +497,10 @@ shinyServer(function(session, input, output) {
         )
     })
 
-    shinyServer(function(session, input, output){
-        observe({
-            print(input$dataset)
-            x<- course_data %>% filter(Subject == input$Subjects) %>% select(catalog_number)
-            updateSelectizeInput(session, "Code", "Select the Course Code", choices = unique(x))
-        })
+    observe({
+        print(input$dataset)
+        x<- course_data %>% filter(Subject == input$Subjects) %>% select(catalog_number)
+        updateSelectizeInput(session, "Code", "Select the Course Code", choices = unique(x))
     })
 
     Dataframe2 <- reactive({
