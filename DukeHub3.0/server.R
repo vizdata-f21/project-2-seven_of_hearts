@@ -81,6 +81,31 @@ course_data <- course_data %>%
         grepl('Wilson Center', location) ~ 'Wilson Center',
         TRUE ~ location))
 
+course_data <- course_data %>%
+    mutate(Area = case_when(
+        Subject %in% c("VMS", "LIT", "CINE", "ARTHIST", "MEDREN" ,
+                       "ARTSVIS", "DANCE", "CLST", "THEATRST",
+                       "ENGLISH", "DOCST", "LINGUIST", "MUSIC",
+                       "PHIL", "RELIGION", "SES", "ROMST") ~ "Arts & Humanities",
+        Subject %in% c("AEROSCI", "EVANTH", "BIOCHEM", "NEUROSCI", "CHEM",
+                       "COMPSCI", "PSY", "PHYSICS", "ENVIRON", "SUSTAIN",
+                       "EOS", "ECS", "MATH", "STA", "PHARM", "ISS", "MARSCI",
+                       "CMAC", "LATAMER", "MGM", "DECSCI") ~ "Natural Sciences",
+        Subject %in% c("CULANTH", "AMES", "AAAS", "HISTORY", "POLSCI",
+                       "ICS", "ECON", "GSF", "EDUC", "SOCIOL", "PUBPOL",
+                       "PJMS", "RIGHTS", "HUMANDEV", "JEWISHST", "SCISOC",
+                       "MMS", "MILITSCI", "NAVALSCI", "ETHICS", "LSGS",
+                       "GLHLTH", "SXL", "I&E", "CHILDPOL", "CESC", "ENERGY",
+                       "EHD", "HLTHPOL") ~ "Social Sciences",
+        Subject %in% c("BME", "CEE", "EGR", "ECE", "ME", "ENRGYEGR") ~ "Engineering",
+        Subject %in% c("ARABIC", "CHINESE", "FRENCH", "GERMAN", "GREEK",
+                       "HEBREW", "HINDI", "ITALIAN", "JPN", "KOREAN", "LATIN",
+                       "RUSSIAN", "PORTUGUE", "SPANISH", "PERSIAN", "TURKISH",
+                       "CREOLE", "POLISH", "KICHE", "SWAHILI") ~ "Language",
+        Subject %in% c("PHYSEDU") ~ "Physical Education",
+        Subject %in% c("WRITING") ~ "Writing",
+        TRUE ~ Subject
+    ))
 
 a <- c("Subject", "catalog_number", "Descr", "Section",
           "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
