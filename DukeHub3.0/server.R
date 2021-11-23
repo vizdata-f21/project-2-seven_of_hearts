@@ -12,6 +12,16 @@ library(readr)
 library(tidyverse)
 library(DT)
 
+
+df <- setNames(data.frame(matrix(ncol = 10, nrow = 0)), c("Subject",
+                                                    "catalog_number", "Descr",
+                                                    "Section", "enroll_cap", "days", "mtg_start","mtg_end","Mode", "location"))
+
+print(df)
+
+de<-data.frame("hola","ciao")
+names(de)<-c("hello","goodbye")
+
 course_data <- read_csv(here::here("data/course_catalog.csv"))
 
 course_data <- course_data %>%
@@ -512,6 +522,7 @@ shinyServer(function(session, input, output) {
     })
     })
 
+
     Dataframe2 <- reactive({
         mtcars[,input$Columns]
     })
@@ -523,6 +534,8 @@ shinyServer(function(session, input, output) {
 
     output$x4 = renderPrint({
         s = input$view_rows_selected
+        de = rbind(df, s)
+        print(de)
         if (length(s)) {
             cat('These rows were selected:\n\n')
             cat(s, sep = ', ')
@@ -541,12 +554,45 @@ shinyServer(function(session, input, output) {
                               extend = "collection",
                               text = 'test',
                               action = DT::JS("function ( e, dt, node, config ) {
-                                      Shiny.setInputValue('test', true, {priority: 'event'});
+                                    var data=oTable.rows( { selected: true }).data();
+                                      Shiny.setInputValue('test', data, {priority: 'event'});
                                    }")
                           )
                       )
                   )
         ))
+
+    observeEvent(input$view_rows_selected, {
+        df = rbind(df, as.data.frame(input$view_rows_selected))
+
+    })
+
+    selectedRow <- eventReactive(input$mytable_rows_selected,{
+        row.names(datasetInput())[c(input$mytable_rows_selected)]
+    })
+
+
+    filteredTable_selected <- reactive({
+        ids <- input$view_rows_selected
+        datasetInput()[ids,]
+    })
+
+    output$filteredTableSelected <- DT::renderDataTable({
+        datatable(
+            filteredTable_selected(),
+            selection = list(mode = "none"),
+            caption = "Table that gets data from unfiltered original data"
+        )
+    })
+
+    output$selected <- renderText({
+        selectedRow()
+    })
+
+
+    output$selected<- renderDT(
+        selectedRow())
+
 
     observeEvent(input$test, {
         if(input$test){
