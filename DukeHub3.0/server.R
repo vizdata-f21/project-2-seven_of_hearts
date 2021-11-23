@@ -81,7 +81,31 @@ course_data <- course_data %>%
         grepl('Wilson Center', location) ~ 'Wilson Center',
         TRUE ~ location))
 
-
+course_data <- course_data %>%
+    mutate(Area = case_when(
+        Subject %in% c("VMS", "LIT", "CINE", "ARTHIST", "MEDREN" ,
+                       "ARTSVIS", "DANCE", "CLST", "THEATRST",
+                       "ENGLISH", "DOCST", "LINGUIST", "MUSIC",
+                       "PHIL", "RELIGION", "SES", "ROMST") ~ "Arts & Humanities",
+        Subject %in% c("AEROSCI", "EVANTH", "BIOCHEM", "NEUROSCI", "CHEM",
+                       "COMPSCI", "PSY", "PHYSICS", "ENVIRON", "SUSTAIN",
+                       "EOS", "ECS", "MATH", "STA", "PHARM", "ISS", "MARSCI",
+                       "CMAC", "LATAMER", "MGM", "DECSCI") ~ "Natural Sciences",
+        Subject %in% c("CULANTH", "AMES", "AAAS", "HISTORY", "POLSCI",
+                       "ICS", "ECON", "GSF", "EDUC", "SOCIOL", "PUBPOL",
+                       "PJMS", "RIGHTS", "HUMANDEV", "JEWISHST", "SCISOC",
+                       "MMS", "MILITSCI", "NAVALSCI", "ETHICS", "LSGS",
+                       "GLHLTH", "SXL", "I&E", "CHILDPOL", "CESC", "ENERGY",
+                       "EHD", "HLTHPOL") ~ "Social Sciences",
+        Subject %in% c("BME", "CEE", "EGR", "ECE", "ME", "ENRGYEGR") ~ "Engineering",
+        Subject %in% c("ARABIC", "CHINESE", "FRENCH", "GERMAN", "GREEK",
+                       "HEBREW", "HINDI", "ITALIAN", "JPN", "KOREAN", "LATIN",
+                       "RUSSIAN", "PORTUGUE", "SPANISH", "PERSIAN", "TURKISH",
+                       "CREOLE", "POLISH", "KICHE", "SWAHILI") ~ "Language",
+        Subject %in% c("PHYSEDU") ~ "Physical Education",
+        Subject %in% c("WRITING") ~ "Writing",
+        TRUE ~ Subject
+    ))
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
@@ -475,13 +499,37 @@ shinyServer(function(input, output) {
                  select("Subject", "catalog_number", "Descr", "Section",
                         "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
                         "location"),
-             "Writing" = course_data%>%filter(Subject == "WRITING") %>%
+             "Writing" = course_data %>% filter(Subject == "WRITING") %>%
                  select("Subject", "catalog_number", "Descr", "Section",
                         "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
                         "location")
 
                )
     })
+
+    # make selection based on previous input
+    # switch_function <- function(course_data$catalog_number){
+    #     parse(
+    #         eval
+    #     )
+    # }
+
+
+    observeEvent(input$Subject,{
+        req(input$Subject)
+        updateSelectInput(session, "Class code",
+                          choices =  course_data$catalog_number[course_data$Subject %in% input$Subject],
+                          selected = course_data$Subject[1])
+    })
+
+    # datasetInput_code <- reactive({
+    #     switch(input$dataset,
+    #            course_data$catalog_number <- course_data %>%
+    #                filter(Subject == dataset()) %>%
+    #                select("catalog_number")
+    #     )
+    # })
+
 
     Dataframe2 <- reactive({
         mtcars[,input$Columns]
