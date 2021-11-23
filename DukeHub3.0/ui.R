@@ -151,10 +151,7 @@ ui <- fluidPage(
 
                    # Output: HTML table with requested number of observations ----
                    DT::dataTableOutput("view"),
-                  textOutput("selectedagain"),
-                   DT::dataTableOutput("selected"),
                   DT::dataTableOutput("filteredTableSelected"),
-                   verbatimTextOutput('x4'),
 
                  ),
                  tabPanel("Weekly Calendar",

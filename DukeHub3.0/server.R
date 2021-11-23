@@ -523,24 +523,8 @@ shinyServer(function(session, input, output) {
     })
 
 
-    Dataframe2 <- reactive({
-        mtcars[,input$Columns]
-    })
-
-    output$dfStr <- renderPrint({
-        str(Dataframe2())
-    })
 
 
-    output$x4 = renderPrint({
-        s = input$view_rows_selected
-        de = rbind(df, s)
-        print(de)
-        if (length(s)) {
-            cat('These rows were selected:\n\n')
-            cat(s, sep = ', ')
-        }
-    })
 
     # Show the first "n" observations ----
     output$view <- renderDT(
@@ -567,17 +551,14 @@ shinyServer(function(session, input, output) {
 
     })
 
-    selectedRow <- eventReactive(input$mytable_rows_selected,{
-        row.names(datasetInput())[c(input$mytable_rows_selected)]
-    })
 
 
     filteredTable_selected <- reactive({
         ids <- input$view_rows_selected
-        datasetInput()[ids,]
+        rbind(df, datasetInput()[ids,])
     })
 
-    output$filteredTableSelected <- DT::renderDataTable({
+   output$filteredTableSelected <- DT::renderDataTable({
         datatable(
             filteredTable_selected(),
             selection = list(mode = "none"),
@@ -585,13 +566,7 @@ shinyServer(function(session, input, output) {
         )
     })
 
-    output$selected <- renderText({
-        selectedRow()
-    })
 
-
-    output$selected<- renderDT(
-        selectedRow())
 
 
     observeEvent(input$test, {
