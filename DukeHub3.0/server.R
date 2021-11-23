@@ -483,7 +483,6 @@ shinyServer(function(input, output) {
                )
     })
 
-
     Dataframe2 <- reactive({
         mtcars[,input$Columns]
     })
