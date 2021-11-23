@@ -497,18 +497,22 @@ shinyServer(function(session, input, output) {
         )
     })
 
+    shinyServer(function(session, input, output) {
     observe({
         print(input$dataset)
         x<- course_data %>% filter(Subject == input$Subjects) %>% select(catalog_number)
         updateSelectizeInput(session, "Code", "Select the Course Code", choices = unique(x))
     })
+    })
 
     Dataframe2 <- reactive({
         mtcars[,input$Columns]
     })
+
     output$dfStr <- renderPrint({
         str(Dataframe2())
     })
+
     # Show the first "n" observations ----
     output$view <- renderTable({
         head(datasetInput(), n = input$obs)
