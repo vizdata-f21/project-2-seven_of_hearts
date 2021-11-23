@@ -1,167 +1,30 @@
 ui <- fluidPage(
 
-    # App title ----
-    titlePanel("DukeHub 3.0"),
-
-    # Sidebar layout with a input and output definitions ----
-    sidebarLayout(
-
-        # Sidebar panel for inputs ----
-        sidebarPanel(
-
-            selectInput(inputId = "housing",
-                        label = "Where do you live?",
-                        choices  = c("East Campus", "West Campus",
-                                     "9th Street (Off Campus)", "Off Campus")),
-            selectInput(inputId = "credits",
-                        label = "How Many classes are you taking this semester?",
-                        choices = c(1, 2, 3, 4, 5, 6)),
-
-            selectInput(inputId = "study_location",
-                        label = "Where do you primarily study?",
-                        choices = c("Perkins Library", "Rubenstein Library",
-                        "Law School", "Sanford", "Lilly Library", "My Room"
-                        )),
-
-            # Input: Selector for choosing dataset ----
-            selectizeInput(inputId = "dataset",
-                        label = "Choose a Subject Area:",
-                        choices = c("African American Studies",
-                                    "Aerospace Studies",
-                                    "Asian & Middle Eastern Studies",
-                                    "Arabic",
-                                    "Art History",
-                                    "Arts and Sciences IDEAS THEME",
-                                    "Visual Arts",
-                                    "Biochemistry",
-                                    "Biology",
-                                    "Biomedical Engineering",
-                                    "Brain and Society",
-                                    "Civil and Environmental Engineering",
-                                    "Civic Engagement and Social Change",
-                                    "Chemistry",
-                                    "Child Policy",
-                                    "Chinese",
-                                    "Cinema",
-                                    "Classical Studies",
-                                    "Computational Media, Arts, and Culture",
-                                    "Computer Science",
-                                    "Creole",
-                                    "Cultural Anthropology",
-                                    "Dance",
-                                    "Decision Sciences Program",
-                                    "Documentary Studies",
-                                    "Electrical and Computer Engineering",
-                                    "Economics",
-                                    "Earth and Climate Science",
-                                    "Education",
-                                    "Engineering",
-                                    "Education and Human Development",
-                                    "Energy",
-                                    "English",
-                                    "Energy Engineering",
-                                    "Environment",
-                                    "Earth and Ocean Sciences",
-                                    "Ethics",
-                                    "Evolutionary Anthropology",
-                                    "French",
-                                    "German",
-                                    "Global Health",
-                                    "Greek",
-                                    "Gender Sexuality & Feminist Studies",
-                                    "Hebrew",
-                                    "Hindi",
-                                    "History",
-                                    "Health Policy",
-                                    "Human Development",
-                                    "Innovation & Entrepeneurship",
-                                    "International Comparative Studies",
-                                    "Information Science + Studies",
-                                    "Italian",
-                                    "Jewish Studies",
-                                    "Japanese",
-                                    "K'iche' Maya",
-                                    "Korean",
-                                    "Latin American Studies",
-                                    "Latin",
-                                    "Linguistics",
-                                    "Literature",
-                                    "Latino Studies & Global South",
-                                    "Marine Science Conservation",
-                                    "Math",
-                                    "Mechanical Engineering",
-                                    "Medieval and Renaissance",
-                                    "Molec Genetics & Microbiology",
-                                    "Military Science",
-                                    "Markets & Management",
-                                    "Music",
-                                    "Naval Science",
-                                    "Neuroscience",
-                                    "Persian",
-                                    "Pharm & Cancer Biology",
-                                    "Philosophy",
-                                    "Physical Education",
-                                    "Physics",
-                                    "Policy Journalism & Media Studies",
-                                    "Polish",
-                                    "Political Science",
-                                    "Portuguese",
-                                    "Psychology",
-                                    "Public Policy",
-                                    "Religion",
-                                    "Human Rights",
-                                    "Romance Studies",
-                                    "Russian",
-                                    "Science & Society",
-                                    "Slavic and Eurasian Studies",
-                                    "Sociology",
-                                    "Spanish",
-                                    "Statistics",
-                                    "Sustainability",
-                                    "Swahili",
-                                    "Study of Sexualities",
-                                    "Theatre Studies",
-                                    "Turkish",
-                                    "Visual Media Studies",
-                                    "Writing"
-                                    ),
-                        multiple = FALSE),
-            selectizeInput(inputId = "dataset",
-                           label = "Choose a Course Code: ",
-                           choices = course_data$catalog_number),
-            # Input: Numeric entry for number of obs to view ----
-            numericInput(inputId = "obs",
-                         label = "Number of observations to view:",
-                         value = 10)
-            # Show only certain columns from dataframe
-          #  $selectInput("Columns","Columns",
-                       # names(mtcars), multiple = TRUE)
-        ),
-
-        # Main panel for displaying outputs ----
-        mainPanel(
-            navbarPage("",
-            tabPanel(
-                "Schedule Builder",
-
-            # Output: Verbatim text for data summary ----
-            #verbatimTextOutput("summary"),
-            #verbatimTextOutput("dfStr"),
-
-            # Output: HTML table with requested number of observations ----
-            tableOutput("view")
-            ),
-            tabPanel("Weekly Calendar",
-            mainPanel("Weekly calendar similar to DukeHub
+  # App title ----
+  titlePanel("DukeHub 3.0"),
+  headerPanel(title = "Choose a course"),
+  sidebarLayout(
+    sidebarPanel(
+      selectizeInput("Subjects", "Pick Department", choices = course_data$Subject),
+      selectizeInput("Code", "Pick Code", choices = NULL)
+    ),
+    mainPanel(
+        navbarPage("",
+                   tabPanel("Schedule Builder",
+                            tableOutput("view")),
+                   tabPanel("Weekly Calendar",
+                            mainPanel("Weekly calendar similar to DukeHub
                             (customizable colors for each class")),
-            tabPanel("Class Info",
-            mainPanel("Visualzation on the number of people in courses,
+                   tabPanel("Class Info",
+                            mainPanel("Visualzation on the number of people in courses,
                             types of courses")),
-            tabPanel("Distance",
-                 mainPanel("Visualization based on commuter distance")),
-            tabPanel("Reccomendations",
-            mainPanel("Recommendations on days to study and where
+                   tabPanel("Distance",
+                            mainPanel("Visualization based on commuter distance")),
+                   tabPanel("Reccomendations",
+                            mainPanel("Recommendations on days to study and where
                             they should study and best days to go hang
-                            with friends")))
-    ))
+                            with friends"))
+    )
+  )
+)
 )
