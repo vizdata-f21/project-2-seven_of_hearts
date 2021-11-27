@@ -12,6 +12,7 @@ library(readr)
 library(tidyverse)
 library(DT)
 library(shinythemes)
+library(ggweekly)
 
 
 df <- setNames(data.frame(matrix(ncol = 10, nrow = 0)), c("Subject",
@@ -553,6 +554,12 @@ shinyServer(function(session, input, output) {
 ## Add selectd rows in the dataframe to a
 
     filteredTable_selected <- reactive({
+        observeEvent(input$delete,{
+            df <- setNames(data.frame(matrix(ncol = 10, nrow = 0)), c("Subject",
+                                                                      "catalog_number", "Descr",
+                                                                      "Section", "enroll_cap", "days", "mtg_start","mtg_end","Mode", "location"))
+
+        })
         ids <- input$view_rows_selected
         newRows <- datasetInput()[input$view_rows_selected, , drop = F]
         df <<- rbind(isolate(df), newRows) %>%
@@ -568,7 +575,7 @@ shinyServer(function(session, input, output) {
         )
     })
 
-   observeEvent(input$add, {
+   observeEvent(input$save, {
        print("did you work")
        #req(input$view_rows_selected)
       # df <<- rbind(isolate(df), datasetInput()[input$view_rows_selected, , drop = F])
@@ -580,6 +587,17 @@ shinyServer(function(session, input, output) {
                                                                  "Section", "enroll_cap", "days", "mtg_start","mtg_end","Mode", "location"))
 
    })
+
+   output$plot <- renderPlot({
+       cal_plot <- ggweek_planner(
+           start_day = "2021-01-04",
+           end_day = "2021-01-10",
+           week_start_label = "week"
+       )
+       plot(cal_plot)
+   })
+
+
 
 
 
