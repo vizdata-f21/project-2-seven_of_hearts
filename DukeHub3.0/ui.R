@@ -1,4 +1,7 @@
-ui <- fluidPage(
+library(shinythemes)
+
+ui <-  fluidPage(
+  theme = shinytheme("cerulean"),
 
   # App title ----
   titlePanel("DukeHub 3.0"),
@@ -150,8 +153,12 @@ ui <- fluidPage(
                    #verbatimTextOutput("dfStr"),
 
                    # Output: HTML table with requested number of observations ----
+                   verbatimTextOutput("Select Classes to add to Schedule"),
                    DT::dataTableOutput("view"),
+                  verbatimTextOutput("Selected Courses"),
                   DT::dataTableOutput("filteredTableSelected"),
+                  actionButton("add", label = NULL, icon("arrow-right")),
+                  actionButton("delete", label = "remove"),
 
                  ),
                  tabPanel("Weekly Calendar",

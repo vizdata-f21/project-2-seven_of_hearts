@@ -11,6 +11,7 @@ library(shiny)
 library(readr)
 library(tidyverse)
 library(DT)
+library(shinythemes)
 
 
 df <- setNames(data.frame(matrix(ncol = 10, nrow = 0)), c("Subject",
@@ -19,8 +20,6 @@ df <- setNames(data.frame(matrix(ncol = 10, nrow = 0)), c("Subject",
 
 print(df)
 
-de<-data.frame("hola","ciao")
-names(de)<-c("hello","goodbye")
 
 course_data <- read_csv(here::here("data/course_catalog.csv"))
 
@@ -92,6 +91,7 @@ course_data <- course_data %>%
         grepl('Wilson Center', location) ~ 'Wilson Center',
         TRUE ~ location))
 
+
 course_data <- course_data %>%
     mutate(Area = case_when(
         Subject %in% c("VMS", "LIT", "CINE", "ARTHIST", "MEDREN" ,
@@ -121,6 +121,7 @@ course_data <- course_data %>%
 a <- c("Subject", "catalog_number", "Descr", "Section",
           "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
           "location")
+
 
 # Define server logic required to draw a histogram
 shinyServer(function(session, input, output) {
@@ -546,16 +547,17 @@ shinyServer(function(session, input, output) {
                   )
         ))
 
-    observeEvent(input$view_rows_selected, {
-        df = rbind(df, as.data.frame(input$view_rows_selected))
-
-    })
 
 
+
+## Add selectd rows in the dataframe to a
 
     filteredTable_selected <- reactive({
         ids <- input$view_rows_selected
-        rbind(df, datasetInput()[ids,])
+        newRows <- datasetInput()[input$view_rows_selected, , drop = F]
+        df <<- rbind(isolate(df), newRows) %>%
+            distinct()
+
     })
 
    output$filteredTableSelected <- DT::renderDataTable({
@@ -566,6 +568,18 @@ shinyServer(function(session, input, output) {
         )
     })
 
+   observeEvent(input$add, {
+       print("did you work")
+       #req(input$view_rows_selected)
+      # df <<- rbind(isolate(df), datasetInput()[input$view_rows_selected, , drop = F])
+   })
+
+   observeEvent(input$delete,{
+       df <- setNames(data.frame(matrix(ncol = 10, nrow = 0)), c("Subject",
+                                                                 "catalog_number", "Descr",
+                                                                 "Section", "enroll_cap", "days", "mtg_start","mtg_end","Mode", "location"))
+
+   })
 
 
 
