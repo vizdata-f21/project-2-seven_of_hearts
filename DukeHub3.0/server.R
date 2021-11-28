@@ -439,20 +439,19 @@ shinyServer(function(session, input, output) {
 
   output$barplot <- renderPlot({
     bar_data <- filteredTable_selected() %>%
-      mutate(course_name = paste0(Subject, " ", catalog_number))
+      mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
+      arrange(desc(enroll_cap))
 
     bar_plot <- ggplot(data = bar_data,
-                       aes(x = enroll_cap, y = reorder(course_name, -enroll_cap),
+                       aes(x = enroll_cap, y = course_name,
                            fill = Area)) +
       geom_col() +
       theme_minimal() +
       labs(title = "Enrollment cap of your classes",
            x = "Enrollment",
            y = "Course name") +
-      # scale_y_discrete(name = paste0(filteredTable_selected()$Subject,
-      #                                " ",
-      #                                filteredTable_selected()$catalog_number)) +
       scale_fill_viridis_d(option = "magma")
+
 
     plot(bar_plot)
   })
