@@ -92,24 +92,24 @@ course_data <- course_data %>%
         Subject %in% c("VMS", "LIT", "CINE", "ARTHIST", "MEDREN" ,
                        "ARTSVIS", "DANCE", "CLST", "THEATRST",
                        "ENGLISH", "DOCST", "LINGUIST", "MUSIC",
-                       "PHIL", "RELIGION", "SES", "ROMST") ~ "Arts & Humanities",
+                       "PHIL", "RELIGION", "SES", "ROMST") ~ "Arts & Humanities", # 17
         Subject %in% c("AEROSCI", "EVANTH", "BIOCHEM", "NEUROSCI", "CHEM",
                        "COMPSCI", "PSY", "PHYSICS", "ENVIRON", "SUSTAIN",
                        "EOS", "ECS", "MATH", "STA", "PHARM", "ISS", "MARSCI",
-                       "CMAC", "LATAMER", "MGM", "DECSCI") ~ "Natural Sciences",
+                       "CMAC", "LATAMER", "MGM", "DECSCI") ~ "Natural Sciences", # 21
         Subject %in% c("CULANTH", "AMES", "AAAS", "HISTORY", "POLSCI",
                        "ICS", "ECON", "GSF", "EDUC", "SOCIOL", "PUBPOL",
                        "PJMS", "RIGHTS", "HUMANDEV", "JEWISHST", "SCISOC",
                        "MMS", "MILITSCI", "NAVALSCI", "ETHICS", "LSGS",
                        "GLHLTH", "SXL", "I&E", "CHILDPOL", "CESC", "ENERGY",
-                       "EHD", "HLTHPOL") ~ "Social Sciences",
-        Subject %in% c("BME", "CEE", "EGR", "ECE", "ME", "ENRGYEGR") ~ "Engineering",
+                       "EHD", "HLTHPOL") ~ "Social Sciences", # 29
+        Subject %in% c("BME", "CEE", "EGR", "ECE", "ME", "ENRGYEGR") ~ "Engineering", # 6
         Subject %in% c("ARABIC", "CHINESE", "FRENCH", "GERMAN", "GREEK",
                        "HEBREW", "HINDI", "ITALIAN", "JPN", "KOREAN", "LATIN",
                        "RUSSIAN", "PORTUGUE", "SPANISH", "PERSIAN", "TURKISH",
-                       "CREOLE", "POLISH", "KICHE", "SWAHILI") ~ "Language",
-        Subject %in% c("PHYSEDU") ~ "Physical Education",
-        Subject %in% c("WRITING") ~ "Writing",
+                       "CREOLE", "POLISH", "KICHE", "SWAHILI") ~ "Language", # 20
+        Subject %in% c("PHYSEDU") ~ "Physical Education", # 1
+        Subject %in% c("WRITING") ~ "Writing", # 1
         TRUE ~ Subject
     ))
 
@@ -117,12 +117,10 @@ a <- c("Subject", "catalog_number", "Descr", "Section",
           "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
           "location", "Area")
 
-df <- setNames(data.frame(matrix(ncol = 11, nrow = 0)), c("Subject",
-                                                          "catalog_number", "Descr",
-                                                          "Section", "enroll_cap", "days", "mtg_start","mtg_end","Mode", "location",
-                                                          "Area"))
+df <- setNames(data.frame(matrix(ncol = 11, nrow = 0)), a)
 
 print(df)
+
 
 # Define server logic required to draw a histogram
 shinyServer(function(session, input, output) {
@@ -143,370 +141,187 @@ shinyServer(function(session, input, output) {
                "Visual Arts" = course_data %>% filter(Subject == "ARTSVIS") %>%
                    select(a),
                "Biochemistry" = course_data %>% filter(Subject == "BIOCHEM") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Biology" = course_data %>% filter(Subject == "BIOLOGY") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Biomedical Engineering" = course_data %>% filter(Subject == "BME") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Brain and Society" = course_data %>% filter(Subject == "BRAINSOC") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Civil and Environmental Engineering" = course_data %>% filter(Subject == "CEE") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Civic Engagement and Social Change" = course_data %>% filter(Subject == "CESC") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Chemistry" = course_data %>% filter(Subject == "CHEM") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Child Policy" = course_data %>% filter(Subject == "CHILDPOL") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Chinese" = course_data %>% filter(Subject == "CHINESE") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Cinema" = course_data %>% filter(Subject == "CINE") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Classical Studies" = course_data %>% filter(Subject == "CLST") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Computational Media, Arts, and Culture" = course_data %>% filter(Subject == "CMAC") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Computer Science" = course_data%>%filter(Subject == 'COMPSCI') %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Creole" = course_data %>%filter(Subject == 'CREOLE') %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Cultural Anthropology" = course_data %>% filter(Subject == "CULANTH") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Dance" = course_data %>% filter(Subject == "DANCE") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Decision Sciences Program" = course_data %>% filter(Subject == "DECSCI") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Documentary Studies" = course_data %>% filter(Subject == "DOCST") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Electrical and Computer Engineering" = course_data %>% filter(Subject == "ECE") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Economics" = course_data%>%filter(Subject == "ECON") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Earth and Climate Science" = course_data%>%filter(Subject == "ECS") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Education" = course_data%>%filter(Subject == "EDU") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Engineering"  = course_data%>%filter(Subject == "EGR") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Education and Human Development"  = course_data%>%filter(Subject == "EHD") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Energy" = course_data%>%filter(Subject == "ENERGY") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "English" = course_data%>%filter(Subject == "ENGLISH") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Energy Engineering" = course_data%>%filter(Subject == "ENRGYEGR") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Environment" = course_data%>%filter(Subject == "ENVIRON") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Earth and Ocean Sciences" = course_data%>%filter(Subject == "EOS") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Ethics" = course_data%>%filter(Subject == "ETHICS") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Evolutionary Anthropology" = course_data%>%filter(Subject == "EVANTH") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "French" = course_data%>%filter(Subject == "FRENCH") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "German" = course_data%>%filter(Subject == "GERMAN") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Global Health" = course_data%>%filter(Subject == "GLHLTH") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Greek" = course_data%>%filter(Subject == "Greek") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Gender Sexuality & Feminist Studies" = course_data%>%filter(Subject == "GSF") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Hebrew" = course_data%>%filter(Subject == "HEBREW") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Hindi" = course_data%>%filter(Subject == "HINDI") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "History" = course_data%>%filter(Subject == "HISTORY") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Health Policy" = course_data%>%filter(Subject == "HLTHPOL") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Human Development" = course_data%>%filter(Subject == "HUMANDEV") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Innovation & Entrepeneurship" = course_data%>%filter(Subject == "I&E") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "International Comparative Studies" = course_data%>%filter(Subject == "ICS") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Information Science + Studies" = course_data%>%filter(Subject == "ISS") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Italian" =  course_data%>%filter(Subject == "ITALIAN") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Jewish Studies" = course_data%>%filter(Subject == "JEWISHST") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Japanese" = course_data%>%filter(Subject == "JPN") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "K'iche' Maya" = course_data%>%filter(Subject == "KICHE") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Korean"  = course_data%>%filter(Subject == "KOREAN") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Latin American Studies"  = course_data%>%filter(Subject == "LATAMER") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Latin"  = course_data%>%filter(Subject == "LATIN") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Linguistics" = course_data%>%filter(Subject == "LINGUIST") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Literature" = course_data %>% filter(Subject == "LIT") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Latino Studies & Global South" = course_data %>% filter(Subject == "LSGS") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Marine Science Conservation" = course_data %>% filter(Subject == "MARSCI") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Math" = course_data %>% filter(Subject == "MATH") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Mechanical Engineering" = course_data %>% filter(Subject == "ME") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Medieval and Renaissance" = course_data %>% filter(Subject == "MEDREN") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Molec Genetics & Microbiology" = course_data %>% filter(Subject == "MGM") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Markets & Management" = course_data %>% filter(Subject == "MMS") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Military Science" = course_data %>% filter(Subject == "MILITSCI") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Music" = course_data %>% filter(Subject == "MUSIC") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Naval Science" = course_data %>% filter(Subject == "NAVALSCI") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Neuroscience" = course_data %>% filter(Subject == "NEUROSCI") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Persian" = course_data %>% filter(Subject == "PERSIAN") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Pharm & Cancer Biology" = course_data %>% filter(Subject == "PHARM") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Philosophy" = course_data %>% filter(Subject == "PHIL") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Physical Education" = course_data %>% filter(Subject == "PHYSEDU") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Physics" = course_data %>% filter(Subject == "PHYSICS") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Policy Journalism & Media Studies" = course_data %>% filter(Subject == "PJMS") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Polish" = course_data %>% filter(Subject == "POLISH") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Political Science" = course_data %>% filter(Subject == "POLSCI") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Portuguese" = course_data %>% filter(Subject == "PORTUGUE") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Psychology" = course_data %>% filter(Subject == "PSY") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Public Policy" = course_data %>% filter(Subject == "PUBPOL") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Religion" = course_data %>% filter(Subject == "RELIGION") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Human Rights" = course_data %>% filter(Subject == "RIGHTS") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Romance Studies" = course_data %>% filter(Subject == "ROMST") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Russian" = course_data %>% filter(Subject == "RUSSIAN") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Science & Society" = course_data %>% filter(Subject == "SCISOC") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Slavic and Eurasian Studies"  = course_data %>% filter(Subject == "SES") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Sociology" = course_data %>% filter(Subject == "SOCIOL") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Spanish" =  course_data %>% filter(Subject == "SPANISH") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Statistics" = course_data%>%filter(Subject == 'STA') %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Sustainability" = course_data%>%filter(Subject == 'SUSTAIN') %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Swahili" = course_data%>%filter(Subject == 'SWAHILI') %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Study of Sexualities" = course_data%>%filter(Subject == 'SXL') %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Theatre Studies" =  course_data%>%filter(Subject == 'THEATRST') %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Turkish" = course_data%>%filter(Subject == 'TURKISH') %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Visual Media Studies" = course_data%>%filter(Subject == 'VMS') %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location"),
+                select(a),
                "Writing" = course_data%>%filter(Subject == "WRITING") %>%
-                   select("Subject", "catalog_number", "Descr", "Section",
-                          "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-                          "location")
-
+                select(a)
         )
     })
 
@@ -599,19 +414,32 @@ shinyServer(function(session, input, output) {
        plot(cal_plot)
    })
 
+  output$bardata <- DT::renderDataTable({
+    datatable(
+      filteredTable_selected() %>%
+        mutate(course_name = paste0(Subject, " ", catalog_number)),
+      caption = "You selected these courses"
+    )
+  })
+
   output$barplot <- renderPlot({
-    bar_plot <- ggplot(data = filteredTable_selected(),
-                       aes(x = enroll_cap, y = reorder(Subject, -enroll_cap),
+    bar_data <- filteredTable_selected() %>%
+      mutate(course_name = paste0(Subject, " ", catalog_number))
+
+    bar_plot <- ggplot(data = bar_data,
+                       aes(x = enroll_cap, y = reorder(course_name, -enroll_cap),
                            fill = Area)) +
-      geom_col(stat = "identity") +
+      geom_col() +
       theme_minimal() +
       labs(title = "Enrollment cap of your classes",
            x = "Enrollment",
-           y = "Course") +
-      scale_fill_viridis_d(option="magma")
+           y = "Course name") +
+      # scale_y_discrete(name = paste0(filteredTable_selected()$Subject,
+      #                                " ",
+      #                                filteredTable_selected()$catalog_number)) +
+      scale_fill_viridis_d(option = "magma")
 
     plot(bar_plot)
-    # columns don't match: some don't have "AREA"
   })
 
 
