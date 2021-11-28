@@ -26,6 +26,18 @@ ui <-  fluidPage(
                               "Law School", "Sanford", "Lilly Library", "My Room"
                   )),
 
+      # Input: Selector for choosing General Subject Area ----
+      selectizeInput(inputId = "area",
+                     label = "Choose a General Area:",
+                     choices = c("Arts & Humanities",
+                                 "Natural Sciences",
+                                 "Social Sciences",
+                                 "Engineering",
+                                 "Language",
+                                 "Physical Education",
+                                 "Writing"),
+                     multiple = FALSE),
+
       # Input: Selector for choosing dataset ----
       selectizeInput(inputId = "dataset",
                      label = "Choose a Subject Area:",
@@ -129,6 +141,8 @@ ui <-  fluidPage(
                                  "Writing"
                      ),
                      multiple = FALSE),
+
+
       # selectizeInput(inputId = "code",
       #                label = "Choose a Course Code: ",
       #                choices = course_data$catalog_number),

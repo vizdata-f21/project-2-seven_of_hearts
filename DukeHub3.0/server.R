@@ -323,11 +323,29 @@ shinyServer(function(session, input, output) {
                "Writing" = course_data%>%filter(Subject == "WRITING") %>%
                 select(a)
         )
+
     })
 
+      datasetInput <- reactive({
+        switch(input$area,
+               "Arts & Humanities" = course_data %>% filter(Area == "Arts & Humanities") %>%
+                 select(a),
+               "Natural Sciences" = course_data%>%filter(Area == "Natural Sciences") %>%
+                 select(a),
+               "Social Sciences" = course_data%>%filter(Area == "Social Sciences") %>%
+                 select(a),
+               "Engineering" = course_data%>%filter(Area == "Engineering") %>%
+                 select(a),
+               "Language" = course_data%>%filter(Area == "Language") %>%
+                 select(a),
+               "Physical Education" = course_data%>%filter(Area == "Physical Education") %>%
+                 select(a),
+               "Writing" = course_data%>%filter(Area == "Writing") %>%
+                 select(a)
+               )
+      })
 
 
-    shinyServer(function(session, input, output) {
     observe({
         print(input$dataset)
         x <- course_data %>%
@@ -337,9 +355,6 @@ shinyServer(function(session, input, output) {
         updateSelectizeInput(session, "code", "Select the Course Code",
                              choices = unique(x))
     })
-    })
-
-
 
 
 
