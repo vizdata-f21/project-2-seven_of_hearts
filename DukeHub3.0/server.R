@@ -13,6 +13,7 @@ library(tidyverse)
 library(DT)
 library(shinythemes)
 library(ggweekly)
+library(ggmap)
 
 
 course_data <- read_csv(here::here("data/course_catalog.csv"))
@@ -457,7 +458,14 @@ shinyServer(function(session, input, output) {
     plot(bar_plot)
   })
 
-
+  output$map <- renderPlot({
+    duke <- get_map(center = c(36.00209987490141, -78.93985780879883),
+                         zoom = 10,
+                         maptype = c("terrain",
+                                     "satellite", "roadmap", "hybrid"),
+                         messaging = FALSE)
+    qmap(duke)
+  })
 
     observeEvent(input$test, {
         if(input$test){

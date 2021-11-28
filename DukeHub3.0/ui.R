@@ -185,7 +185,9 @@ ui <-  fluidPage(
                           plotOutput("barplot"),
                           DT::dataTableOutput("bardata")),
                  tabPanel("Distance",
-                          mainPanel("Visualization based on commuter distance")),
+                          mainPanel("Visualization based on commuter distance"),
+                          plotOutput("map"),
+                          DT::dataTableOutput("bardata")),
                  tabPanel("Reccomendations",
                           mainPanel("Recommendations on days to study and where
                             they should study and best days to go hang
