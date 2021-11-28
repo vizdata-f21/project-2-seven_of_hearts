@@ -169,10 +169,10 @@ ui <-  fluidPage(
                    # Output: HTML table with requested number of observations ----
                    verbatimTextOutput("Select Classes to add to Schedule"),
                    DT::dataTableOutput("view"),
-                  verbatimTextOutput("Selected Courses"),
-                  DT::dataTableOutput("filteredTableSelected"),
-                  actionButton("add", label = NULL, icon("arrow-right")),
-                  actionButton("delete", label = "remove"),
+                   verbatimTextOutput("Selected Courses"),
+                   DT::dataTableOutput("filteredTableSelected"),
+                   actionButton("add", label = NULL, icon("arrow-right")),
+                   actionButton("delete", label = "remove"),
 
                  ),
                  tabPanel("Weekly Calendar",
@@ -185,9 +185,7 @@ ui <-  fluidPage(
                           plotOutput("barplot"),
                           DT::dataTableOutput("bardata")),
                  tabPanel("Distance",
-                          mainPanel("Visualization based on commuter distance"),
-                          plotOutput("map"),
-                          DT::dataTableOutput("bardata")),
+                          mainPanel("Visualization based on commuter distance")),
                  tabPanel("Reccomendations",
                           mainPanel("Recommendations on days to study and where
                             they should study and best days to go hang
