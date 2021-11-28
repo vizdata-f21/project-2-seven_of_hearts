@@ -528,25 +528,25 @@ shinyServer(function(session, input, output) {
 
 
 
-    # Show the first "n" observations ----
-    output$view <- renderDT(
-            datatable(datasetInput(),
-                  extensions = 'Buttons',
-                  options = list(
-                      dom = 'Bfrtip',
-                      buttons = list(
-                          "copy",
-                          list(
-                              extend = "collection",
-                              text = 'test',
-                              action = DT::JS("function ( e, dt, node, config ) {
-                                    var data=oTable.rows( { selected: true }).data();
-                                      Shiny.setInputValue('test', data, {priority: 'event'});
-                                   }")
-                          )
-                      )
-                  )
-        ))
+    # # Show the first "n" observations ----
+    # output$view <- renderDT(
+    #         datatable(datasetInput(),
+    #               extensions = 'Buttons',
+    #               options = list(
+    #                   dom = 'Bfrtip',
+    #                   buttons = list(
+    #                       "copy",
+    #                       list(
+    #                           extend = "collection",
+    #                           text = 'test',
+    #                           action = DT::JS("function ( e, dt, node, config ) {
+    #                                 var data=oTable.rows( { selected: true }).data();
+    #                                   Shiny.setInputValue('test', data, {priority: 'event'});
+    #                                }")
+    #                       )
+    #                   )
+    #               )
+    #     ))
 
 
 

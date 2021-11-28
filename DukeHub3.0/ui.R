@@ -129,9 +129,9 @@ ui <-  fluidPage(
                                  "Writing"
                      ),
                      multiple = FALSE),
-      selectizeInput(inputId = "code",
-                     label = "Choose a Course Code: ",
-                     choices = course_data$catalog_number),
+      # selectizeInput(inputId = "code",
+      #                label = "Choose a Course Code: ",
+      #                choices = course_data$catalog_number),
 
       # Input: Numeric entry for number of obs to view ----
       numericInput(inputId = "obs",
