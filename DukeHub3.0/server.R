@@ -429,21 +429,22 @@ shinyServer(function(session, input, output) {
        plot(cal_plot)
    })
 
+
   output$bardata <- DT::renderDataTable({
     datatable(
       filteredTable_selected() %>%
-        mutate(course_name = paste0(Subject, " ", catalog_number)),
+        mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
+        arrange(desc(enroll_cap)),
       caption = "You selected these courses"
     )
   })
 
-  output$barplot <- renderPlot({
-    bar_data <- filteredTable_selected() %>%
-      mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
-      arrange(desc(enroll_cap))
 
-    bar_plot <- ggplot(data = bar_data,
-                       aes(x = enroll_cap, y = course_name,
+  output$barplot <- renderPlot({
+    bar_plot <- ggplot(data = filteredTable_selected() %>%
+                         mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
+                         arrange(desc(enroll_cap)),
+                       aes(x = enroll_cap, y = course_name,  # ordering not interactive
                            fill = Area)) +
       geom_col() +
       theme_minimal() +
@@ -451,7 +452,7 @@ shinyServer(function(session, input, output) {
            x = "Enrollment",
            y = "Course name") +
       scale_fill_viridis_d(option = "magma")
-
+      # facet_wrap(~ Area, scales = "free")
 
     plot(bar_plot)
   })
