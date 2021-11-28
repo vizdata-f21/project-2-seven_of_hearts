@@ -15,14 +15,8 @@ library(shinythemes)
 library(ggweekly)
 
 
-df <- setNames(data.frame(matrix(ncol = 10, nrow = 0)), c("Subject",
-                                                    "catalog_number", "Descr",
-                                                    "Section", "enroll_cap", "days", "mtg_start","mtg_end","Mode", "location"))
-
-print(df)
-
-
 course_data <- read_csv(here::here("data/course_catalog.csv"))
+
 
 course_data <- course_data %>%
     rename(location = `Descr 1`,
@@ -121,8 +115,14 @@ course_data <- course_data %>%
 
 a <- c("Subject", "catalog_number", "Descr", "Section",
           "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-          "location")
+          "location", "Area")
 
+df <- setNames(data.frame(matrix(ncol = 11, nrow = 0)), c("Subject",
+                                                          "catalog_number", "Descr",
+                                                          "Section", "enroll_cap", "days", "mtg_start","mtg_end","Mode", "location",
+                                                          "Area"))
+
+print(df)
 
 # Define server logic required to draw a histogram
 shinyServer(function(session, input, output) {
@@ -555,9 +555,10 @@ shinyServer(function(session, input, output) {
 
     filteredTable_selected <- reactive({
         observeEvent(input$delete,{
-            df <- setNames(data.frame(matrix(ncol = 10, nrow = 0)), c("Subject",
+            df <- setNames(data.frame(matrix(ncol = 11, nrow = 0)), c("Subject",
                                                                       "catalog_number", "Descr",
-                                                                      "Section", "enroll_cap", "days", "mtg_start","mtg_end","Mode", "location"))
+                                                                      "Section", "enroll_cap", "days", "mtg_start","mtg_end","Mode", "location",
+                                                                      "Area"))
 
         })
         ids <- input$view_rows_selected
@@ -582,9 +583,10 @@ shinyServer(function(session, input, output) {
    })
 
    observeEvent(input$delete,{
-       df <- setNames(data.frame(matrix(ncol = 10, nrow = 0)), c("Subject",
+       df <- setNames(data.frame(matrix(ncol = 11, nrow = 0)), c("Subject",
                                                                  "catalog_number", "Descr",
-                                                                 "Section", "enroll_cap", "days", "mtg_start","mtg_end","Mode", "location"))
+                                                                 "Section", "enroll_cap", "days", "mtg_start","mtg_end","Mode", "location",
+                                                                 "Area"))
 
    })
 
@@ -597,7 +599,20 @@ shinyServer(function(session, input, output) {
        plot(cal_plot)
    })
 
+  output$barplot <- renderPlot({
+    bar_plot <- ggplot(data = filteredTable_selected(),
+                       aes(x = enroll_cap, y = reorder(Subject, -enroll_cap),
+                           fill = Area)) +
+      geom_col(stat = "identity") +
+      theme_minimal() +
+      labs(title = "Enrollment cap of your classes",
+           x = "Enrollment",
+           y = "Course") +
+      scale_fill_viridis_d(option="magma")
 
+    plot(bar_plot)
+    # columns don't match: some don't have "AREA"
+  })
 
 
 
