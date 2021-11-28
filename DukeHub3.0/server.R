@@ -134,7 +134,7 @@ shinyServer(function(session, input, output) {
                    select(a),
                "Asian & Middle Eastern Studies" = course_data %>% filter(Subject == "AMES") %>%
                    select(a),
-               "Arabic" = course_data %>% filter(Subject == "AAAS") %>%
+               "Arabic" = course_data %>% filter(Subject == "ARABIC") %>%
                    select(a),
                "Art History" = course_data %>% filter(Subject == "ARTHIST") %>%
                    select(a),
@@ -529,24 +529,24 @@ shinyServer(function(session, input, output) {
 
 
     # # Show the first "n" observations ----
-    # output$view <- renderDT(
-    #         datatable(datasetInput(),
-    #               extensions = 'Buttons',
-    #               options = list(
-    #                   dom = 'Bfrtip',
-    #                   buttons = list(
-    #                       "copy",
-    #                       list(
-    #                           extend = "collection",
-    #                           text = 'test',
-    #                           action = DT::JS("function ( e, dt, node, config ) {
-    #                                 var data=oTable.rows( { selected: true }).data();
-    #                                   Shiny.setInputValue('test', data, {priority: 'event'});
-    #                                }")
-    #                       )
-    #                   )
-    #               )
-    #     ))
+    output$view <- renderDT(
+            datatable(datasetInput(),
+                  extensions = 'Buttons',
+                  options = list(
+                      dom = 'Bfrtip',
+                      buttons = list(
+                          "copy",
+                          list(
+                              extend = "collection",
+                              text = 'test',
+                              action = DT::JS("function ( e, dt, node, config ) {
+                                    var data=oTable.rows( { selected: true }).data();
+                                      Shiny.setInputValue('test', data, {priority: 'event'});
+                                   }")
+                          )
+                      )
+                  )
+        ))
 
 
 
