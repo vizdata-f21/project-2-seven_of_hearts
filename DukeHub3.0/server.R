@@ -329,57 +329,45 @@ shinyServer(function(session, input, output) {
 
   })
 
-  datasetInput <- reactive({
-    switch(input$area,
-           "Arts & Humanities" = course_data %>%
-             rownames_to_column('rowNames') %>%
-             filter(Area == "Arts & Humanities") %>%
-             select(all_of(a), rowNames),
-             #column_to_rownames('rowNames'),
-           "Natural Sciences" = course_data%>%
-             rownames_to_column('rowNames') %>%
-             filter(Area == "Natural Sciences") %>%
-             select(all_of(a), rowNames) %>%
-             column_to_rownames('rowNames')
-
-           "Social Sciences" = course_data%>%
-             rownames_to_column('rowNames') %>%
-             filter(Area == "Social Sciences") %>%
-             select(all_of(a), rowNames) %>%
-             column_to_rownames('rowNames'),
-           "Engineering" = course_data%>%
-             rownames_to_column('rowNames') %>%
-             filter(Area == "Engineering") %>%
-             select(all_of(a), rowNames)%>%
-             column_to_rownames('rowNames'),
-           "Language" = course_data%>%
-             rownames_to_column('rowNames') %>%
-             filter(Area == "Language") %>%
-             select(all_of(a), rowNames) %>%
-             column_to_rownames('rowNames'),
-           "Physical Education" = course_data%>%
-             rownames_to_column('rowNames') %>%
-             filter(Area == "Physical Education") %>%
-             select( all_of(a), rowNames)  %>%
-             column_to_rownames('rowNames'),
-           "Writing" = course_data%>%
-             rownames_to_column('rowNames') %>%
-             filter(Area == "Writing") %>%
-             select(all_of(a), rowNames) %>%
-             column_to_rownames('rowNames')
-    )
-  })
 
 
-  observe({
-    print(input$dataset)
-    x <- course_data %>%
-      filter(Subject == input$dataset) %>%
+#    switch(input$area,
+    #        "Arts & Humanities" = course_data %>%
+    #          filter(Area == "Arts & Humanities") %>%
+    #          select(all_of(a)),
+    #        "Natural Sciences" = course_data%>%
+    #          filter(Area == "Natural Sciences") %>%
+    #          select(all_of(a)),
+    #        "Social Sciences" = course_data%>%
+    #          filter(Area == "Social Sciences") %>%
+    #          select(all_of(a)),
+    #        "Engineering" = course_data%>%
+    #          filter(Area == "Engineering") %>%
+    #          select(all_of(a)),
+    #        "Language" = course_data%>%
+    #          filter(Area == "Language") %>%
+    #          select(all_of(a)),
+    #        "Physical Education" = course_data%>%
+    #          filter(Area == "Physical Education") %>%
+    #          select(all_of(a)),
+    #        "Writing" = course_data %>%
+    #          filter(Area == "Writing") %>%
+    #          select(all_of(a))
+    # )
+
+
+
+
+#  observe({
+#    print(input$dataset)
+#    x <- course_data %>%
+#      filter(Subject == input$dataset) %>%
       # select(catalog_number) # dataframe
-      pull(catalog_number) # vector
-    updateSelectizeInput(session, "code", "Select the Course Code",
-                         choices = unique(x))
-  })
+#      pull(catalog_number) # vector
+#    updateSelectizeInput(session, "code", "Select the Course Code",
+#                         choices = unique(x))
+#  })
+
 
 
 
@@ -409,17 +397,30 @@ shinyServer(function(session, input, output) {
   ## Add selectd rows in the dataframe to a
 
   filteredTable_selected <- reactive({
-    #input$view_rows_selected <- c()
-    ids <- input$view_rows_selected
-    newRows <- datasetInput()[input$view_rows_selected, , drop = F]
-    df <<- rbind(isolate(df), newRows) %>%
-      distinct()
+  #  input$view_rows_selected <- c()
+
+    #input$view_rows_selected
+   #ids <- input$view_rows_selected
+
+    ## from selected rows in filtered
+    ## grab that new ID in rowName col
+    ## get that row from original course_Data
+
+
+   observeEvent(input$add, {
+     newRows <- datasetInput()[input$view_rows_selected, , drop = F]
+     df <<- rbind(isolate(df), newRows) %>%
+       distinct()
+   })
 
   })
 
+#  observeEvent()
+
+  ##BookBag
   output$filteredTableSelected <- DT::renderDataTable({
     datatable(
-      filteredTable_selected(),
+       df,
       selection = list(mode = "none"),
       caption = "Table that gets data from unfiltered original data"
     )
@@ -442,7 +443,6 @@ shinyServer(function(session, input, output) {
   })
 
 
-observeEvent()
 
   output$bardata <- DT::renderDataTable({
     datatable(
@@ -489,6 +489,39 @@ observeEvent()
     plot(pie)
 
   })
+
+
+  observeEvent(input$add, {
+    newRows <- datasetInput()[input$view_rows_selected, , drop = F]
+    df <<- rbind(isolate(df), newRows) %>%
+      distinct()
+    print(df)
+    output$filteredTableSelected <- DT::renderDataTable({
+      datatable(
+        df,
+        selection = list(mode = "none"),
+        caption = "Table that gets data from unfiltered original data"
+      )
+    })
+    print("Please add to bookbag")
+  })
+
+  observeEvent(input$clear, {
+    df <<- df[0,]
+    print(df)
+    output$filteredTableSelected <- DT::renderDataTable({
+      datatable(
+        df,
+        selection = list(mode = "none"),
+        caption = "Table that gets data from unfiltered original data"
+      )
+    })
+    print("Are you empty")
+  })
+
+ ## 1. add button to add course
+  ## 2. on button click (button = true), then only do the binding of rows
+        ##same code to add to book bag
 
 
 

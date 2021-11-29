@@ -169,11 +169,11 @@ ui <-  fluidPage(
                    # Output: HTML table with requested number of observations ----
                    verbatimTextOutput("Select Classes to add to Schedule"),
                    DT::dataTableOutput("view"),
+                   actionButton("add", label = "Add Course"),
                    verbatimTextOutput("Selected Courses"),
                    DT::dataTableOutput("filteredTableSelected"),
-                   actionButton("add", label = NULL, icon("arrow-right")),
-                   actionButton("delete", label = "remove")
-
+                   actionButton("clear", label = "Clear BookBag"),
+                   actionButton("validate", label = "Validate Schedule")
                  ),
                  tabPanel("Weekly Calendar",
                           mainPanel("Weekly calendar similar to DukeHub
