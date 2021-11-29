@@ -183,9 +183,11 @@ ui <-  fluidPage(
                           mainPanel("Visualzation on the number of people in courses,
                             types of courses"),
                           plotOutput("barplot"),
+                          plotOutput("piechart"),
                           DT::dataTableOutput("bardata")),
                  tabPanel("Distance",
-                          mainPanel("Visualization based on commuter distance")),
+                          mainPanel("Visualization based on commuter distance"),
+                          plotOutput("location")),
                  tabPanel("Reccomendations",
                           mainPanel("Recommendations on days to study and where
                             they should study and best days to go hang

@@ -113,11 +113,14 @@ course_data <- course_data %>%
     TRUE ~ Subject
   ))
 
+
+
 a <- c("Subject", "catalog_number", "Descr", "Section",
        "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
        "location", "Area")
 
 df <- setNames(data.frame(matrix(ncol = 11, nrow = 0)), a)
+
 
 print(df)
 
@@ -440,6 +443,8 @@ shinyServer(function(session, input, output) {
   })
 
 
+
+
   output$barplot <- renderPlot({
     bar_plot <- ggplot(data = filteredTable_selected() %>%
                          mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
@@ -456,6 +461,25 @@ shinyServer(function(session, input, output) {
 
     plot(bar_plot)
   })
+
+  output$piechart <- renderPlot({
+
+    pie <- ggplot(data = filteredTable_selected() %>%
+                    group_by(Area) %>%
+                    count(Area),
+                       aes(x = "",
+                           y = n,
+                           fill = Area)) +
+      geom_bar(stat="identity", width=1) +
+      coord_polar("y", start=0)
+      theme_minimal() +
+      labs(title = "Subject Area")
+
+    plot(pie)
+
+  })
+
+
 
 
 
