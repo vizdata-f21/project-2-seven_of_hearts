@@ -416,10 +416,7 @@ shinyServer(function(session, input, output) {
   })
 
   observeEvent(input$delete,{
-    df <- setNames(data.frame(matrix(ncol = 11, nrow = 0)), c("Subject",
-                                                              "catalog_number", "Descr",
-                                                              "Section", "enroll_cap", "days", "mtg_start","mtg_end","Mode", "location",
-                                                              "Area"))
+    actionButton("delete", label = "remove"),
 
   })
 
@@ -480,13 +477,5 @@ shinyServer(function(session, input, output) {
   })
 
 
-
-
-
-  observeEvent(input$test, {
-    if(input$test){
-      print("hello")
-    }
-  })
 
 })
