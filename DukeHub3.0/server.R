@@ -331,20 +331,42 @@ shinyServer(function(session, input, output) {
 
   datasetInput <- reactive({
     switch(input$area,
-           "Arts & Humanities" = course_data %>% filter(Area == "Arts & Humanities") %>%
-             select(a),
-           "Natural Sciences" = course_data%>%filter(Area == "Natural Sciences") %>%
-             select(a),
-           "Social Sciences" = course_data%>%filter(Area == "Social Sciences") %>%
-             select(a),
-           "Engineering" = course_data%>%filter(Area == "Engineering") %>%
-             select(a),
-           "Language" = course_data%>%filter(Area == "Language") %>%
-             select(a),
-           "Physical Education" = course_data%>%filter(Area == "Physical Education") %>%
-             select(a),
-           "Writing" = course_data%>%filter(Area == "Writing") %>%
-             select(a)
+           "Arts & Humanities" = course_data %>%
+             rownames_to_column('rowNames') %>%
+             filter(Area == "Arts & Humanities") %>%
+             select(all_of(a), rowNames),
+             #column_to_rownames('rowNames'),
+           "Natural Sciences" = course_data%>%
+             rownames_to_column('rowNames') %>%
+             filter(Area == "Natural Sciences") %>%
+             select(all_of(a), rowNames) %>%
+             column_to_rownames('rowNames')
+
+           "Social Sciences" = course_data%>%
+             rownames_to_column('rowNames') %>%
+             filter(Area == "Social Sciences") %>%
+             select(all_of(a), rowNames) %>%
+             column_to_rownames('rowNames'),
+           "Engineering" = course_data%>%
+             rownames_to_column('rowNames') %>%
+             filter(Area == "Engineering") %>%
+             select(all_of(a), rowNames)%>%
+             column_to_rownames('rowNames'),
+           "Language" = course_data%>%
+             rownames_to_column('rowNames') %>%
+             filter(Area == "Language") %>%
+             select(all_of(a), rowNames) %>%
+             column_to_rownames('rowNames'),
+           "Physical Education" = course_data%>%
+             rownames_to_column('rowNames') %>%
+             filter(Area == "Physical Education") %>%
+             select( all_of(a), rowNames)  %>%
+             column_to_rownames('rowNames'),
+           "Writing" = course_data%>%
+             rownames_to_column('rowNames') %>%
+             filter(Area == "Writing") %>%
+             select(all_of(a), rowNames) %>%
+             column_to_rownames('rowNames')
     )
   })
 
@@ -387,13 +409,7 @@ shinyServer(function(session, input, output) {
   ## Add selectd rows in the dataframe to a
 
   filteredTable_selected <- reactive({
-    observeEvent(input$delete,{
-      df <- setNames(data.frame(matrix(ncol = 11, nrow = 0)), c("Subject",
-                                                                "catalog_number", "Descr",
-                                                                "Section", "enroll_cap", "days", "mtg_start","mtg_end","Mode", "location",
-                                                                "Area"))
-
-    })
+    #input$view_rows_selected <- c()
     ids <- input$view_rows_selected
     newRows <- datasetInput()[input$view_rows_selected, , drop = F]
     df <<- rbind(isolate(df), newRows) %>%
@@ -415,10 +431,6 @@ shinyServer(function(session, input, output) {
     # df <<- rbind(isolate(df), datasetInput()[input$view_rows_selected, , drop = F])
   })
 
-  observeEvent(input$delete,{
-    actionButton("delete", label = "remove"),
-
-  })
 
   output$plot <- renderPlot({
     cal_plot <- ggweek_planner(
@@ -429,6 +441,8 @@ shinyServer(function(session, input, output) {
     plot(cal_plot)
   })
 
+
+observeEvent()
 
   output$bardata <- DT::renderDataTable({
     datatable(

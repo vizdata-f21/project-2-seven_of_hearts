@@ -172,7 +172,7 @@ ui <-  fluidPage(
                    verbatimTextOutput("Selected Courses"),
                    DT::dataTableOutput("filteredTableSelected"),
                    actionButton("add", label = NULL, icon("arrow-right")),
-                   actionButton("delete", label = "remove"),
+                   actionButton("delete", label = "remove")
 
                  ),
                  tabPanel("Weekly Calendar",
@@ -188,7 +188,7 @@ ui <-  fluidPage(
                  tabPanel("Distance",
                           mainPanel("Visualization based on commuter distance"),
                           plotOutput("location")),
-                 tabPanel("Reccomendations",
+                 tabPanel("Course Catalog Info",
                           mainPanel("Recommendations on days to study and where
                             they should study and best days to go hang
                             with friends")))
