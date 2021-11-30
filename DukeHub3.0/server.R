@@ -483,6 +483,8 @@ shinyServer(function(session, input, output) {
 
   observeEvent(input$validate,{
 
+
+
     times <- df %>%
       mutate(intervals = interval(mtg_start, mtg_end)) %>%
       group_by(days) %>%
@@ -535,7 +537,27 @@ shinyServer(function(session, input, output) {
         imageUrl = "",
         animation = TRUE
       )}
-    if(nrow(df) >= 1 && !(TRUE %in% times$overlap2)){
+
+    if(nrow(df) > 6){
+
+      shinyalert(
+        title = "Invalid Schedule",
+        text = "Only 6 courses allowed per semester",
+        size = "s",
+        closeOnEsc = TRUE,
+        closeOnClickOutside = FALSE,
+        html = FALSE,
+        type = "error",
+        showConfirmButton = TRUE,
+        showCancelButton = FALSE,
+        confirmButtonText = "OK",
+        confirmButtonCol = "red",
+        timer = 0,
+        imageUrl = "",
+        animation = TRUE
+      )}
+
+    if((1 <= nrow(df) && nrow(df) <= 6) && !(TRUE %in% times$overlap2)){
       shinyalert(
         title = "Sucess",
         text = "Valid Course Schedule",
