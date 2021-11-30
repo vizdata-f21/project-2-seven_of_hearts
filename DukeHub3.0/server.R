@@ -385,11 +385,11 @@ shinyServer(function(session, input, output) {
   ## Add selectd rows in the dataframe to a
 
   filteredTable_selected <- reactive({
-   observeEvent(input$add, {
-     newRows <- datasetInput()[input$view_rows_selected, , drop = F]
-     df <<- rbind(isolate(df), newRows) %>%
-       distinct()
-   })
+    observeEvent(input$add, {
+      newRows <- datasetInput()[input$view_rows_selected, , drop = F]
+      df <<- rbind(isolate(df), newRows) %>%
+        distinct()
+    })
   })
 
 #  observeEvent()
@@ -454,7 +454,7 @@ shinyServer(function(session, input, output) {
                       fill = Area)) +
       geom_bar(stat = "identity", width = 1) +
       theme_minimal() +
-      theme(axis.title = element_blank(),
+      theme(axis.title.x = element_blank(),
             axis.text = element_blank(),
             panel.grid.major = element_blank(),
             panel.grid.minor = element_blank()) +
@@ -470,11 +470,12 @@ shinyServer(function(session, input, output) {
   output$barplot <- renderPlot({
     bar_plot <- ggplot(data = df %>%
                          mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
-                         arrange(desc(enroll_cap)),
-                       aes(x = enroll_cap, y = course_name,  # ordering not interactive
+                         arrange(enroll_cap),
+                       aes(x = enroll_cap, y = reorder(course_name, -enroll_cap),  # ordering not interactive
                            fill = Area)) +
       geom_col() +
       theme_minimal() +
+      theme(panel.grid.minor = element_blank()) +
       labs(title = "Enrollment cap of your classes",
            x = "Enrollment",
            y = "Course name") +
