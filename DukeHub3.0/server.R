@@ -412,7 +412,7 @@ shinyServer(function(session, input, output) {
 
 
   output$weeklyplot <- renderPlot({
-   week <- ggplot(data = filteredTableSelected() %>%
+   week <- ggplot(data = df %>%
                     mutate_at("days", str_replace, "M-F", "MTWTHF") %>%
                     mutate_at("days", str_replace, "M-TH", "MTWTH") %>%
                     mutate_at("days", str_replace, "TH", "D") %>%
@@ -438,7 +438,7 @@ shinyServer(function(session, input, output) {
 
   output$bardata <- DT::renderDataTable({
     datatable(
-      filteredTable_selected() %>%
+      df %>%
         mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
         arrange(desc(enroll_cap)),
       caption = "You selected these courses"
@@ -449,7 +449,7 @@ shinyServer(function(session, input, output) {
 
 
   output$barplot <- renderPlot({
-    bar_plot <- ggplot(data = filteredTable_selected() %>%
+    bar_plot <- ggplot(data = df %>%
                          mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
                          arrange(desc(enroll_cap)),
                        aes(x = enroll_cap, y = course_name,  # ordering not interactive
@@ -463,23 +463,6 @@ shinyServer(function(session, input, output) {
     # facet_wrap(~ Area, scales = "free")
 
     plot(bar_plot)
-  })
-
-  output$piechart <- renderPlot({
-
-    pie <- ggplot(data = filteredTable_selected() %>%
-                    group_by(Area) %>%
-                    count(Area),
-                       aes(x = "",
-                           y = n,
-                           fill = Area)) +
-      geom_bar(stat="identity", width=1) +
-      coord_polar("y", start=0)
-      theme_minimal() +
-      labs(title = "Subject Area")
-
-    plot(pie)
-
   })
 
 

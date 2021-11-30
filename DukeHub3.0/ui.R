@@ -185,7 +185,6 @@ ui <-  fluidPage(
                           mainPanel("Visualzation on the number of people in courses,
                             types of courses"),
                           plotOutput("barplot"),
-                          plotOutput("piechart"),
                           DT::dataTableOutput("bardata")),
                  tabPanel("Distance",
                           mainPanel("Visualization based on commuter distance"),
