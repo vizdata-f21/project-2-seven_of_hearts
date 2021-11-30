@@ -12,7 +12,6 @@ library(readr)
 library(tidyverse)
 library(DT)
 library(shinythemes)
-library(ggweekly)
 library(shinyalert)
 library(lubridate)
 library(data.table)
@@ -423,12 +422,10 @@ shinyServer(function(session, input, output) {
                     mutate_at("days",str_replace, "W", "3") %>%
                     mutate_at("days",str_replace, "D", "4") %>%
                     mutate_at("days",str_replace, "F", "5") %>%
-                    rename(time_strt = 'Mtg Start',
-                           time_end = 'Mtg End') %>%
                     select(c(days, Subject, Catalog, time_strt, time_end)) %>%
-                    mutate(time_strt = round(hour(time_strt)+minute(time_strt) / 60 + second(time_strt) / 360,2),
-                           time_end  = round(hour(time_end) + minute(time_end) / 60 + second(time_end) / 360,2),
-                           days = as.numeric(days)))+
+                    mutate(mtg_start = round(hour(mtg_start)+minute(mtg_start) / 60 + second(mtg_start) / 360,2),
+                           mtg_end  = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2),
+                           days = as.numeric(days))) +
       geom_rect(xmin = 0.75*days, xmax = 1.25*days,
                 ymin = time_strt, ymax = time_end)
    plot(week)
