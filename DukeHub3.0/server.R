@@ -409,25 +409,18 @@ shinyServer(function(session, input, output) {
   })
 
 
-  output$weeklyplot <- renderPlot({
-   week <- ggplot(data = df %>%
-                    mutate_at("days", str_replace, "M-F", "MTWTHF") %>%
-                    mutate_at("days", str_replace, "M-TH", "MTWTH") %>%
-                    mutate_at("days", str_replace, "TH", "D") %>%
-                    separate_rows(days, sep = "") %>%
-                    filter(days != "") %>%
-                    mutate_at("days",str_replace, "M", "1") %>%
-                    mutate_at("days",str_replace, "T", "2") %>%
-                    mutate_at("days",str_replace, "W", "3") %>%
-                    mutate_at("days",str_replace, "D", "4") %>%
-                    mutate_at("days",str_replace, "F", "5") %>%
-                    select(c(days, Subject, Catalog, time_strt, time_end)) %>%
-                    mutate(mtg_start = round(hour(mtg_start)+minute(mtg_start) / 60 + second(mtg_start) / 360,2),
-                           mtg_end  = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2),
-                           days = as.numeric(days))) +
-      geom_rect(xmin = 0.75*days, xmax = 1.25*days,
-                ymin = time_strt, ymax = time_end)
-   plot(week)
+  output$week <- renderPlot({
+    xy<- tribble(
+      ~x, ~y,
+      0,0,
+      1,1,
+      2,2
+    )
+    wp <- ggplot(data = xy, aes(x = x, y = y))+
+      geom_point()
+
+    plot(wp)
+
   })
 
 
@@ -440,6 +433,8 @@ shinyServer(function(session, input, output) {
       caption = "You selected these courses"
     )
   })
+
+
 
   output$piechart <- renderPlot({
 
