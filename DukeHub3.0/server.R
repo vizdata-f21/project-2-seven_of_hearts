@@ -390,7 +390,6 @@ shinyServer(function(session, input, output) {
      df <<- rbind(isolate(df), newRows) %>%
        distinct()
    })
-
   })
 
 #  observeEvent()
