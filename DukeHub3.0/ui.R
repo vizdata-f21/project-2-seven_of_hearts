@@ -1,4 +1,5 @@
 library(shinythemes)
+library(shinyalert)
 
 ui <-  fluidPage(
   theme = shinytheme("cerulean"),
@@ -169,10 +170,11 @@ ui <-  fluidPage(
                    # Output: HTML table with requested number of observations ----
                    verbatimTextOutput("Select Classes to add to Schedule"),
                    DT::dataTableOutput("view"),
-                   actionButton("add", label = "Add Course"),
+                   actionButton("add", label = "Add Course To BookBag"),
                    verbatimTextOutput("Selected Courses"),
                    DT::dataTableOutput("filteredTableSelected"),
                    actionButton("clear", label = "Clear BookBag"),
+                   useShinyalert(),
                    actionButton("validate", label = "Validate Schedule")
                  ),
                  tabPanel("Weekly Calendar",

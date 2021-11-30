@@ -13,6 +13,9 @@ library(tidyverse)
 library(DT)
 library(shinythemes)
 library(ggweekly)
+library(shinyalert)
+library(lubridate)
+library(data.table)
 
 
 course_data <- read_csv(here::here("data/course_catalog.csv"))
@@ -373,22 +376,7 @@ shinyServer(function(session, input, output) {
 
   # # Show the first "n" observations ----
   output$view <- renderDT(
-    datatable(datasetInput(),
-              extensions = 'Buttons',
-              options = list(
-                dom = 'Bfrtip',
-                buttons = list(
-                  "copy",
-                  list(
-                    extend = "collection",
-                    text = 'test',
-                    action = DT::JS("function ( e, dt, node, config ) {
-                                    var data=oTable.rows( { selected: true }).data();
-                                      Shiny.setInputValue('test', data, {priority: 'event'});
-                                   }")
-                  )
-                )
-              )
+    datatable(datasetInput()
     ))
 
 
@@ -505,6 +493,79 @@ shinyServer(function(session, input, output) {
     })
     print("Please add to bookbag")
   })
+
+  observeEvent(input$validate,{
+
+    times <- df %>%
+      mutate(intervals = interval(mtg_start, mtg_end)) %>%
+      group_by(days) %>%
+      arrange(int_start(intervals), .by_group = TRUE) %>%
+      mutate(overlap2 = map_int(intervals, ~ sum(int_overlaps(.x, intervals))) > 1)
+
+
+    ## logic to deal with multiple days
+
+    ## unique: [1] "MW"   "TTH"  "WF"   "TH"   "T"    "M"    "W"    "MF"   "F"
+    ## "MWF"  "M-F"  NA     "MTWF" "M-TH" "MT"   "TW"   "TWTH" "MWTH" "MTH"
+
+
+    if(nrow(df) < 1){
+      print("empty")
+      shinyalert(
+        title = "Invalid Schedule",
+        text = "No classes selected",
+        size = "s",
+        closeOnEsc = TRUE,
+        closeOnClickOutside = FALSE,
+        html = FALSE,
+        type = "error",
+        showConfirmButton = TRUE,
+        showCancelButton = FALSE,
+        confirmButtonText = "OK",
+        confirmButtonCol = "red",
+        timer = 0,
+        imageUrl = "",
+        animation = TRUE
+      )
+    }
+    if(TRUE %in% times$overlap2){
+
+      print("wrong)")
+
+      shinyalert(
+        title = "Invalid Schedule",
+        text = "Time Overlap, Please Clear Bookbag and try Again",
+        size = "s",
+        closeOnEsc = TRUE,
+        closeOnClickOutside = FALSE,
+        html = FALSE,
+        type = "error",
+        showConfirmButton = TRUE,
+        showCancelButton = FALSE,
+        confirmButtonText = "OK",
+        confirmButtonCol = "red",
+        timer = 0,
+        imageUrl = "",
+        animation = TRUE
+      )}
+    if(nrow(df) >= 1 && !(TRUE %in% times$overlap2)){
+      shinyalert(
+        title = "Sucess",
+        text = "Valid Course Schedule",
+        size = "s",
+        closeOnEsc = TRUE,
+        closeOnClickOutside = FALSE,
+        html = FALSE,
+        type = "success",
+        showConfirmButton = TRUE,
+        showCancelButton = FALSE,
+        confirmButtonText = "OK",
+        confirmButtonCol = "#AEDEF4",
+        timer = 0,
+        imageUrl = "",
+        animation = TRUE
+      )}
+}   )
 
   observeEvent(input$clear, {
     df <<- df[0,]
