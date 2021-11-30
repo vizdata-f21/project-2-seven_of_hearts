@@ -430,8 +430,8 @@ shinyServer(function(session, input, output) {
       mutate_at("days",str_replace, "D", "4") %>%
       mutate_at("days",str_replace, "F", "5") %>%
       select(c(days, Subject, Catalog, time_strt, time_end)) %>%
-      mutate(mtg_start = round(hour(mtg_start)+minute(mtg_start) / 60 + second(mtg_start) / 360,2),
-             mtg_end  = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2),
+      mutate(time_start = round(hour(mtg_start)+minute(mtg_start) / 60 + second(mtg_start) / 360,2),
+             time_end  = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2),
              days = as.numeric(days))
   })
   output$week <- renderPlot({
