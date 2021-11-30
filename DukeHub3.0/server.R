@@ -445,7 +445,24 @@ shinyServer(function(session, input, output) {
     )
   })
 
+  output$piechart <- renderPlot({
 
+    data <- as.data.frame(filteredTable_selected()) %>%
+      group_by(Area) %>%
+      summarise(n = n())
+
+    pie <- ggplot(data = data,
+                  aes(x = "",
+                      y = n,
+                      fill = Area)) +
+      geom_bar(stat="identity", width=1) +
+      coord_polar("y", start=0)
+    theme_minimal() +
+      labs(title = "Subject Area")
+
+    plot(pie)
+
+  })
 
 
   output$barplot <- renderPlot({
