@@ -333,42 +333,42 @@ shinyServer(function(session, input, output) {
 
 
 
-#    switch(input$area,
-    #        "Arts & Humanities" = course_data %>%
-    #          filter(Area == "Arts & Humanities") %>%
-    #          select(all_of(a)),
-    #        "Natural Sciences" = course_data%>%
-    #          filter(Area == "Natural Sciences") %>%
-    #          select(all_of(a)),
-    #        "Social Sciences" = course_data%>%
-    #          filter(Area == "Social Sciences") %>%
-    #          select(all_of(a)),
-    #        "Engineering" = course_data%>%
-    #          filter(Area == "Engineering") %>%
-    #          select(all_of(a)),
-    #        "Language" = course_data%>%
-    #          filter(Area == "Language") %>%
-    #          select(all_of(a)),
-    #        "Physical Education" = course_data%>%
-    #          filter(Area == "Physical Education") %>%
-    #          select(all_of(a)),
-    #        "Writing" = course_data %>%
-    #          filter(Area == "Writing") %>%
-    #          select(all_of(a))
-    # )
+  #    switch(input$area,
+  #        "Arts & Humanities" = course_data %>%
+  #          filter(Area == "Arts & Humanities") %>%
+  #          select(all_of(a)),
+  #        "Natural Sciences" = course_data%>%
+  #          filter(Area == "Natural Sciences") %>%
+  #          select(all_of(a)),
+  #        "Social Sciences" = course_data%>%
+  #          filter(Area == "Social Sciences") %>%
+  #          select(all_of(a)),
+  #        "Engineering" = course_data%>%
+  #          filter(Area == "Engineering") %>%
+  #          select(all_of(a)),
+  #        "Language" = course_data%>%
+  #          filter(Area == "Language") %>%
+  #          select(all_of(a)),
+  #        "Physical Education" = course_data%>%
+  #          filter(Area == "Physical Education") %>%
+  #          select(all_of(a)),
+  #        "Writing" = course_data %>%
+  #          filter(Area == "Writing") %>%
+  #          select(all_of(a))
+  # )
 
 
 
 
-#  observe({
-#    print(input$dataset)
-#    x <- course_data %>%
-#      filter(Subject == input$dataset) %>%
-      # select(catalog_number) # dataframe
-#      pull(catalog_number) # vector
-#    updateSelectizeInput(session, "code", "Select the Course Code",
-#                         choices = unique(x))
-#  })
+  #  observe({
+  #    print(input$dataset)
+  #    x <- course_data %>%
+  #      filter(Subject == input$dataset) %>%
+  # select(catalog_number) # dataframe
+  #      pull(catalog_number) # vector
+  #    updateSelectizeInput(session, "code", "Select the Course Code",
+  #                         choices = unique(x))
+  #  })
 
 
 
@@ -391,12 +391,12 @@ shinyServer(function(session, input, output) {
     })
   })
 
-#  observeEvent()
+  #  observeEvent()
 
   ##BookBag
   output$filteredTableSelected <- DT::renderDataTable({
     datatable(
-       df,
+      df,
       selection = list(mode = "none"),
       caption = "Table that gets data from unfiltered original data"
     )
@@ -417,7 +417,7 @@ shinyServer(function(session, input, output) {
       caption = "Tentative Course Schedule"
     )
   })
-  output$weekwrangle <- DT::renderDataTable({
+  weekwrangle <- reactive({
     df %>%
       mutate_at("days", str_replace, "M-F", "MTWTHF") %>%
       mutate_at("days", str_replace, "M-TH", "MTWTH") %>%
@@ -429,16 +429,16 @@ shinyServer(function(session, input, output) {
       mutate_at("days",str_replace, "W", "3") %>%
       mutate_at("days",str_replace, "D", "4") %>%
       mutate_at("days",str_replace, "F", "5") %>%
-      select(c(days, Subject, Catalog, time_strt, time_end)) %>%
-      mutate(time_start = round(hour(mtg_start)+minute(mtg_start) / 60 + second(mtg_start) / 360,2),
-             time_end  = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2),
+      select(c(days, Subject, catalog_number, mtg_start, mtg_end)) %>%
+      mutate(mtg_start = round(hour(mtg_start)+ minute(mtg_start) / 60 + second(mtg_start) / 360,2),
+             mtg_end  = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2),
              days = as.numeric(days))
   })
 
   output$week <- renderPlot({
-    sched <- ggplot(data = weekwrangle())+
-      geom_rect(xmin = 0.75*days, xmax = 1.25*days,
-                ymin = time_strt, ymax = time_end)
+    sched <- ggplot(data = weekwrangle()) +
+      geom_rect(xmin = as.numeric(0.75*days), xmax = as.numeric(1.25*days),
+                ymin = as.numeric(time_strt), ymax = as.numeric(time_end))
     plot(sched)
   })
 
@@ -605,7 +605,7 @@ shinyServer(function(session, input, output) {
         imageUrl = "",
         animation = TRUE
       )}
-}   )
+  }   )
 
   observeEvent(input$clear, {
     df <<- df[0,]
@@ -620,9 +620,9 @@ shinyServer(function(session, input, output) {
     print("Are you empty")
   })
 
- ## 1. add button to add course
+  ## 1. add button to add course
   ## 2. on button click (button = true), then only do the binding of rows
-        ##same code to add to book bag
+  ##same code to add to book bag
 
 
 
