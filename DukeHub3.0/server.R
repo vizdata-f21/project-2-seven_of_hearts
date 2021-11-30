@@ -385,16 +385,6 @@ shinyServer(function(session, input, output) {
   ## Add selectd rows in the dataframe to a
 
   filteredTable_selected <- reactive({
-  #  input$view_rows_selected <- c()
-
-    #input$view_rows_selected
-   #ids <- input$view_rows_selected
-
-    ## from selected rows in filtered
-    ## grab that new ID in rowName col
-    ## get that row from original course_Data
-
-
    observeEvent(input$add, {
      newRows <- datasetInput()[input$view_rows_selected, , drop = F]
      df <<- rbind(isolate(df), newRows) %>%
