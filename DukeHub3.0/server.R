@@ -456,7 +456,9 @@ shinyServer(function(session, input, output) {
       geom_bar(stat = "identity", width = 1) +
       theme_minimal() +
       theme(axis.title = element_blank(),
-            axis.text = element_blank()) +
+            axis.text = element_blank(),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank()) +
       labs(y = "Subject Area") +
       coord_polar("y", start = 0) +
       scale_fill_viridis_d(option = "magma")
