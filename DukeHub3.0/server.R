@@ -409,6 +409,31 @@ shinyServer(function(session, input, output) {
   })
 
 
+  output$weekdata <- DT::renderDataTable({
+    datatable(
+      df %>%
+        mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
+        arrange(desc(enroll_cap)),
+      caption = "Tentative Course Schedule"
+    )
+  })
+  output$weekwrangle <- DT::renderDataTable({
+    df %>%
+      mutate_at("days", str_replace, "M-F", "MTWTHF") %>%
+      mutate_at("days", str_replace, "M-TH", "MTWTH") %>%
+      mutate_at("days", str_replace, "TH", "D") %>%
+      separate_rows(days, sep = "") %>%
+      filter(days != "") %>%
+      mutate_at("days",str_replace, "M", "1") %>%
+      mutate_at("days",str_replace, "T", "2") %>%
+      mutate_at("days",str_replace, "W", "3") %>%
+      mutate_at("days",str_replace, "D", "4") %>%
+      mutate_at("days",str_replace, "F", "5") %>%
+      select(c(days, Subject, Catalog, time_strt, time_end)) %>%
+      mutate(mtg_start = round(hour(mtg_start)+minute(mtg_start) / 60 + second(mtg_start) / 360,2),
+             mtg_end  = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2),
+             days = as.numeric(days))
+  })
   output$week <- renderPlot({
     xy<- tribble(
       ~x, ~y,

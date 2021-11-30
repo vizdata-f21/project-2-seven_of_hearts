@@ -180,8 +180,8 @@ ui <-  fluidPage(
                  tabPanel("Weekly Calendar",
                           mainPanel("Weekly calendar similar to DukeHub
                             (customizable colors for each class"),
-                          plotOutput("week"),
-                          DT::dataTableOutput("bardata")),
+                          DT::dataTableOutput("weekdata"),
+                          plotOutput("week")),
                  tabPanel("Class Info",
                           mainPanel("Visualzation on the number of people in courses,
                             types of courses"),
