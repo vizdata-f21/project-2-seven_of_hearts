@@ -389,7 +389,6 @@ shinyServer(function(session, input, output) {
      df <<- rbind(isolate(df), newRows) %>%
        distinct()
    })
-
   })
 
 #  observeEvent()
@@ -433,7 +432,7 @@ shinyServer(function(session, input, output) {
 
 
 
-  output$bardata <- DT::renderDataTable({
+  output$bardata <- DT::renderDataTable({ # after changing classes in the schedule builder, plot doesn't change
     datatable(
       df %>%
         mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
@@ -444,18 +443,21 @@ shinyServer(function(session, input, output) {
 
   output$piechart <- renderPlot({
 
-    data <- as.data.frame(filteredTable_selected()) %>%
-      group_by(Area) %>%
-      summarise(n = n())
-
-    pie <- ggplot(data = data,
+    pie <- ggplot(data = df %>%
+                    group_by(Area) %>%
+                    count(Area),
                   aes(x = "",
                       y = n,
                       fill = Area)) +
-      geom_bar(stat="identity", width=1) +
-      coord_polar("y", start=0)
-    theme_minimal() +
-      labs(title = "Subject Area")
+      geom_bar(stat = "identity", width = 1) +
+      theme_minimal() +
+      theme(axis.title = element_blank(),
+            axis.text = element_blank(),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank()) +
+      labs(y = "Subject Area") +
+      coord_polar("y", start = 0) +
+      scale_fill_viridis_d(option = "magma")
 
     plot(pie)
 
