@@ -434,18 +434,12 @@ shinyServer(function(session, input, output) {
              time_end  = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2),
              days = as.numeric(days))
   })
+
   output$week <- renderPlot({
-    xy<- tribble(
-      ~x, ~y,
-      0,0,
-      1,1,
-      2,2
-    )
-    wp <- ggplot(data = xy, aes(x = x, y = y))+
-      geom_point()
-
-    plot(wp)
-
+    sched <- ggplot(data = weekwrangle())+
+      geom_rect(xmin = 0.75*days, xmax = 1.25*days,
+                ymin = time_strt, ymax = time_end)
+    plot(sched)
   })
 
 
