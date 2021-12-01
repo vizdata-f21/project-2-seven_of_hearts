@@ -400,33 +400,33 @@ shinyServer(function(session, input, output) {
     )
   })
   weekwrangle <- reactive({
+    df %>%
       mutate_at("days", str_replace, "M-F", "MTWTHF") %>%
       mutate_at("days", str_replace, "M-TH", "MTWTH") %>%
       mutate_at("days", str_replace, "TH", "D") %>%
       separate_rows(days, sep = "") %>%
       filter(days != "") %>%
-      mutate(days = case_when(
+      mutate(days_num = case_when(
         days == "M" ~ 1,
         days == "T" ~ 3,
         days == "W" ~ 5,
         days == "D" ~ 7,
         days == "F" ~ 9
       )) %>%
-      #select(-c(class_identifier, Section, Descr, location, Career, term, Mode)) %>%
-      mutate(days = as.numeric(days)) %>%
+      mutate(days_num = as.numeric(days_num)) %>%
       mutate(mtg_start= round(hour(mtg_start)+minute(mtg_start) / 60 + second(mtg_start) / 360,2)) %>%
       mutate(mtg_end = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2)) %>%
-      mutate(plotting_st = (days - 1)) %>%
-      mutate(plotting_end = (days + 1)) %>%
+      mutate(plotting_st = (days_num - 1)) %>%
+      mutate(plotting_end = (days_num + 1)) %>%
       mutate(midpoint = (mtg_start + mtg_end)/2) %>%
       mutate(head = paste0(Subject, catalog_number))
   })
 
   output$week <- renderPlot({
-    sched <- ggplot(data = weekwrangle(), aes(x = days, y = midpoint)) +
+    sched <- ggplot(data = weekwrangle(), aes(x = days_num, y = midpoint)) +
       geom_rect(aes(xmin = plotting_st, xmax = plotting_end,
                     ymax = mtg_start, ymin = mtg_end, fill = head))+
-      geom_text(label = data_un$head)+
+      #geom_text(label = data_un$head)+
       geom_vline(xintercept = 0, colour = "gray", linetype = "longdash", alpha = 0.4)+
       geom_vline(xintercept = 2, colour = "gray", linetype = "longdash", alpha = 0.4)+
       geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
