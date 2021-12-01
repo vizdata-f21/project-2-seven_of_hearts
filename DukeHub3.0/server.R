@@ -364,8 +364,6 @@ shinyServer(function(session, input, output) {
     ))
 
 
-
-
   ## Add selectd rows in the dataframe to a
 
   filteredTable_selected <- reactive({
@@ -661,30 +659,32 @@ shinyServer(function(session, input, output) {
   })
 
   # Do subject areas differ by location?
-    dist <- course_data %>%
-      filter(!is.na(Group_Category)) %>%
-      filter(Area != "ARTS&SCI") %>%
-      group_by(Area) %>%
-      count(Group_Category) %>%
-      arrange(desc(n),.by_group = TRUE) %>%
-      mutate(perc = n/sum(n))
-      # filter(row_number() %in% c(1,2))
-
-    dist_plot <- dist %>%
-      ggplot() +
-      geom_segment(aes(x = 0, y = reorder_within(Group_Category, n, Area),
-                       xend = n, yend = reorder_within(Group_Category, n, Area)),
-                   size = 1, color = "skyblue") +
-      geom_point(aes(x = n, y = reorder_within(Group_Category, n, Area))) +
-      facet_wrap( ~ Area, ncol = 3, scales = "free") +
-      theme_minimal() +
-      theme(strip.background = element_rect(fill = "skyblue"),
-            panel.grid.minor = element_blank()) +
-      labs(y = "Campus locations",
-           x = "Number of classs",
-           title = "Distribution of class locations by subject area")
 
     output$distinfo <- renderPlot({
+
+      dist <- course_data %>%
+        filter(!is.na(Group_Category)) %>%
+        filter(Area != "ARTS&SCI") %>%
+        group_by(Area) %>%
+        count(Group_Category) %>%
+        arrange(desc(n),.by_group = TRUE) %>%
+        mutate(perc = n/sum(n))
+      # filter(row_number() %in% c(1,2))
+
+      dist_plot <- dist %>%
+        ggplot() +
+        geom_segment(aes(x = 0, y = reorder_within(Group_Category, n, Area),
+                         xend = n, yend = reorder_within(Group_Category, n, Area)),
+                     size = 1, color = "skyblue") +
+        geom_point(aes(x = n, y = reorder_within(Group_Category, n, Area))) +
+        facet_wrap( ~ Area, ncol = 3, scales = "free") +
+        theme_minimal() +
+        theme(strip.background = element_rect(fill = "skyblue"),
+              panel.grid.minor = element_blank()) +
+        labs(y = "Campus locations",
+             x = "Number of classs",
+             title = "Distribution of class locations by subject area")
+
       dist_plot
     })
 })
