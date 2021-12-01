@@ -27,7 +27,7 @@ create.
 We designed 5 tabs for students to explore the details of their course
 schedules.
 
-![plot](data/tab.jpg)
+![plot](data//graphics/tab.jpg)
 
 ### Schedule builder
 
