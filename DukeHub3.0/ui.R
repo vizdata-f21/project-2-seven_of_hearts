@@ -193,10 +193,9 @@ ui <-  fluidPage(
                           mainPanel("Visualization based on commuter distance"),
                           plotOutput("location")),
                  tabPanel("Course Catalog Info",
-                          mainPanel("Recommendations on days to study and where
-                            they should study and best days to go hang
-                            with friends"),
-                          DT::dataTableOutput("catalog_enrollcap"),),
+                          mainPanel("An overview of the classes available"),
+                          plotOutput("locinfo"),
+                          plotOutput("distinfo")),
                  tabPanel("Campus Map",
                           mainPanel("Duke University", width = 10),
                           leafletOutput("dukemap")

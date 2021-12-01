@@ -16,6 +16,8 @@ library(shinyalert)
 library(lubridate)
 library(data.table)
 library(leaflet)
+library(treemap)
+library(tidytext)
 
 
 course_data <- read_csv(here::here("data/course_catalog.csv"))
@@ -103,7 +105,7 @@ course_data <- course_data %>%
     Subject %in% c("AEROSCI", "EVANTH", "BIOCHEM", "NEUROSCI", "CHEM",
                    "COMPSCI", "PSY", "PHYSICS", "ENVIRON", "SUSTAIN",
                    "EOS", "ECS", "MATH", "STA", "PHARM", "ISS", "MARSCI",
-                   "CMAC", "LATAMER", "MGM", "DECSCI") ~ "Natural Sciences", # 21
+                   "CMAC", "LATAMER", "MGM", "DECSCI", "BIOLOGY") ~ "Natural Sciences", # 21
     Subject %in% c("CULANTH", "AMES", "AAAS", "HISTORY", "POLSCI",
                    "ICS", "ECON", "GSF", "EDUC", "SOCIOL", "PUBPOL",
                    "PJMS", "RIGHTS", "HUMANDEV", "JEWISHST", "SCISOC",
@@ -471,9 +473,9 @@ shinyServer(function(session, input, output) {
                     aes(x = "",
                         y = n,
                         fill = Area)) +
-        geom_bar(stat = "identity", width = 1) +
+        geom_bar(stat = "identity", width = 1, color = "white") +
         theme_minimal() +
-        theme(axis.title.x = element_blank(),
+        theme(axis.title = element_blank(),
               axis.text = element_blank(),
               panel.grid.major = element_blank(),
               panel.grid.minor = element_blank()) +
@@ -600,17 +602,59 @@ shinyServer(function(session, input, output) {
   })
 
 
-
-
   # course_catalog table
-  catalog_enrollcap <- course_data %>%
+  loc <- course_data %>%
     group_by(Group_Category) %>%
     count(Group_Category) %>%
     arrange(desc(n)) %>%
     filter(!is.na(Group_Category))
 
-  enrollcap_plot <- ggplot(data = catalog_enrollcap,
-                           aes(x = Group_Category, y = reorder(Group_Category, -n))) +
-    geom_col()
+  loc$fraction <- loc$n / sum(loc$n)
+  loc$ymax <- cumsum(loc$fraction)
+  loc$ymin <- c(0, head(loc$ymax, n = - 1))
+  loc$labelPosition <- (loc$ymax + loc$ymin) / 2
+  loc$label <- paste0(loc$n, " classes at ", loc$Group_Category)
 
+  loc_plot <- ggplot(loc, aes(ymax = ymax, ymin = ymin,
+                              xmax = 4, xmin = 3, fill = Group_Category)) +
+    geom_rect() +
+    geom_label(x = 3.5, aes(y = labelPosition, label = label), size = 3) +
+    scale_fill_brewer(palette = "Paired") +
+    coord_polar(theta = "y") +
+    xlim(c(2.3, 4)) +
+    theme_void() +
+    theme(legend.position = "none") +
+    labs(title = "Where are the classes located at?")
+
+  output$locinfo <- renderPlot({
+    loc_plot
+  })
+
+  # Do subject areas differ by location?
+    dist <- course_data %>%
+      filter(!is.na(Group_Category)) %>%
+      filter(Area != "ARTS&SCI") %>%
+      group_by(Area) %>%
+      count(Group_Category) %>%
+      arrange(desc(n),.by_group = TRUE) %>%
+      mutate(perc = n/sum(n))
+      # filter(row_number() %in% c(1,2))
+
+    dist_plot <- dist %>%
+      ggplot() +
+      geom_segment(aes(x = 0, y = reorder_within(Group_Category, n, Area),
+                       xend = n, yend = reorder_within(Group_Category, n, Area)),
+                   size = 1, color = "skyblue") +
+      geom_point(aes(x = n, y = reorder_within(Group_Category, n, Area))) +
+      facet_wrap( ~ Area, ncol = 3, scales = "free") +
+      theme_minimal() +
+      theme(strip.background = element_rect(fill = "skyblue"),
+            panel.grid.minor = element_blank()) +
+      labs(y = "Campus locations",
+           x = "Number of classs",
+           title = "Distribution of class locations by subject area")
+
+    output$distinfo <- renderPlot({
+      dist_plot
+    })
 })
