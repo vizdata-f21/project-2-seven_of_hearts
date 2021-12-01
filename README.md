@@ -27,6 +27,8 @@ create.
 We designed 5 tabs for students to explore the details of their course
 schedules.
 
+![plot](data/tab.jpg)
+
 ### Schedule builder
 
 Students can choose courses based on the specific subjects they would
@@ -38,7 +40,22 @@ page.
 
 Take an example of a student who wants to choose African American
 Studies. In DukeHub 2.0, the dropdown list only contains the course
-catalog numbers and descriptions. ![plot](data/tab.jpg)
+catalog numbers and descriptions after choosing the subject.
+
+![plot](data/dukehub_old1.jpg)
+
+Students need to click twice to see the time and location of a class,
+which are difficult to find.
+
+![plot](data/dukehub_old2.jpg)
+
+Our shiny app displasy a comprehensive list of African American Studies
+classes, including course catalog, description, enrollment cap,
+location, time, teaching mode, etc. This will immediately give students
+an idea of how far away this class is from their dorms, whether they
+need to get up early to catch a bus, the class size, etc.
+
+![plot](data/newapp_aaas.jpg)
 
 ### Weekly calendar
 
@@ -55,6 +72,10 @@ academic curriculum. Students will be able to make choices conveniently
 after visualizing the size of other classes. Subject areas are shown in
 a pie chart to give the student an idea of how diverse their classes are
 that semester.
+
+Here is an example of a schedule of 6 classes:
+
+![plot](data/bar_chart.jpg) ![plot](data/pie_chart.jpg)
 
 ### Distance
 
