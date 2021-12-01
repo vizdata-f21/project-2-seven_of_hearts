@@ -127,9 +127,9 @@ course_data <- course_data %>%
 
 a <- c("Subject", "catalog_number", "Descr", "Section",
        "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-       "location", "Area")
+       "location", "Area", "Group_Category")
 
-df <- setNames(data.frame(matrix(ncol = 11, nrow = 0)), a)
+df <- setNames(data.frame(matrix(ncol = 12, nrow = 0)), a)
 
 
 print(df)
@@ -369,7 +369,7 @@ shinyServer(function(session, input, output) {
   filteredTable_selected <- reactive({
     observeEvent(input$add, {
       newRows <- datasetInput()[input$view_rows_selected, , drop = F]
-      df <<- rbind(isolate(df), newRows) %>%
+       df <<- rbind(isolate(df), newRows) %>%
         distinct()
     })
   })
@@ -400,6 +400,7 @@ shinyServer(function(session, input, output) {
       caption = "Tentative Course Schedule"
     )
   })
+
   weekwrangle <- reactive({
     df %>%
       mutate_at("days", str_replace, "M-F", "MTWTHF") %>%
@@ -450,7 +451,7 @@ shinyServer(function(session, input, output) {
 
   observeEvent(input$add, {
     newRows <- datasetInput()[input$view_rows_selected, , drop = F]
-    df <<- rbind(isolate(df), newRows) %>%
+     df <<- rbind(isolate(df), newRows) %>%
       distinct()
     print(df)
     output$filteredTableSelected <- DT::renderDataTable({
@@ -637,7 +638,6 @@ shinyServer(function(session, input, output) {
   loc$ymin <- c(0, head(loc$ymax, n = - 1))
   loc$labelPosition <- (loc$ymax + loc$ymin)/2
   loc$label <- paste0(loc$n, " classes at ", loc$Group_Category)
-  y.breaks <- cumsum(loc$n) - loc$n/2
 
   loc_plot <- ggplot(loc, aes(ymax = ymax, ymin = ymin,
                               xmax = 4, xmin = 3, fill = Group_Category,
@@ -665,21 +665,21 @@ shinyServer(function(session, input, output) {
       dist <- course_data %>%
         filter(!is.na(Group_Category)) %>%
         filter(Area != "ARTS&SCI") %>%
+        filter(Area %in% df$Area) %>%
         group_by(Area) %>%
         count(Group_Category) %>%
         arrange(desc(n),.by_group = TRUE) %>%
         mutate(perc = n/sum(n))
-      # filter(row_number() %in% c(1,2))
 
-      dist_plot <- dist %>%
-        ggplot() +
+      dist_plot <- ggplot(data = dist) +
         geom_segment(aes(x = 0, y = reorder_within(Group_Category, n, Area),
                          xend = n, yend = reorder_within(Group_Category, n, Area)),
-                     size = 1, color = "skyblue") +
+                     size = 1, color = "#003087") +
         geom_point(aes(x = n, y = reorder_within(Group_Category, n, Area))) +
         facet_wrap( ~ Area, ncol = 3, scales = "free") +
         theme_minimal() +
-        theme(strip.background = element_rect(fill = "skyblue"),
+        theme(strip.background = element_rect(fill = "#003087"),
+              strip.text = element_text(colour = 'white'),
               panel.grid.minor = element_blank()) +
         labs(y = "Campus locations",
              x = "Number of classs",
