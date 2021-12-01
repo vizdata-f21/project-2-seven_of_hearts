@@ -11,7 +11,11 @@ DukeHub is the academic portal used by Duke students, faculty, and advisers to r
 We designed 5 tabs for students to explore the details of their course schedules.
 
 ### Schedule builder
-Students can choose courses based on the specific subjects they would like to take. Like the current DukeHub, students can validate their schedule to avoid time conflicts, drop classes back to the shopping cart, and clear all selections.
+Students can choose courses based on the specific subjects they would like to take. Like the DukeHub 2.0, students can validate their schedule to avoid time conflicts and overload limits, drop classes back to the shopping cart, and clear all selections. One improvement from DukeHub 2.0 is that more information about classes is available on the same page. 
+
+Take an example of a student who wants to choose African American Studies. In DukeHub 2.0, the dropdown list only contains the course catalog numbers and descriptions. 
+![plot](data/tab.jpg)
+
 
 ### Weekly calendar
 The courses selected in the previous step will show up in a daily calendar format, colored by their patterns (WF, TTh, MWF, etc).

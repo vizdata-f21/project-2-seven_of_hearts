@@ -423,27 +423,6 @@ shinyServer(function(session, input, output) {
   })
 
 
-
-
-  output$barplot <- renderPlot({
-    bar_plot <- ggplot(data = df %>%
-                         mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
-                         arrange(enroll_cap),
-                       aes(x = enroll_cap, y = reorder(course_name, -enroll_cap),  # ordering not interactive
-                           fill = Area)) +
-      geom_col() +
-      theme_minimal() +
-      theme(panel.grid.minor = element_blank()) +
-      labs(title = "Enrollment cap of your classes",
-           x = "Enrollment",
-           y = "Course name") +
-      scale_fill_viridis_d(option = "magma")
-    # facet_wrap(~ Area, scales = "free")
-
-    plot(bar_plot)
-  })
-
-
   observeEvent(input$add, {
     newRows <- datasetInput()[input$view_rows_selected, , drop = F]
     df <<- rbind(isolate(df), newRows) %>%
@@ -466,7 +445,23 @@ shinyServer(function(session, input, output) {
       )
     })
 
+    output$barplot <- renderPlot({
+      bar_plot <- ggplot(data = df %>%
+                           mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
+                           arrange(enroll_cap),
+                         aes(x = enroll_cap, y = reorder(course_name, -enroll_cap),  # ordering not interactive
+                             fill = Area)) +
+        geom_col() +
+        theme_minimal() +
+        theme(panel.grid.minor = element_blank()) +
+        labs(title = "Enrollment cap of your classes",
+             x = "Enrollment",
+             y = "Course name") +
+        scale_fill_viridis_d(option = "magma")
+      # facet_wrap(~ Area, scales = "free")
 
+      plot(bar_plot)
+    })
 
     output$piechart <- renderPlot({
 
