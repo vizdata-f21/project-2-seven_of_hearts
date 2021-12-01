@@ -1,5 +1,6 @@
 library(shinythemes)
 library(shinyalert)
+library(leaflet)
 
 ui <-  fluidPage(
   theme = shinytheme("cerulean"),
@@ -195,7 +196,12 @@ ui <-  fluidPage(
                           mainPanel("Recommendations on days to study and where
                             they should study and best days to go hang
                             with friends"),
-                          DT::dataTableOutput("catalog_enrollcap"),)),
+                          DT::dataTableOutput("catalog_enrollcap"),),
+                 tabPanel("Campus Map",
+                          mainPanel("Duke University", width = 10),
+                          leafletOutput("dukemap")
+                          )),
+
 
     ))
 )

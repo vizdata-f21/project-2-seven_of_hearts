@@ -15,10 +15,12 @@ library(shinythemes)
 library(shinyalert)
 library(lubridate)
 library(data.table)
+library(leaflet)
 
 
 course_data <- read_csv(here::here("data/course_catalog.csv"))
 building_group <- read_csv(here::here("data/Building_groups.csv"))
+coordinates <- read_csv(here::here("data/building_group_coordinates.csv"))
 
 course_data <- course_data %>%
   rename(location = `Descr 1`,
@@ -491,15 +493,13 @@ shinyServer(function(session, input, output) {
 
   observeEvent(input$validate,{
 
-
-
     times <- df %>%
         mutate_at("days", str_replace, "M-F", "MTWTHF") %>%
         mutate_at("days", str_replace, "M-TH", "MTWTH") %>%
         mutate_at("days", str_replace, "TH", "D") %>%
         separate_rows(days, sep = "") %>%
         filter(days != "") %>%
-      mutate(intervals = interval(mtg_start, mtg_end)) %>%
+       mutate(intervals = interval(mtg_start, mtg_end)) %>%
       group_by(days) %>%
       arrange(int_start(intervals), .by_group = TRUE) %>%
       mutate(overlap2 = map_int(intervals, ~ sum(int_overlaps(.x, intervals))) > 1)
@@ -593,12 +593,19 @@ shinyServer(function(session, input, output) {
         caption = "Table that gets data from unfiltered original data"
       )
     })
-    print("Are you empty")
   })
 
-  ## 1. add button to add course
-  ## 2. on button click (button = true), then only do the binding of rows
-  ##same code to add to book bag
+
+  output$dukemap <- renderLeaflet({
+    leaflet() %>%
+      addTiles() %>%
+      setView(lat = 36.000015, lng = -78.936033, zoom = 13) %>%
+      addCircleMarkers(lng = coordinates$Longitude,
+                       lat = coordinates$Latitude)
+  })
+
+
+
 
   # course_catalog table
   catalog_enrollcap <- course_data %>%
