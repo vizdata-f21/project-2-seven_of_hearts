@@ -18,6 +18,7 @@ library(data.table)
 library(leaflet)
 library(treemap)
 library(tidytext)
+library(ggrepel)
 
 
 course_data <- read_csv(here::here("data/course_catalog.csv"))
@@ -336,6 +337,8 @@ shinyServer(function(session, input, output) {
              select(a)
     )
 
+
+
   })
 
 
@@ -634,19 +637,24 @@ shinyServer(function(session, input, output) {
   loc$fraction <- loc$n / sum(loc$n)
   loc$ymax <- cumsum(loc$fraction)
   loc$ymin <- c(0, head(loc$ymax, n = - 1))
-  loc$labelPosition <- (loc$ymax + loc$ymin) / 2
+  loc$labelPosition <- (loc$ymax + loc$ymin)/2
   loc$label <- paste0(loc$n, " classes at ", loc$Group_Category)
+  y.breaks <- cumsum(loc$n) - loc$n/2
 
   loc_plot <- ggplot(loc, aes(ymax = ymax, ymin = ymin,
-                              xmax = 4, xmin = 3, fill = Group_Category)) +
+                              xmax = 4, xmin = 3, fill = Group_Category,
+                              label = label)) +
     geom_rect() +
-    geom_label(x = 3.5, aes(y = labelPosition, label = label), size = 3) +
-    scale_fill_brewer(palette = "Paired") +
+    geom_label_repel(x = 3.5, aes(y = labelPosition, label = label), size = 3) +
+     # geom_text(aes(x = 3.5, y = labelPosition),
+     #           check_overlap = TRUE,
+     #           vjust = -1.5) +
     coord_polar(theta = "y") +
     xlim(c(2.3, 4)) +
     theme_void() +
     theme(legend.position = "none") +
-    labs(title = "Where are the classes located at?")
+    labs(title = "Where are the classes located at?") +
+    scale_fill_brewer(palette = "Paired")
 
   output$locinfo <- renderPlot({
     loc_plot

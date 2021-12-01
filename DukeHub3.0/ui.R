@@ -144,6 +144,18 @@ ui <-  fluidPage(
                      ),
                      multiple = FALSE),
 
+      # Input: Selector for choosing General Subject Area ----
+      selectizeInput(inputId = "area",
+                     label = "Choose a General Area:",
+                     choices = c("Arts & Humanities",
+                                 "Natural Sciences",
+                                 "Social Sciences",
+                                 "Engineering",
+                                 "Language",
+                                 "Physical Education",
+                                 "Writing"),
+                     multiple = FALSE),
+
 
       # selectizeInput(inputId = "code",
       #                label = "Choose a Course Code: ",
