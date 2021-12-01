@@ -400,27 +400,49 @@ shinyServer(function(session, input, output) {
     )
   })
   weekwrangle <- reactive({
-    df %>%
       mutate_at("days", str_replace, "M-F", "MTWTHF") %>%
       mutate_at("days", str_replace, "M-TH", "MTWTH") %>%
       mutate_at("days", str_replace, "TH", "D") %>%
       separate_rows(days, sep = "") %>%
       filter(days != "") %>%
-      mutate_at("days",str_replace, "M", "1") %>%
-      mutate_at("days",str_replace, "T", "2") %>%
-      mutate_at("days",str_replace, "W", "3") %>%
-      mutate_at("days",str_replace, "D", "4") %>%
-      mutate_at("days",str_replace, "F", "5") %>%
-      select(c(days, Subject, catalog_number, mtg_start, mtg_end)) %>%
-      mutate(mtg_start = round(hour(mtg_start)+ minute(mtg_start) / 60 + second(mtg_start) / 360,2),
-             mtg_end  = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2),
-             days = as.numeric(days))
+      mutate(days = case_when(
+        days == "M" ~ 1,
+        days == "T" ~ 3,
+        days == "W" ~ 5,
+        days == "D" ~ 7,
+        days == "F" ~ 9
+      )) %>%
+      #select(-c(class_identifier, Section, Descr, location, Career, term, Mode)) %>%
+      mutate(days = as.numeric(days)) %>%
+      mutate(mtg_start= round(hour(mtg_start)+minute(mtg_start) / 60 + second(mtg_start) / 360,2)) %>%
+      mutate(mtg_end = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2)) %>%
+      mutate(plotting_st = (days - 1)) %>%
+      mutate(plotting_end = (days + 1)) %>%
+      mutate(midpoint = (mtg_start + mtg_end)/2) %>%
+      mutate(head = paste0(Subject, catalog_number))
   })
 
   output$week <- renderPlot({
-    sched <- ggplot(data = weekwrangle()) +
-      geom_rect(xmin = as.numeric(0.75*days), xmax = as.numeric(1.25*days),
-                ymin = as.numeric(time_strt), ymax = as.numeric(time_end))
+    sched <- ggplot(data = weekwrangle(), aes(x = days, y = midpoint)) +
+      geom_rect(aes(xmin = plotting_st, xmax = plotting_end,
+                    ymax = mtg_start, ymin = mtg_end, fill = head))+
+      geom_text(label = data_un$head)+
+      geom_vline(xintercept = 0, colour = "gray", linetype = "longdash", alpha = 0.4)+
+      geom_vline(xintercept = 2, colour = "gray", linetype = "longdash", alpha = 0.4)+
+      geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
+      geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
+      geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
+      theme_bw() +
+      theme(panel.border = element_blank(),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            axis.line = element_line(colour = "black"),
+            legend.position = "none")+
+      xlim(0, 10)+
+      scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
+      scale_y_continuous(breaks = seq(6, 20, by = 1))+
+      #coord_cartesian(ylim = c(6, 20))+
+      labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week")
     plot(sched)
   })
 
