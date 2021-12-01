@@ -422,14 +422,13 @@ shinyServer(function(session, input, output) {
       mutate(plotting_st = (days_num - 1)) %>%
       mutate(plotting_end = (days_num + 1)) %>%
       mutate(midpoint = (mtg_start + mtg_end)/2) %>%
-      mutate(head = paste0(Subject, catalog_number))
+      mutate(head = paste0(Subject, catalog_number, Section))
   })
 
   output$week <- renderPlot({
     sched <- ggplot(data = weekwrangle(), aes(x = days_num, y = midpoint)) +
       geom_rect(aes(xmin = plotting_st, xmax = plotting_end,
                     ymax = mtg_start, ymin = mtg_end, fill = head))+
-      #geom_text(label = data_un$head)+
       geom_vline(xintercept = 0, colour = "gray", linetype = "longdash", alpha = 0.4)+
       geom_vline(xintercept = 2, colour = "gray", linetype = "longdash", alpha = 0.4)+
       geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
