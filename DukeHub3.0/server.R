@@ -345,18 +345,6 @@ shinyServer(function(session, input, output) {
 
 
 
-  #  observe({
-  #    print(input$dataset)
-  #    x <- course_data %>%
-  #      filter(Subject == input$dataset) %>%
-  # select(catalog_number) # dataframe
-  #      pull(catalog_number) # vector
-  #    updateSelectizeInput(session, "code", "Select the Course Code",
-  #                         choices = unique(x))
-  #  })
-
-
-
 
   # # Show the first "n" observations ----
   output$view <- renderDT(
