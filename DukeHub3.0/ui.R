@@ -28,18 +28,6 @@ ui <-  fluidPage(
                               "Law School", "Sanford", "Lilly Library", "My Room"
                   )),
 
-      # Input: Selector for choosing General Subject Area ----
-      selectizeInput(inputId = "area",
-                     label = "Choose a General Area:",
-                     choices = c("Arts & Humanities",
-                                 "Natural Sciences",
-                                 "Social Sciences",
-                                 "Engineering",
-                                 "Language",
-                                 "Physical Education",
-                                 "Writing"),
-                     multiple = FALSE),
-
       # Input: Selector for choosing dataset ----
       selectizeInput(inputId = "dataset",
                      label = "Choose a Subject Area:",
@@ -144,17 +132,17 @@ ui <-  fluidPage(
                      ),
                      multiple = FALSE),
 
-      # Input: Selector for choosing General Subject Area ----
-      selectizeInput(inputId = "area",
-                     label = "Choose a General Area:",
-                     choices = c("Arts & Humanities",
-                                 "Natural Sciences",
-                                 "Social Sciences",
-                                 "Engineering",
-                                 "Language",
-                                 "Physical Education",
-                                 "Writing"),
-                     multiple = FALSE),
+      # # Input: Selector for choosing General Subject Area ----
+      # selectizeInput(inputId = "area",
+      #                label = "Choose a General Area:",
+      #                choices = c("Arts & Humanities",
+      #                            "Natural Sciences",
+      #                            "Social Sciences",
+      #                            "Engineering",
+      #                            "Language",
+      #                            "Physical Education",
+      #                            "Writing"),
+      #                multiple = FALSE),
 
 
       # selectizeInput(inputId = "code",
