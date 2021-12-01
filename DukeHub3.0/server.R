@@ -628,8 +628,14 @@ shinyServer(function(session, input, output) {
   ##same code to add to book bag
 
   # course_catalog table
-  output$catalog_enrollcap <- course_data %>%
+  catalog_enrollcap <- course_data %>%
+    group_by(Group_Category) %>%
+    count(Group_Category) %>%
+    arrange(desc(n)) %>%
+    filter(!is.na(Group_Category))
 
-
+  enrollcap_plot <- ggplot(data = catalog_enrollcap,
+                           aes(x = Group_Category, y = reorder(Group_Category, -n))) +
+    geom_col()
 
 })
