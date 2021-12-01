@@ -18,7 +18,7 @@ library(data.table)
 
 
 course_data <- read_csv(here::here("data/course_catalog.csv"))
-
+building_group <- read_csv(here::here("data/building_groups.csv"))
 
 course_data <- course_data %>%
   rename(location = `Descr 1`,
@@ -88,6 +88,9 @@ course_data <- course_data %>%
     grepl('Wilson Center', location) ~ 'Wilson Center',
     TRUE ~ location))
 
+# conbime location data
+course_data <- course_data %>%
+  left_join(building_group, by = c("location" = "Location"))
 
 course_data <- course_data %>%
   mutate(Area = case_when(
@@ -623,6 +626,9 @@ shinyServer(function(session, input, output) {
   ## 1. add button to add course
   ## 2. on button click (button = true), then only do the binding of rows
   ##same code to add to book bag
+
+  # course_catalog table
+  output$catalog_enrollcap <- course_data %>%
 
 
 

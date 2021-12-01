@@ -194,6 +194,8 @@ ui <-  fluidPage(
                  tabPanel("Course Catalog Info",
                           mainPanel("Recommendations on days to study and where
                             they should study and best days to go hang
-                            with friends")))
+                            with friends"),
+                          DT::dataTableOutput("catalog_enrollcap"),)),
+
     ))
 )
