@@ -18,7 +18,7 @@ library(data.table)
 
 
 course_data <- read_csv(here::here("data/course_catalog.csv"))
-building_group <- read_csv(here::here("data/building_groups.csv"))
+building_group <- read_csv(here::here("data/Building_groups.csv"))
 
 course_data <- course_data %>%
   rename(location = `Descr 1`,
@@ -336,31 +336,6 @@ shinyServer(function(session, input, output) {
 
 
 
-  #    switch(input$area,
-  #        "Arts & Humanities" = course_data %>%
-  #          filter(Area == "Arts & Humanities") %>%
-  #          select(all_of(a)),
-  #        "Natural Sciences" = course_data%>%
-  #          filter(Area == "Natural Sciences") %>%
-  #          select(all_of(a)),
-  #        "Social Sciences" = course_data%>%
-  #          filter(Area == "Social Sciences") %>%
-  #          select(all_of(a)),
-  #        "Engineering" = course_data%>%
-  #          filter(Area == "Engineering") %>%
-  #          select(all_of(a)),
-  #        "Language" = course_data%>%
-  #          filter(Area == "Language") %>%
-  #          select(all_of(a)),
-  #        "Physical Education" = course_data%>%
-  #          filter(Area == "Physical Education") %>%
-  #          select(all_of(a)),
-  #        "Writing" = course_data %>%
-  #          filter(Area == "Writing") %>%
-  #          select(all_of(a))
-  # )
-
-
 
 
   #  observe({
@@ -447,39 +422,6 @@ shinyServer(function(session, input, output) {
 
 
 
-  output$bardata <- DT::renderDataTable({ # after changing classes in the schedule builder, plot doesn't change
-    datatable(
-      df %>%
-        mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
-        arrange(desc(enroll_cap)),
-      caption = "You selected these courses"
-    )
-  })
-
-
-
-  output$piechart <- renderPlot({
-
-    pie <- ggplot(data = df %>%
-                    group_by(Area) %>%
-                    count(Area),
-                  aes(x = "",
-                      y = n,
-                      fill = Area)) +
-      geom_bar(stat = "identity", width = 1) +
-      theme_minimal() +
-      theme(axis.title.x = element_blank(),
-            axis.text = element_blank(),
-            panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank()) +
-      labs(y = "Subject Area") +
-      coord_polar("y", start = 0) +
-      scale_fill_viridis_d(option = "magma")
-
-    plot(pie)
-
-  })
-
 
   output$barplot <- renderPlot({
     bar_plot <- ggplot(data = df %>%
@@ -512,7 +454,39 @@ shinyServer(function(session, input, output) {
         caption = "Table that gets data from unfiltered original data"
       )
     })
-    print("Please add to bookbag")
+
+    output$bardata <- DT::renderDataTable({ # after changing classes in the schedule builder, plot doesn't change
+      datatable(
+        df %>%
+          mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
+          arrange(desc(enroll_cap)),
+        caption = "You selected these courses"
+      )
+    })
+
+
+
+    output$piechart <- renderPlot({
+
+      pie <- ggplot(data = df %>%
+                      group_by(Area) %>%
+                      count(Area),
+                    aes(x = "",
+                        y = n,
+                        fill = Area)) +
+        geom_bar(stat = "identity", width = 1) +
+        theme_minimal() +
+        theme(axis.title.x = element_blank(),
+              axis.text = element_blank(),
+              panel.grid.major = element_blank(),
+              panel.grid.minor = element_blank()) +
+        labs(y = "Subject Area") +
+        coord_polar("y", start = 0) +
+        scale_fill_viridis_d(option = "magma")
+
+      plot(pie)
+
+    })
   })
 
   observeEvent(input$validate,{
@@ -520,16 +494,15 @@ shinyServer(function(session, input, output) {
 
 
     times <- df %>%
+        mutate_at("days", str_replace, "M-F", "MTWTHF") %>%
+        mutate_at("days", str_replace, "M-TH", "MTWTH") %>%
+        mutate_at("days", str_replace, "TH", "D") %>%
+        separate_rows(days, sep = "") %>%
+        filter(days != "") %>%
       mutate(intervals = interval(mtg_start, mtg_end)) %>%
       group_by(days) %>%
       arrange(int_start(intervals), .by_group = TRUE) %>%
       mutate(overlap2 = map_int(intervals, ~ sum(int_overlaps(.x, intervals))) > 1)
-
-
-    ## logic to deal with multiple days
-
-    ## unique: [1] "MW"   "TTH"  "WF"   "TH"   "T"    "M"    "W"    "MF"   "F"
-    ## "MWF"  "M-F"  NA     "MTWF" "M-TH" "MT"   "TW"   "TWTH" "MWTH" "MTH"
 
 
     if(nrow(df) < 1){
