@@ -8,6 +8,7 @@ ui <-  fluidPage(
   # App title ----
   titlePanel("DukeHub 3.0"),
 
+
   # Sidebar layout with a input and output definitions ----
   sidebarLayout(
 

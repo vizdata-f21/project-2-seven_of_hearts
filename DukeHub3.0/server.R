@@ -568,30 +568,44 @@ shinyServer(function(session, input, output) {
     })
 
       modified_distCosine <- function(Longitude1, Latitude1, Longitude2, Latitude2) {
-      if (any(is.na(c(Longitude1, Latitude1, Longitude2, Latitude2)))) {
+      if(any(is.na(c(Longitude1, Latitude1, Longitude2, Latitude2)))) {
         0.0
-      } else {
+      }
+      else {
         distCosine(c(Longitude1, Latitude1), c(Longitude2, Latitude2))
       }
     }
 
 
-    distTable <- left_join(weekwrangle(), coordinates, by = "Group_Number")
+    distTable <- left_join(weekwrangle(), coordinates, by = "Group_Number") %>%
+      select(Subject, days, mtg_start, location, Group_Number, Latitude, Longitude)
+
+
+
+    output$distanceTable <- DT::renderDataTable({
+      datatable(
+        distTable,
+        caption = "Tentative Course Schedule"
+      )
+    })
 
 
     distTable <- distTable %>%
         group_by(days) %>%
         arrange(desc(mtg_start)) %>%
         mutate(Distance = mapply(modified_distCosine, Longitude, Latitude, lag(Longitude), lag(Latitude)) * 0.000621371) %>%
-        mutate(case_when(is.na(Distance) ~ 0.00,
-                         TRUE ~ Distance)) %>%
-        mutate(Distance = round(Distance, digits = 2))%>%
+        mutate(Distance = case_when(Distance > .10 ~ round(Distance, digits = 2),
+                                    Distance < .10 ~ .10,
+                                    TRUE ~ Distance))%>%
         mutate(days = case_when(days == "M" ~ "Monday",
                                 days == "T" ~  "Tuesday",
                                 days == "W" ~ "Wednesday",
                                 days == "D" ~ "Thursday",
                                 days == "F" ~ "Friday",
                                 TRUE ~ days))
+
+
+
 
 
     output$location <- renderPlot({
