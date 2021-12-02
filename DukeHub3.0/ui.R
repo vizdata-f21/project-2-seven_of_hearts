@@ -2,16 +2,7 @@ library(shinythemes)
 library(shinyalert)
 library(leaflet)
 
-ui <-  fluidPage(
-  theme = shinytheme("cerulean"),
-
-  # App title ----
-  titlePanel("DukeHub 3.0"),
-
-  # Sidebar layout with a input and output definitions ----
-    # Main panel for displaying outputs ----
-    mainPanel(
-      navbarPage("",
+ui <-  navbarPage("DukeHub 3.0",
                  tabPanel("ScheduleBuilder",
 
                    sidebarLayout(
@@ -149,7 +140,7 @@ ui <-  fluidPage(
                  tabPanel("Class Info",
                           mainPanel("Visualzation on the number of people in courses,
                             types of courses"),
-                          DT::dataTableOutput("bardata"),
+                          #DT::dataTableOutput("bardata"),
                           plotOutput("barplot"),
                           plotOutput("piechart")),
                  tabPanel("Distance",
@@ -166,10 +157,9 @@ ui <-  fluidPage(
                           plotOutput("locinfo"),
                           plotOutput("distinfo")),
                  tabPanel("Campus Map",
-                          mainPanel("Duke University", width = 10),
-                          leafletOutput("dukemap")
+                          leafletOutput("dukemap", width = "120%", height = 800)
                           ),
                  tabPanel("Project Info",
                           mainPanel("About our Project")))
 
-    ))
+
