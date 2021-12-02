@@ -552,7 +552,7 @@ shinyServer(function(session, input, output) {
         geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
-        geom_text(aes(label = df$head))
+        geom_text(aes(label = df$head))+
         theme_bw()+
         xlim(0, 10)+
         scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
