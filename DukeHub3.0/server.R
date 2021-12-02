@@ -489,17 +489,13 @@ shinyServer(function(session, input, output) {
         geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
-<<<<<<< HEAD
         geom_text(aes(label = df$head))+
-        theme_bw()+
-=======
         theme_bw() +
         theme(panel.border = element_blank(),
               panel.grid.major = element_blank(),
               panel.grid.minor = element_blank(),
               axis.line = element_line(colour = "black"),
               legend.position = "none")+
->>>>>>> 507bce4f4bc63a7f14f14023bb787c703e7bca55
         xlim(0, 10)+
         scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
         scale_y_continuous(breaks = seq(6, 20, by = 1))+
