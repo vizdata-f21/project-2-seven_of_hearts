@@ -44,7 +44,7 @@ course_data <- course_data %>%
 
 course_data <- course_data %>%
   mutate(location = case_when(
-    grepl('Classroom Building', location ) ~ 'Classroom Buiding',
+    grepl('Classroom Building', location ) ~ 'Classroom Building',
     grepl('Allen', location) ~ 'Allen',
     grepl('Art Building', location) ~ 'Art Building',
     grepl('Bell Tower', location) ~ 'Bell Tower',
@@ -78,7 +78,7 @@ course_data <- course_data %>%
     grepl('Page', location) ~ 'Page',
     grepl('Perkins', location) ~ 'Perkins',
     grepl('Physics', location) ~ 'Physics',
-    grepl('Reuben-Cooke', location) ~ 'Reuben-Cooke',
+    grepl('Reuben-Cooke', location) ~ 'Reuben Cooke',
     grepl('Rubenstein Hall', location) ~ 'Sanford',
     grepl('Rubenstein Arts', location) ~ 'Rubenstein Arts Center',
     grepl('Sanford', location) ~ 'Sanford',
@@ -96,6 +96,8 @@ course_data <- course_data %>%
 # conbime location data
 course_data <- course_data %>%
   left_join(building_group, by = c("location" = "Location"))
+
+print(course_data$Group_Category)
 
 course_data <- course_data %>%
   mutate(Area = case_when(
@@ -373,67 +375,6 @@ shinyServer(function(session, input, output) {
     )
   })
 
-  observeEvent(input$save, {
-    print("did you work")
-    #req(input$view_rows_selected)
-    # df <<- rbind(isolate(df), datasetInput()[input$view_rows_selected, , drop = F])
-  })
-
-
-  output$weekdata <- DT::renderDataTable({
-    datatable(
-      df %>%
-        mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
-        arrange(desc(enroll_cap)),
-      caption = "Tentative Course Schedule"
-    )
-  })
-
-  weekwrangle <- reactive({
-    df %>%
-      mutate_at("days", str_replace, "M-F", "MTWTHF") %>%
-      mutate_at("days", str_replace, "M-TH", "MTWTH") %>%
-      mutate_at("days", str_replace, "TH", "D") %>%
-      separate_rows(days, sep = "") %>%
-      filter(days != "") %>%
-      mutate(days_num = case_when(
-        days == "M" ~ 1,
-        days == "T" ~ 3,
-        days == "W" ~ 5,
-        days == "D" ~ 7,
-        days == "F" ~ 9
-      )) %>%
-      mutate(days_num = as.numeric(days_num)) %>%
-      mutate(mtg_start= round(hour(mtg_start)+minute(mtg_start) / 60 + second(mtg_start) / 360,2)) %>%
-      mutate(mtg_end = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2)) %>%
-      mutate(plotting_st = (days_num - 1)) %>%
-      mutate(plotting_end = (days_num + 1)) %>%
-      mutate(midpoint = (mtg_start + mtg_end)/2) %>%
-      mutate(head = paste0(Subject, catalog_number, Section))
-  })
-
-  output$week <- renderPlot({
-    sched <- ggplot(data = weekwrangle(), aes(x = days_num, y = midpoint)) +
-      geom_rect(aes(xmin = plotting_st, xmax = plotting_end,
-                    ymax = mtg_start, ymin = mtg_end, fill = head))+
-      geom_vline(xintercept = 0, colour = "gray", linetype = "longdash", alpha = 0.4)+
-      geom_vline(xintercept = 2, colour = "gray", linetype = "longdash", alpha = 0.4)+
-      geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
-      geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
-      geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
-      theme_bw() +
-      theme(panel.border = element_blank(),
-            panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank(),
-            axis.line = element_line(colour = "black"),
-            legend.position = "none")+
-      xlim(0, 10)+
-      scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
-      scale_y_continuous(breaks = seq(6, 20, by = 1))+
-      #coord_cartesian(ylim = c(6, 20))+
-      labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week")
-    plot(sched)
-  })
 
 
   observeEvent(input$add, {
@@ -497,6 +438,107 @@ shinyServer(function(session, input, output) {
       plot(pie)
 
     })
+
+
+    output$weekdata <- DT::renderDataTable({
+      datatable(
+        df %>%
+          mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
+          arrange(desc(enroll_cap)),
+        caption = "Tentative Course Schedule"
+      )
+    })
+
+
+    weekwrangle <- reactive({
+      df %>%
+        mutate_at("days", str_replace, "M-F", "MTWTHF") %>%
+        mutate_at("days", str_replace, "M-TH", "MTWTH") %>%
+        mutate_at("days", str_replace, "TH", "D") %>%
+        separate_rows(days, sep = "") %>%
+        filter(days != "") %>%
+        mutate(days_num = case_when(
+          days == "M" ~ 1,
+          days == "T" ~ 3,
+          days == "W" ~ 5,
+          days == "D" ~ 7,
+          days == "F" ~ 9
+        )) %>%
+        mutate(days_num = as.numeric(days_num)) %>%
+        mutate(mtg_start= round(hour(mtg_start)+minute(mtg_start) / 60 + second(mtg_start) / 360,2)) %>%
+        mutate(mtg_end = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2)) %>%
+        mutate(plotting_st = (days_num - 1)) %>%
+        mutate(plotting_end = (days_num + 1)) %>%
+        mutate(midpoint = (mtg_start + mtg_end)/2) %>%
+        mutate(head = paste0(Subject, catalog_number, Section))
+    })
+
+
+
+    output$week <- renderPlot({
+      sched <- ggplot(data = weekwrangle(), aes(x = days_num, y = midpoint)) +
+        geom_rect(aes(xmin = plotting_st, xmax = plotting_end,
+                      ymax = mtg_start, ymin = mtg_end, fill = head))+
+        geom_vline(xintercept = 0, colour = "gray", linetype = "longdash", alpha = 0.4)+
+        geom_vline(xintercept = 2, colour = "gray", linetype = "longdash", alpha = 0.4)+
+        geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
+        geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
+        geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
+        theme_bw() +
+        theme(panel.border = element_blank(),
+              panel.grid.major = element_blank(),
+              panel.grid.minor = element_blank(),
+              axis.line = element_line(colour = "black"),
+              legend.position = "none")+
+        xlim(0, 10)+
+        scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
+        scale_y_continuous(breaks = seq(6, 20, by = 1))+
+        #coord_cartesian(ylim = c(6, 20))+
+        labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week")
+      plot(sched)
+    })
+
+
+
+
+    output$distinfo <- renderPlot({
+
+      dist <- course_data %>%
+        filter(!is.na(Group_Category)) %>%
+        filter(Area != "ARTS&SCI") %>%
+        filter(Area %in% df$Area) %>%
+        group_by(Area) %>%
+        count(Group_Category) %>%
+        arrange(desc(n),.by_group = TRUE) %>%
+        mutate(perc = n/sum(n))
+
+      dist_plot <- ggplot(data = dist) +
+        geom_segment(aes(x = 0, y = reorder_within(Group_Category, n, Area),
+                         xend = n, yend = reorder_within(Group_Category, n, Area)),
+                     size = 1, color = "#003087") +
+        geom_point(aes(x = n, y = reorder_within(Group_Category, n, Area))) +
+        facet_wrap( ~ Area, ncol = 3, scales = "free") +
+        theme_minimal() +
+        theme(strip.background = element_rect(fill = "#003087"),
+              strip.text = element_text(colour = 'white'),
+              panel.grid.minor = element_blank()) +
+        labs(y = "Campus locations",
+             x = "Number of classs",
+             title = "Distribution of class locations by subject area")
+
+      dist_plot
+    })
+
+    joinedtb <- left_join(weekwrangle(), building_groups, by = "Group_Category")
+
+    output$distanceTable <- DT::renderDataTable({
+      datatable(
+        joinedtb,
+        caption = "GroupedByDays"
+      )
+    })
+
+
   })
 
   observeEvent(input$validate,{
@@ -598,7 +640,7 @@ shinyServer(function(session, input, output) {
       datatable(
         df,
         selection = list(mode = "none"),
-        caption = "Table that gets data from unfiltered original data"
+        caption = "Your Bookbag"
       )
     })
   })
@@ -646,32 +688,4 @@ shinyServer(function(session, input, output) {
   })
 
   # Do subject areas differ by location?
-
-    output$distinfo <- renderPlot({
-
-      dist <- course_data %>%
-        filter(!is.na(Group_Category)) %>%
-        filter(Area != "ARTS&SCI") %>%
-        filter(Area %in% df$Area) %>%
-        group_by(Area) %>%
-        count(Group_Category) %>%
-        arrange(desc(n),.by_group = TRUE) %>%
-        mutate(perc = n/sum(n))
-
-      dist_plot <- ggplot(data = dist) +
-        geom_segment(aes(x = 0, y = reorder_within(Group_Category, n, Area),
-                         xend = n, yend = reorder_within(Group_Category, n, Area)),
-                     size = 1, color = "#003087") +
-        geom_point(aes(x = n, y = reorder_within(Group_Category, n, Area))) +
-        facet_wrap( ~ Area, ncol = 3, scales = "free") +
-        theme_minimal() +
-        theme(strip.background = element_rect(fill = "#003087"),
-              strip.text = element_text(colour = 'white'),
-              panel.grid.minor = element_blank()) +
-        labs(y = "Campus locations",
-             x = "Number of classs",
-             title = "Distribution of class locations by subject area")
-
-      dist_plot
-    })
 })

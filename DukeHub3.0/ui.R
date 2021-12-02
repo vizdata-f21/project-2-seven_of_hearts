@@ -150,9 +150,6 @@ ui <-  fluidPage(
       #                choices = course_data$catalog_number),
 
       # Input: Numeric entry for number of obs to view ----
-      numericInput(inputId = "obs",
-                   label = "Number of observations to view:",
-                   value = 10)
       # Show only certain columns from dataframe
       #  $selectInput("Columns","Columns",
       # names(mtcars), multiple = TRUE)
@@ -164,9 +161,6 @@ ui <-  fluidPage(
                  tabPanel(
                    "Schedule Builder",
 
-                   # Output: Verbatim text for data summary ----
-                   #verbatimTextOutput("summary"),
-                   #verbatimTextOutput("dfStr"),
 
                    # Output: HTML table with requested number of observations ----
                    verbatimTextOutput("Select Classes to add to Schedule"),
@@ -191,6 +185,7 @@ ui <-  fluidPage(
                           plotOutput("piechart")),
                  tabPanel("Distance",
                           mainPanel("Visualization based on commuter distance"),
+                          DT::dataTableOutput("distanceTable"),
                           plotOutput("location")),
                  tabPanel("Course Catalog Info",
                           mainPanel("An overview of the classes available"),
