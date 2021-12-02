@@ -203,8 +203,6 @@ shinyServer(function(session, input, output) {
              select(a),
            "Earth and Climate Science" = course_data%>%filter(Subject == "ECS") %>%
              select(a),
-           "Education" = course_data%>%filter(Subject == "EDU") %>%
-             select(a),
            "Engineering"  = course_data%>%filter(Subject == "EGR") %>%
              select(a),
            "Education and Human Development"  = course_data%>%filter(Subject == "EHD") %>%
@@ -535,29 +533,6 @@ shinyServer(function(session, input, output) {
       dist_plot
     })
 
-    modified_distCosine <- function(Longitude1, Latitude1, Longitude2, Latitude2) {
-      if (any(is.na(c(Longitude1, Latitude1, Longitude2, Latitude2)))) {
-        NA
-      } else {
-        distCosine(c(Longitude1, Latitude1), c(Longitude2, Latitude2))
-      }
-    }
-
-
-    distTable <- left_join(weekwrangle(), coordinates, by = "Group_Number")
-
-
-    output$distanceTable <- DT::renderDataTable({
-      datatable(
-    distTable <- distTable %>%
-        group_by(days) %>%
-        arrange(desc(mtg_start)) %>%
-        mutate(Distance = mapply(modified_distCosine, Longitude, Latitude, lag(Longitude), lag(Latitude)) * 0.000621371) %>%
-        mutate(Distance = round(Distance, digits = 2))
-      )
-    })
-
-    print(distTable)
 
 
 
@@ -594,7 +569,7 @@ shinyServer(function(session, input, output) {
 
       modified_distCosine <- function(Longitude1, Latitude1, Longitude2, Latitude2) {
       if (any(is.na(c(Longitude1, Latitude1, Longitude2, Latitude2)))) {
-        NA
+        0.0
       } else {
         distCosine(c(Longitude1, Latitude1), c(Longitude2, Latitude2))
       }
@@ -608,17 +583,24 @@ shinyServer(function(session, input, output) {
         group_by(days) %>%
         arrange(desc(mtg_start)) %>%
         mutate(Distance = mapply(modified_distCosine, Longitude, Latitude, lag(Longitude), lag(Latitude)) * 0.000621371) %>%
-        mutate(Distance = round(Distance, digits = 2))
-
-
-
+        mutate(case_when(is.na(Distance) ~ 0.00,
+                         TRUE ~ Distance)) %>%
+        mutate(Distance = round(Distance, digits = 2))%>%
+        mutate(days = case_when(days == "M" ~ "Monday",
+                                days == "T" ~  "Tuesday",
+                                days == "W" ~ "Wednesday",
+                                days == "D" ~ "Thursday",
+                                days == "F" ~ "Friday",
+                                TRUE ~ days))
 
 
     output$location <- renderPlot({
 
 
-      distance_plot <- ggplot(data = distTable, aes(x= days, y = Distance)) + geom_col() + coord_flip()
-
+      distance_plot <- ggplot(data = distTable, aes(x= days, y = Distance))+ geom_col(aes(fill = factor(days))) +
+        labs(title = "Class Commuter Distance", x = "Day", y = "Distance (miles)") + theme_minimal() +
+        scale_color_viridis_b() + theme(legend.position = "",
+                                        axis.title.y = element_text(angle = 0, vjust = 0.5)) + coord_flip()
 
       distance_plot
     })

@@ -59,7 +59,6 @@ ui <-  fluidPage(
                                  "Electrical and Computer Engineering",
                                  "Economics",
                                  "Earth and Climate Science",
-                                 "Education",
                                  "Engineering",
                                  "Education and Human Development",
                                  "Energy",
@@ -132,27 +131,6 @@ ui <-  fluidPage(
                      ),
                      multiple = FALSE),
 
-      # # Input: Selector for choosing General Subject Area ----
-      # selectizeInput(inputId = "area",
-      #                label = "Choose a General Area:",
-      #                choices = c("Arts & Humanities",
-      #                            "Natural Sciences",
-      #                            "Social Sciences",
-      #                            "Engineering",
-      #                            "Language",
-      #                            "Physical Education",
-      #                            "Writing"),
-      #                multiple = FALSE),
-
-
-      # selectizeInput(inputId = "code",
-      #                label = "Choose a Course Code: ",
-      #                choices = course_data$catalog_number),
-
-      # Input: Numeric entry for number of obs to view ----
-      # Show only certain columns from dataframe
-      #  $selectInput("Columns","Columns",
-      # names(mtcars), multiple = TRUE)
     ),
 
     # Main panel for displaying outputs ----
