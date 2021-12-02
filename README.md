@@ -17,17 +17,22 @@ convenient. Our DukeHub 3.0 is an R Shiny app that allows students to
 build their academic schedule from 2408 courses/sections and provides
 additional insights to their schedule through various visualizations.
 Once a student inputs their schedule, the app will provide different
-visualizations such as the distance between the classes they choose to
-avoid unnecessary travel in between classes. We will also make
-recommendations on the good study spots based on the schedules users
-create.
+visualizations such as the enrollment caps, diversity of the subject
+areas they study, and the expected traveling during a day based on the
+classes student select.
 
 ## Interactive functions
 
-We designed 5 tabs for students to explore the details of their course
-schedules.
+We designed 5 tabs for students to explore the nitty-gritty of their
+course schedules, which will be introduced in detail in the following
+sections.
 
-![plot](data/graphics/tab.jpg)
+![plot](data/graphics/tab.jpg) \* [Schedule
+builder](#schedule-builder)  
+\* [Weekly calendar](#weekly-calendar)  
+\* [Class information](#class-information)  
+\* [Distance](#distance)  
+\* [Course Catalog Info](#course-catalog-info)
 
 ### Schedule builder
 

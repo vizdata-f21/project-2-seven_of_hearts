@@ -516,11 +516,13 @@ shinyServer(function(session, input, output) {
         arrange(desc(n),.by_group = TRUE) %>%
         mutate(perc = n/sum(n))
 
-      dist_plot <- ggplot(data = dist) +
+      dist_plot <- ggplot(data = dist, aes(y = reorder_within(Group_Category, n, Area),
+                                           Group_Category)) +
         geom_segment(aes(x = 0, y = reorder_within(Group_Category, n, Area),
                          xend = n, yend = reorder_within(Group_Category, n, Area)),
                      size = 1, color = "#003087") +
         geom_point(aes(x = n, y = reorder_within(Group_Category, n, Area))) +
+        scale_y_reordered() +
         facet_wrap( ~ Area, ncol = 3, scales = "free") +
         theme_minimal() +
         theme(strip.background = element_rect(fill = "#003087"),
