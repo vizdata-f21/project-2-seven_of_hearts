@@ -421,7 +421,7 @@ shinyServer(function(session, input, output) {
       mutate(plotting_st = (days_num - 1)) %>%
       mutate(plotting_end = (days_num + 1)) %>%
       mutate(midpoint = (mtg_start + mtg_end)/2) %>%
-      mutate(head = paste0(Subject, catalog_number, Section))
+      mutate(head = paste0(Subject," ",catalog_number))
   })
 
   output$week <- renderPlot({
@@ -433,6 +433,7 @@ shinyServer(function(session, input, output) {
       geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
       geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
       geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
+      geom_text(aes(label = head))+
       theme_bw() +
       theme(panel.border = element_blank(),
             panel.grid.major = element_blank(),
@@ -441,8 +442,8 @@ shinyServer(function(session, input, output) {
             legend.position = "none")+
       xlim(0, 10)+
       scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
-      scale_y_continuous(breaks = seq(6, 20, by = 1))+
-      #coord_cartesian(ylim = c(6, 20))+
+      scale_y_continuous(breaks = seq(6, 22, by = 1))+
+      coord_cartesian(ylim = c(6, 22))+
       labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week")
     plot(sched)
   })
