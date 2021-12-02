@@ -17,30 +17,39 @@ convenient. Our DukeHub 3.0 is an R Shiny app that allows students to
 build their academic schedule from 2408 courses/sections and provides
 additional insights to their schedule through various visualizations.
 Once a student inputs their schedule, the app will provide different
-visualizations such as the distance between the classes they choose to
-avoid unnecessary travel in between classes. We will also make
-recommendations on the good study spots based on the schedules users
-create.
+visualizations such as the enrollment caps, diversity of the subject
+areas they study, and the expected traveling during a day based on the
+classes student select.
 
 ## Interactive functions
 
-We designed 5 tabs for students to explore the details of their course
-schedules.
+We designed 5 tabs for students to explore the nitty-gritty of their
+course schedules, which will be introduced in detail in the following
+sections.
 
-![plot](data/graphics/tab.jpg)
+![plot](data/graphics/tab.jpg) \* [Schedule
+builder](#schedule-builder)  
+\* [Weekly calendar](#weekly-calendar)  
+\* [Class information](#class-information)  
+\* [Distance](#distance)  
+\* [Course Catalog Info](#course-catalog-info)
 
 ### Schedule builder
 
 Students can choose courses based on the specific subjects they would
 like to take. Like the DukeHub 2.0, students can validate their schedule
-to avoid time conflicts and overload limits, drop classes back to the
-shopping cart, and clear all selections. One improvement from DukeHub
-2.0 is that more information about classes is available on the same
-page.
+to avoid time conflicts and overload limits (6 classes maximum), drop
+classes back to the shopping cart, and clear all selections. If the
+students didn’t choose any classes, the schedule builder will also
+report invalid.
 
-Take an example of a student who wants to choose African American
-Studies. In DukeHub 2.0, the dropdown list only contains the course
-catalog numbers and descriptions after choosing the subject.
+![plot](data/graphics/invalid.jpg)
+
+Our improvement from DukeHub 2.0 is that more information about classes
+is available on the same page. Take an example of a student who wants to
+choose African American Studies. In DukeHub 2.0, the dropdown list only
+contains the course catalog numbers and descriptions after choosing the
+subject.
 
 ![plot](data/graphics/dukehub_old1.jpg)
 
@@ -73,9 +82,20 @@ after visualizing the size of other classes. Subject areas are shown in
 a pie chart to give the student an idea of how diverse their classes are
 that semester.
 
-Here is an example of a schedule of 6 classes:
+Here is an example of a schedule of 6 classes. We see that COMPSCI 201
+is a big introductory class with 300 enrollment cap, and the
+higher-level AAAS 109S is smaller. Students might want to strike a
+balance regarding class sizes to achieve a good learning experience.
+Although there are 3 CS classes, this diverse schedule allows the
+student to explore other areas like Engineering, Social Science, and
+Arts & Humanities as well.
+
+We hope these visualizations will help students determine on a schedule
+with reasonable combination of classes sizes and subject areas and enjoy
+the liberal arts education environment at Duke.
 
 ![plot](data/graphics/bar_chart.jpg)
+
 ![plot](data/graphics/pie_chart.jpg)
 
 ### Distance
@@ -89,19 +109,17 @@ the donut chart, we find that the places where the most classes are held
 are the main quad of West Campus (888 classes) and on Science Drive (535
 classes).
 
-\[plot\]
+![plot](data/graphics/pie_dist.jpg)
 
 The specific course students choose indicate their interest in that
 area, so it is also useful to know the distribution of locations by
-these subject areas. Take an example of a students who chooses DANCE 122
-(Arts & Humanities), AAAS 190S (Social Sciences), and AEROSCI 302S
-(Natural Sciences). The lollipop plot indicates that Arts & Humanities
-classes are mostly held on the main quad of West Campus as well as
-places between East and West, such as Rubinstein Arts Center, Nasher
+these subject areas. The example schedule in [Class
+information](#class-information) contains classes from four subject
+areas. The lollipop plot indicates that Arts & Humanities classes are
+mostly held on the main quad of West Campus as well as places between
+East and West (C-One Route), such as Rubinstein Arts Center, Nasher
 Museum of Art, and Smith Warehouse; Natural Sciences classes are mostly
-held on Science Drive; and Social Sciences classes are spreaded on both
+held on Science Drive; and Social Sciences classes are spread on both
 East and West campus.
 
-\[plot\]
-
-## Conclusion
+![plot](data/graphics/dist_plot.jpg)

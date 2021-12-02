@@ -20,6 +20,7 @@ library(treemap)
 library(tidytext)
 library(ggrepel)
 library(geodist)
+library(geosphere)
 
 
 course_data <- read_csv(here::here("data/course_catalog.csv"))
@@ -394,14 +395,14 @@ shinyServer(function(session, input, output) {
       )
     })
 
-    output$bardata <- DT::renderDataTable({ # after changing classes in the schedule builder, plot doesn't change
-      datatable(
-        df %>%
-          mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
-          arrange(desc(enroll_cap)),
-        caption = "You selected these courses"
-      )
-    })
+   # output$bardata <- DT::renderDataTable({ # after changing classes in the schedule builder, plot doesn't change
+  #    datatable(
+  #      df %>%
+  #        mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
+  #        arrange(desc(enroll_cap)),
+  #      caption = "You selected these courses"
+  #    )
+  #  })
 
     output$barplot <- renderPlot({
       bar_plot <- ggplot(data = df %>%
@@ -439,7 +440,7 @@ shinyServer(function(session, input, output) {
         coord_polar("y", start = 0) +
         scale_fill_viridis_d(option = "magma")
 
-      plot(pie)
+      plot(pie, height = 500, width = 500)
 
     })
 
@@ -521,11 +522,13 @@ shinyServer(function(session, input, output) {
         arrange(desc(n),.by_group = TRUE) %>%
         mutate(perc = n/sum(n))
 
-      dist_plot <- ggplot(data = dist) +
+      dist_plot <- ggplot(data = dist, aes(y = reorder_within(Group_Category, n, Area),
+                                           Group_Category)) +
         geom_segment(aes(x = 0, y = reorder_within(Group_Category, n, Area),
                          xend = n, yend = reorder_within(Group_Category, n, Area)),
                      size = 1, color = "#003087") +
         geom_point(aes(x = n, y = reorder_within(Group_Category, n, Area))) +
+        scale_y_reordered() +
         facet_wrap( ~ Area, ncol = 3, scales = "free") +
         theme_minimal() +
         theme(strip.background = element_rect(fill = "#003087"),
@@ -546,8 +549,6 @@ shinyServer(function(session, input, output) {
   })
 
   observeEvent(input$calculate, {
-
-
 
     weekwrangle <- reactive({
       df %>%
@@ -600,7 +601,7 @@ shinyServer(function(session, input, output) {
         arrange(desc(mtg_start)) %>%
         mutate(Distance = mapply(modified_distCosine, Longitude, Latitude, lag(Longitude), lag(Latitude)) * 0.000621371) %>%
         mutate(Distance = case_when(Distance > .10 ~ round(Distance, digits = 2),
-                                    Distance < .10 ~ .10,
+                                    Distance < .10 ~ 0,
                                     TRUE ~ Distance))%>%
         mutate(days = case_when(days == "M" ~ "Monday",
                                 days == "T" ~  "Tuesday",
