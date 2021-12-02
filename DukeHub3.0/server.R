@@ -429,7 +429,7 @@ shinyServer(function(session, input, output) {
       geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
       geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
       geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
-      geom_text(aes(label = head))+
+      geom_text(aes(label = paste0(Subject," ",catalog_number)))+
       theme_bw() +
       theme(panel.border = element_blank(),
             panel.grid.major = element_blank(),
