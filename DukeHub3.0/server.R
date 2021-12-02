@@ -19,6 +19,7 @@ library(leaflet)
 library(treemap)
 library(tidytext)
 library(ggrepel)
+library(geosphere)
 
 
 course_data <- read_csv(here::here("data/course_catalog.csv"))
@@ -534,14 +535,25 @@ shinyServer(function(session, input, output) {
       dist_plot
     })
 
+    modified_distCosine <- function(Longitude1, Latitude1, Longitude2, Latitude2) {
+      if (any(is.na(c(Longitude1, Latitude1, Longitude2, Latitude2)))) {
+        NA
+      } else {
+        distCosine(c(Longitude1, Latitude1), c(Longitude2, Latitude2))
+      }
+    }
+
+
+    distTable <- left_join(weekwrangle(), coordinates, by = "Group_Number")
 
 
     output$distanceTable <- DT::renderDataTable({
       datatable(
-      weekwrangle()%>%
-          select(location, Group_Category, Group_Number),
+      distTable %>%
+        mutate(     Distance = mapply(modified_distCosine,
+                                 Longitude, Latitude, lag(Longitude), lag(Latitude)),
         caption = "GroupedByDays"
-      )
+      ))
     })
 
 
@@ -657,8 +669,9 @@ shinyServer(function(session, input, output) {
       addTiles() %>%
       setView(lat = 36.000015, lng = -78.936033, zoom = 13) %>%
       addCircleMarkers(lng = coordinates$Longitude,
-                       lat = coordinates$Latitude)
-  })
+                       lat = coordinates$Latitude,
+                       popup  = coordinates$Group_Number,
+                       label = coordinates$Group_Number)})
 
 
   # course_catalog table
