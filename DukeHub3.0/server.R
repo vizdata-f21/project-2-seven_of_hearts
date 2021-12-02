@@ -552,17 +552,18 @@ shinyServer(function(session, input, output) {
         geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
-        theme_bw() +
-        theme(panel.border = element_blank(),
-              panel.grid.major = element_blank(),
-              panel.grid.minor = element_blank(),
-              axis.line = element_line(colour = "black"),
-              legend.position = "none")+
+        geom_text(aes(label = df$head))
+        theme_bw()+
         xlim(0, 10)+
         scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
         scale_y_continuous(breaks = seq(6, 20, by = 1))+
         #coord_cartesian(ylim = c(6, 20))+
-        labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week")
+        labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week") +
+          theme(panel.border = element_blank(),
+                panel.grid.major = element_blank(),
+                panel.grid.minor = element_blank(),
+                axis.line = element_line(colour = "black"),
+                legend.position = "none")
       plot(sched)
     })
 
