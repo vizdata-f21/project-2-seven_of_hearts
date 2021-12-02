@@ -19,7 +19,7 @@ library(leaflet)
 library(treemap)
 library(tidytext)
 library(ggrepel)
-library(geosphere)
+#library(geodist)
 
 
 course_data <- read_csv(here::here("data/course_catalog.csv"))
@@ -549,11 +549,13 @@ shinyServer(function(session, input, output) {
 
     output$distanceTable <- DT::renderDataTable({
       datatable(
-      distTable %>%
-        mutate(     Distance = mapply(modified_distCosine,
-                                 Longitude, Latitude, lag(Longitude), lag(Latitude)),
+      distTable,
+      #%>%
+      #  mutate(     Distance = mapply(modified_distCosine,
+      #                           Longitude, Latitude, lag(Longitude), lag(Latitude)),
         caption = "GroupedByDays"
-      ))
+      #)
+      )
     })
 
 
