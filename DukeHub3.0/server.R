@@ -439,7 +439,7 @@ shinyServer(function(session, input, output) {
         coord_polar("y", start = 0) +
         scale_fill_viridis_d(option = "magma")
 
-      plot(pie)
+      plot(pie, height = 500, width = 500)
 
     })
 
