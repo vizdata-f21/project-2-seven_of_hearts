@@ -22,7 +22,7 @@ library(ggrepel)
 
 
 course_data <- read_csv(here::here("data/course_catalog.csv"))
-building_group <- read_csv(here::here("data/Building_groups.csv"))
+building_group <- read_csv(here::here("data/Building_Groups.csv"))
 coordinates <- read_csv(here::here("data/building_group_coordinates.csv"))
 
 course_data <- course_data %>%
@@ -41,6 +41,7 @@ course_data <- course_data %>%
          !grepl('See Instructor/Department', location),
          !grepl('Thesis',  Descr),
          Descr != 'FIRST-YEAR SEMINAR (TOP)')
+
 
 course_data <- course_data %>%
   mutate(location = case_when(
@@ -66,15 +67,18 @@ course_data <- course_data %>%
     grepl('French Science', location) ~ 'French Science',
     grepl('Friedl Bldg', location) ~ 'Friedl',
     grepl('Fuqua', location) ~ 'Fuqua',
+    grepl('Golf', location) ~ 'Golf Course',
     grepl('Grainger Hal', location) ~ 'Grainger Hall',
     grepl('Gray', location) ~ 'Gray',
     grepl('Gross Hall', location) ~ 'Gross Hall',
     grepl('Hudson Hall', location) ~ 'Hudson Hall',
     grepl('Languages', location) ~ 'Languages',
+    grepl('Lemur', location) ~ 'Lemur Center',
     grepl('LSRC', location) ~ 'LSRC',
     grepl('Nanaline', location) ~ 'Nanaline',
     grepl('Nasher', location) ~ 'Nasher',
     grepl('Old Chemistry', location) ~ 'Old Chemistry',
+    grepl('Online', location) ~ 'Online',
     grepl('Page', location) ~ 'Page',
     grepl('Perkins', location) ~ 'Perkins',
     grepl('Physics', location) ~ 'Physics',
@@ -87,17 +91,18 @@ course_data <- course_data %>%
     grepl('Teer', location) ~ 'Teer',
     grepl('The Ark', location) ~ 'The Ark',
     grepl('Trent', location) ~ 'Trent Hall',
+    grepl('West Campus Tennis Courts', location) ~ 'West Campus Tennis Courts',
     grepl('West Duke', location) ~ 'West Duke',
     grepl('White', location) ~ 'White Lecture Hall',
     grepl('Wilkinson', location) ~ 'Wilkinson',
     grepl('Wilson Center', location) ~ 'Wilson Center',
-    TRUE ~ location))
+    TRUE ~ paste(location, 'NO MATCH')))
 
 # conbime location data
 course_data <- course_data %>%
   left_join(building_group, by = c("location" = "Location"))
 
-print(course_data$Group_Category)
+print(unique(course_data$Group_Category))
 
 course_data <- course_data %>%
   mutate(Area = case_when(
@@ -129,9 +134,9 @@ course_data <- course_data %>%
 
 a <- c("Subject", "catalog_number", "Descr", "Section",
        "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-       "location", "Area", "Group_Category")
+       "location", "Area", "Group_Category", "Group_Number")
 
-df <- setNames(data.frame(matrix(ncol = 12, nrow = 0)), a)
+df <- setNames(data.frame(matrix(ncol = 13, nrow = 0)), a)
 
 
 print(df)
@@ -529,11 +534,12 @@ shinyServer(function(session, input, output) {
       dist_plot
     })
 
-    joinedtb <- left_join(weekwrangle(), building_groups, by = "Group_Category")
+
 
     output$distanceTable <- DT::renderDataTable({
       datatable(
-        joinedtb,
+      weekwrangle()%>%
+          select(location, Group_Category, Group_Number),
         caption = "GroupedByDays"
       )
     })
