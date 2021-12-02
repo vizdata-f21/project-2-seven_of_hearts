@@ -19,7 +19,7 @@ library(leaflet)
 library(treemap)
 library(tidytext)
 library(ggrepel)
-#library(geodist)
+library(geodist)
 
 
 course_data <- read_csv(here::here("data/course_catalog.csv"))
@@ -203,8 +203,6 @@ shinyServer(function(session, input, output) {
              select(a),
            "Earth and Climate Science" = course_data%>%filter(Subject == "ECS") %>%
              select(a),
-           "Education" = course_data%>%filter(Subject == "EDU") %>%
-             select(a),
            "Engineering"  = course_data%>%filter(Subject == "EGR") %>%
              select(a),
            "Education and Human Development"  = course_data%>%filter(Subject == "EHD") %>%
@@ -381,68 +379,6 @@ shinyServer(function(session, input, output) {
     )
   })
 
-  observeEvent(input$save, {
-    print("did you work")
-    #req(input$view_rows_selected)
-    # df <<- rbind(isolate(df), datasetInput()[input$view_rows_selected, , drop = F])
-  })
-
-
-  output$weekdata <- DT::renderDataTable({
-    datatable(
-      df %>%
-        mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
-        arrange(desc(enroll_cap)),
-      caption = "Tentative Course Schedule"
-    )
-  })
-
-  weekwrangle <- reactive({
-    df %>%
-      mutate_at("days", str_replace, "M-F", "MTWTHF") %>%
-      mutate_at("days", str_replace, "M-TH", "MTWTH") %>%
-      mutate_at("days", str_replace, "TH", "D") %>%
-      separate_rows(days, sep = "") %>%
-      filter(days != "") %>%
-      mutate(days_num = case_when(
-        days == "M" ~ 1,
-        days == "T" ~ 3,
-        days == "W" ~ 5,
-        days == "D" ~ 7,
-        days == "F" ~ 9
-      )) %>%
-      mutate(days_num = as.numeric(days_num)) %>%
-      mutate(mtg_start= round(hour(mtg_start)+minute(mtg_start) / 60 + second(mtg_start) / 360,2)) %>%
-      mutate(mtg_end = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2)) %>%
-      mutate(plotting_st = (days_num - 1)) %>%
-      mutate(plotting_end = (days_num + 1)) %>%
-      mutate(midpoint = (mtg_start + mtg_end)/2) %>%
-      mutate(head = paste0(Subject," ",catalog_number))
-  })
-
-  output$week <- renderPlot({
-    sched <- ggplot(data = weekwrangle(), aes(x = days_num, y = midpoint)) +
-      geom_rect(aes(xmin = plotting_st, xmax = plotting_end,
-                    ymax = mtg_start, ymin = mtg_end, fill = head))+
-      geom_vline(xintercept = 0, colour = "gray", linetype = "longdash", alpha = 0.4)+
-      geom_vline(xintercept = 2, colour = "gray", linetype = "longdash", alpha = 0.4)+
-      geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
-      geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
-      geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
-      geom_text(aes(label = paste0(Subject," ",catalog_number)))+
-      theme_bw() +
-      theme(panel.border = element_blank(),
-            panel.grid.major = element_blank(),
-            panel.grid.minor = element_blank(),
-            axis.line = element_line(colour = "black"),
-            legend.position = "none")+
-      xlim(0, 10)+
-      scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
-      scale_y_continuous(breaks = seq(6, 22, by = 1))+
-      coord_cartesian(ylim = c(6, 22))+
-      labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week")
-    plot(sched)
-  })
 
 
   observeEvent(input$add, {
@@ -552,20 +488,22 @@ shinyServer(function(session, input, output) {
         geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
+<<<<<<< HEAD
         geom_text(aes(label = df$head))+
         theme_bw()+
+=======
+        theme_bw() +
+        theme(panel.border = element_blank(),
+              panel.grid.major = element_blank(),
+              panel.grid.minor = element_blank(),
+              axis.line = element_line(colour = "black"),
+              legend.position = "none")+
+>>>>>>> 507bce4f4bc63a7f14f14023bb787c703e7bca55
         xlim(0, 10)+
         scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
-        scale_y_continuous(breaks = seq(6, 20, by = 1), limits = c("6AM", "7AM", "8AM", "9AM", "10AM", "11AM",
-                                                                   "12PM", "1PM", "2PM", "3PM", "4PM", "5PM",
-                                                                   "6PM", "7PM", "8PM", "9PM",  "10PM"))+
+        scale_y_continuous(breaks = seq(6, 20, by = 1))+
         #coord_cartesian(ylim = c(6, 20))+
-        labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week") +
-          theme(panel.border = element_blank(),
-                panel.grid.major = element_blank(),
-                panel.grid.minor = element_blank(),
-                axis.line = element_line(colour = "black"),
-                legend.position = "none")
+        labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week")
       plot(sched)
     })
 
@@ -600,31 +538,94 @@ shinyServer(function(session, input, output) {
       dist_plot
     })
 
-    modified_distCosine <- function(Longitude1, Latitude1, Longitude2, Latitude2) {
-      if (any(is.na(c(Longitude1, Latitude1, Longitude2, Latitude2)))) {
-        NA
-      } else {
+
+
+
+
+
+  })
+
+  observeEvent(input$calculate, {
+
+
+
+    weekwrangle <- reactive({
+      df %>%
+        mutate_at("days", str_replace, "M-F", "MTWTHF") %>%
+        mutate_at("days", str_replace, "M-TH", "MTWTH") %>%
+        mutate_at("days", str_replace, "TH", "D") %>%
+        separate_rows(days, sep = "") %>%
+        filter(days != "") %>%
+        mutate(days_num = case_when(
+          days == "M" ~ 1,
+          days == "T" ~ 3,
+          days == "W" ~ 5,
+          days == "D" ~ 7,
+          days == "F" ~ 9
+        )) %>%
+        mutate(days_num = as.numeric(days_num)) %>%
+        mutate(mtg_start= round(hour(mtg_start)+minute(mtg_start) / 60 + second(mtg_start) / 360,2)) %>%
+        mutate(mtg_end = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2)) %>%
+        mutate(plotting_st = (days_num - 1)) %>%
+        mutate(plotting_end = (days_num + 1)) %>%
+        mutate(midpoint = (mtg_start + mtg_end)/2) %>%
+        mutate(head = paste0(Subject, catalog_number, Section))
+    })
+
+      modified_distCosine <- function(Longitude1, Latitude1, Longitude2, Latitude2) {
+      if(any(is.na(c(Longitude1, Latitude1, Longitude2, Latitude2)))) {
+        0.0
+      }
+      else {
         distCosine(c(Longitude1, Latitude1), c(Longitude2, Latitude2))
       }
     }
 
 
-    distTable <- left_join(weekwrangle(), coordinates, by = "Group_Number")
+    distTable <- left_join(weekwrangle(), coordinates, by = "Group_Number") %>%
+      select(Subject, days, mtg_start, location, Group_Number, Latitude, Longitude)
+
 
 
     output$distanceTable <- DT::renderDataTable({
       datatable(
-      distTable,
-      #%>%
-      #  mutate(     Distance = mapply(modified_distCosine,
-      #                           Longitude, Latitude, lag(Longitude), lag(Latitude)),
-        caption = "GroupedByDays"
-      #)
+        distTable,
+        caption = "Tentative Course Schedule"
       )
     })
 
 
+    distTable <- distTable %>%
+        group_by(days) %>%
+        arrange(desc(mtg_start)) %>%
+        mutate(Distance = mapply(modified_distCosine, Longitude, Latitude, lag(Longitude), lag(Latitude)) * 0.000621371) %>%
+        mutate(Distance = case_when(Distance > .10 ~ round(Distance, digits = 2),
+                                    Distance < .10 ~ .10,
+                                    TRUE ~ Distance))%>%
+        mutate(days = case_when(days == "M" ~ "Monday",
+                                days == "T" ~  "Tuesday",
+                                days == "W" ~ "Wednesday",
+                                days == "D" ~ "Thursday",
+                                days == "F" ~ "Friday",
+                                TRUE ~ days))
+
+
+
+
+
+    output$location <- renderPlot({
+
+
+      distance_plot <- ggplot(data = distTable, aes(x= days, y = Distance))+ geom_col(aes(fill = factor(days))) +
+        labs(title = "Class Commuter Distance", x = "Day", y = "Distance (miles)") + theme_minimal() +
+        scale_color_viridis_b() + theme(legend.position = "",
+                                        axis.title.y = element_text(angle = 0, vjust = 0.5)) + coord_flip()
+
+      distance_plot
+    })
   })
+
+
 
   observeEvent(input$validate,{
 

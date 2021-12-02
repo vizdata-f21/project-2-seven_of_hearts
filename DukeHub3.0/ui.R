@@ -8,6 +8,7 @@ ui <-  fluidPage(
   # App title ----
   titlePanel("DukeHub 3.0"),
 
+
   # Sidebar layout with a input and output definitions ----
   sidebarLayout(
 
@@ -59,7 +60,6 @@ ui <-  fluidPage(
                                  "Electrical and Computer Engineering",
                                  "Economics",
                                  "Earth and Climate Science",
-                                 "Education",
                                  "Engineering",
                                  "Education and Human Development",
                                  "Energy",
@@ -132,27 +132,6 @@ ui <-  fluidPage(
                      ),
                      multiple = FALSE),
 
-      # # Input: Selector for choosing General Subject Area ----
-      # selectizeInput(inputId = "area",
-      #                label = "Choose a General Area:",
-      #                choices = c("Arts & Humanities",
-      #                            "Natural Sciences",
-      #                            "Social Sciences",
-      #                            "Engineering",
-      #                            "Language",
-      #                            "Physical Education",
-      #                            "Writing"),
-      #                multiple = FALSE),
-
-
-      # selectizeInput(inputId = "code",
-      #                label = "Choose a Course Code: ",
-      #                choices = course_data$catalog_number),
-
-      # Input: Numeric entry for number of obs to view ----
-      # Show only certain columns from dataframe
-      #  $selectInput("Columns","Columns",
-      # names(mtcars), multiple = TRUE)
     ),
 
     # Main panel for displaying outputs ----
@@ -185,7 +164,12 @@ ui <-  fluidPage(
                           plotOutput("piechart")),
                  tabPanel("Distance",
                           mainPanel("Visualization based on commuter distance"),
+                          selectInput(inputId = "Housing",
+                                      label = "Where do you live?",
+                                      choices  = c("East Campus", "West Campus",
+                                                   "9th Street (Off Campus)")),
                           DT::dataTableOutput("distanceTable"),
+                          actionButton("calculate", "Calcuate Commuter Distance"),
                           plotOutput("location")),
                  tabPanel("Course Catalog Info",
                           mainPanel("An overview of the classes available"),
