@@ -556,7 +556,9 @@ shinyServer(function(session, input, output) {
         theme_bw()+
         xlim(0, 10)+
         scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
-        scale_y_continuous(breaks = seq(6, 20, by = 1))+
+        scale_y_continuous(breaks = seq(6, 20, by = 1), limits = c("6AM", "7AM", "8AM", "9AM", "10AM", "11AM",
+                                                                   "12PM", "1PM", "2PM", "3PM", "4PM", "5PM",
+                                                                   "6PM", "7PM", "8PM", "9PM",  "10PM"))+
         #coord_cartesian(ylim = c(6, 20))+
         labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week") +
           theme(panel.border = element_blank(),
