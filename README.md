@@ -27,7 +27,7 @@ create.
 We designed 5 tabs for students to explore the details of their course
 schedules.
 
-![plot](data/tab.jpg)
+![plot](data/graphics/tab.jpg)
 
 ### Schedule builder
 
@@ -42,12 +42,12 @@ Take an example of a student who wants to choose African American
 Studies. In DukeHub 2.0, the dropdown list only contains the course
 catalog numbers and descriptions after choosing the subject.
 
-![plot](data/dukehub_old1.jpg)
+![plot](data/graphics/dukehub_old1.jpg)
 
 Students need to click twice to see the time and location of a class,
 which are difficult to find.
 
-![plot](data/dukehub_old2.jpg)
+![plot](data/graphics/dukehub_old2.jpg)
 
 Our shiny app displasy a comprehensive list of African American Studies
 classes, including course catalog, description, enrollment cap,
@@ -55,7 +55,7 @@ location, time, teaching mode, etc. This will immediately give students
 an idea of how far away this class is from their dorms, whether they
 need to get up early to catch a bus, the class size, etc.
 
-![plot](data/newapp_aaas.jpg)
+![plot](data/graphics/newapp_aaas.jpg)
 
 ### Weekly calendar
 
@@ -75,10 +75,33 @@ that semester.
 
 Here is an example of a schedule of 6 classes:
 
-![plot](data/bar_chart.jpg) ![plot](data/pie_chart.jpg)
+![plot](data/graphics/bar_chart.jpg)
+![plot](data/graphics/pie_chart.jpg)
 
 ### Distance
 
-### Recommendations
+### Course Catalog Info
+
+The students are able to find higher-level information about all courses
+during that semester. Duke campus is huge and hard to navigate, so we
+want to show the students the location distribution of all classes. From
+the donut chart, we find that the places where the most classes are held
+are the main quad of West Campus (888 classes) and on Science Drive (535
+classes).
+
+\[plot\]
+
+The specific course students choose indicate their interest in that
+area, so it is also useful to know the distribution of locations by
+these subject areas. Take an example of a students who chooses DANCE 122
+(Arts & Humanities), AAAS 190S (Social Sciences), and AEROSCI 302S
+(Natural Sciences). The lollipop plot indicates that Arts & Humanities
+classes are mostly held on the main quad of West Campus as well as
+places between East and West, such as Rubinstein Arts Center, Nasher
+Museum of Art, and Smith Warehouse; Natural Sciences classes are mostly
+held on Science Drive; and Social Sciences classes are spreaded on both
+East and West campus.
+
+\[plot\]
 
 ## Conclusion

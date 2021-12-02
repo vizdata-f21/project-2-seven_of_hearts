@@ -19,10 +19,11 @@ library(leaflet)
 library(treemap)
 library(tidytext)
 library(ggrepel)
+#library(geodist)
 
 
 course_data <- read_csv(here::here("data/course_catalog.csv"))
-building_group <- read_csv(here::here("data/Building_groups.csv"))
+building_group <- read_csv(here::here("data/Building_Groups.csv"))
 coordinates <- read_csv(here::here("data/building_group_coordinates.csv"))
 
 course_data <- course_data %>%
@@ -42,9 +43,10 @@ course_data <- course_data %>%
          !grepl('Thesis',  Descr),
          Descr != 'FIRST-YEAR SEMINAR (TOP)')
 
+
 course_data <- course_data %>%
   mutate(location = case_when(
-    grepl('Classroom Building', location ) ~ 'Classroom Buiding',
+    grepl('Classroom Building', location ) ~ 'Classroom Building',
     grepl('Allen', location) ~ 'Allen',
     grepl('Art Building', location) ~ 'Art Building',
     grepl('Bell Tower', location) ~ 'Bell Tower',
@@ -66,19 +68,22 @@ course_data <- course_data %>%
     grepl('French Science', location) ~ 'French Science',
     grepl('Friedl Bldg', location) ~ 'Friedl',
     grepl('Fuqua', location) ~ 'Fuqua',
+    grepl('Golf', location) ~ 'Golf Course',
     grepl('Grainger Hal', location) ~ 'Grainger Hall',
     grepl('Gray', location) ~ 'Gray',
     grepl('Gross Hall', location) ~ 'Gross Hall',
     grepl('Hudson Hall', location) ~ 'Hudson Hall',
     grepl('Languages', location) ~ 'Languages',
+    grepl('Lemur', location) ~ 'Lemur Center',
     grepl('LSRC', location) ~ 'LSRC',
     grepl('Nanaline', location) ~ 'Nanaline',
     grepl('Nasher', location) ~ 'Nasher',
     grepl('Old Chemistry', location) ~ 'Old Chemistry',
+    grepl('Online', location) ~ 'Online',
     grepl('Page', location) ~ 'Page',
     grepl('Perkins', location) ~ 'Perkins',
     grepl('Physics', location) ~ 'Physics',
-    grepl('Reuben-Cooke', location) ~ 'Reuben-Cooke',
+    grepl('Reuben-Cooke', location) ~ 'Reuben Cooke',
     grepl('Rubenstein Hall', location) ~ 'Sanford',
     grepl('Rubenstein Arts', location) ~ 'Rubenstein Arts Center',
     grepl('Sanford', location) ~ 'Sanford',
@@ -87,15 +92,18 @@ course_data <- course_data %>%
     grepl('Teer', location) ~ 'Teer',
     grepl('The Ark', location) ~ 'The Ark',
     grepl('Trent', location) ~ 'Trent Hall',
+    grepl('West Campus Tennis Courts', location) ~ 'West Campus Tennis Courts',
     grepl('West Duke', location) ~ 'West Duke',
     grepl('White', location) ~ 'White Lecture Hall',
     grepl('Wilkinson', location) ~ 'Wilkinson',
     grepl('Wilson Center', location) ~ 'Wilson Center',
-    TRUE ~ location))
+    TRUE ~ paste(location, 'NO MATCH')))
 
 # conbime location data
 course_data <- course_data %>%
   left_join(building_group, by = c("location" = "Location"))
+
+print(unique(course_data$Group_Category))
 
 course_data <- course_data %>%
   mutate(Area = case_when(
@@ -127,9 +135,9 @@ course_data <- course_data %>%
 
 a <- c("Subject", "catalog_number", "Descr", "Section",
        "enroll_cap",	"days",	"mtg_start", "mtg_end", "Mode",
-       "location", "Area", "Group_Category")
+       "location", "Area", "Group_Category", "Group_Number")
 
-df <- setNames(data.frame(matrix(ncol = 12, nrow = 0)), a)
+df <- setNames(data.frame(matrix(ncol = 13, nrow = 0)), a)
 
 
 print(df)
@@ -345,18 +353,6 @@ shinyServer(function(session, input, output) {
 
 
 
-  #  observe({
-  #    print(input$dataset)
-  #    x <- course_data %>%
-  #      filter(Subject == input$dataset) %>%
-  # select(catalog_number) # dataframe
-  #      pull(catalog_number) # vector
-  #    updateSelectizeInput(session, "code", "Select the Course Code",
-  #                         choices = unique(x))
-  #  })
-
-
-
 
   # # Show the first "n" observations ----
   output$view <- renderDT(
@@ -510,6 +506,121 @@ shinyServer(function(session, input, output) {
       plot(pie)
 
     })
+
+
+    output$weekdata <- DT::renderDataTable({
+      datatable(
+        df %>%
+          mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
+          arrange(desc(enroll_cap)),
+        caption = "Tentative Course Schedule"
+      )
+    })
+
+
+    weekwrangle <- reactive({
+      df %>%
+        mutate_at("days", str_replace, "M-F", "MTWTHF") %>%
+        mutate_at("days", str_replace, "M-TH", "MTWTH") %>%
+        mutate_at("days", str_replace, "TH", "D") %>%
+        separate_rows(days, sep = "") %>%
+        filter(days != "") %>%
+        mutate(days_num = case_when(
+          days == "M" ~ 1,
+          days == "T" ~ 3,
+          days == "W" ~ 5,
+          days == "D" ~ 7,
+          days == "F" ~ 9
+        )) %>%
+        mutate(days_num = as.numeric(days_num)) %>%
+        mutate(mtg_start= round(hour(mtg_start)+minute(mtg_start) / 60 + second(mtg_start) / 360,2)) %>%
+        mutate(mtg_end = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2)) %>%
+        mutate(plotting_st = (days_num - 1)) %>%
+        mutate(plotting_end = (days_num + 1)) %>%
+        mutate(midpoint = (mtg_start + mtg_end)/2) %>%
+        mutate(head = paste0(Subject, catalog_number, Section))
+    })
+
+
+
+    output$week <- renderPlot({
+      sched <- ggplot(data = weekwrangle(), aes(x = days_num, y = midpoint)) +
+        geom_rect(aes(xmin = plotting_st, xmax = plotting_end,
+                      ymax = mtg_start, ymin = mtg_end, fill = head))+
+        geom_vline(xintercept = 0, colour = "gray", linetype = "longdash", alpha = 0.4)+
+        geom_vline(xintercept = 2, colour = "gray", linetype = "longdash", alpha = 0.4)+
+        geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
+        geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
+        geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
+        theme_bw() +
+        theme(panel.border = element_blank(),
+              panel.grid.major = element_blank(),
+              panel.grid.minor = element_blank(),
+              axis.line = element_line(colour = "black"),
+              legend.position = "none")+
+        xlim(0, 10)+
+        scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
+        scale_y_continuous(breaks = seq(6, 20, by = 1))+
+        #coord_cartesian(ylim = c(6, 20))+
+        labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week")
+      plot(sched)
+    })
+
+
+
+
+    output$distinfo <- renderPlot({
+
+      dist <- course_data %>%
+        filter(!is.na(Group_Category)) %>%
+        filter(Area != "ARTS&SCI") %>%
+        filter(Area %in% df$Area) %>%
+        group_by(Area) %>%
+        count(Group_Category) %>%
+        arrange(desc(n),.by_group = TRUE) %>%
+        mutate(perc = n/sum(n))
+
+      dist_plot <- ggplot(data = dist) +
+        geom_segment(aes(x = 0, y = reorder_within(Group_Category, n, Area),
+                         xend = n, yend = reorder_within(Group_Category, n, Area)),
+                     size = 1, color = "#003087") +
+        geom_point(aes(x = n, y = reorder_within(Group_Category, n, Area))) +
+        facet_wrap( ~ Area, ncol = 3, scales = "free") +
+        theme_minimal() +
+        theme(strip.background = element_rect(fill = "#003087"),
+              strip.text = element_text(colour = 'white'),
+              panel.grid.minor = element_blank()) +
+        labs(y = "Campus locations",
+             x = "Number of classs",
+             title = "Distribution of class locations by subject area")
+
+      dist_plot
+    })
+
+    modified_distCosine <- function(Longitude1, Latitude1, Longitude2, Latitude2) {
+      if (any(is.na(c(Longitude1, Latitude1, Longitude2, Latitude2)))) {
+        NA
+      } else {
+        distCosine(c(Longitude1, Latitude1), c(Longitude2, Latitude2))
+      }
+    }
+
+
+    distTable <- left_join(weekwrangle(), coordinates, by = "Group_Number")
+
+
+    output$distanceTable <- DT::renderDataTable({
+      datatable(
+      distTable,
+      #%>%
+      #  mutate(     Distance = mapply(modified_distCosine,
+      #                           Longitude, Latitude, lag(Longitude), lag(Latitude)),
+        caption = "GroupedByDays"
+      #)
+      )
+    })
+
+
   })
 
   observeEvent(input$validate,{
@@ -611,7 +722,7 @@ shinyServer(function(session, input, output) {
       datatable(
         df,
         selection = list(mode = "none"),
-        caption = "Table that gets data from unfiltered original data"
+        caption = "Your Bookbag"
       )
     })
   })
@@ -622,8 +733,9 @@ shinyServer(function(session, input, output) {
       addTiles() %>%
       setView(lat = 36.000015, lng = -78.936033, zoom = 13) %>%
       addCircleMarkers(lng = coordinates$Longitude,
-                       lat = coordinates$Latitude)
-  })
+                       lat = coordinates$Latitude,
+                       popup  = coordinates$Group_Number,
+                       label = coordinates$Group_Number)})
 
 
   # course_catalog table
@@ -659,32 +771,4 @@ shinyServer(function(session, input, output) {
   })
 
   # Do subject areas differ by location?
-
-    output$distinfo <- renderPlot({
-
-      dist <- course_data %>%
-        filter(!is.na(Group_Category)) %>%
-        filter(Area != "ARTS&SCI") %>%
-        filter(Area %in% df$Area) %>%
-        group_by(Area) %>%
-        count(Group_Category) %>%
-        arrange(desc(n),.by_group = TRUE) %>%
-        mutate(perc = n/sum(n))
-
-      dist_plot <- ggplot(data = dist) +
-        geom_segment(aes(x = 0, y = reorder_within(Group_Category, n, Area),
-                         xend = n, yend = reorder_within(Group_Category, n, Area)),
-                     size = 1, color = "#003087") +
-        geom_point(aes(x = n, y = reorder_within(Group_Category, n, Area))) +
-        facet_wrap( ~ Area, ncol = 3, scales = "free") +
-        theme_minimal() +
-        theme(strip.background = element_rect(fill = "#003087"),
-              strip.text = element_text(colour = 'white'),
-              panel.grid.minor = element_blank()) +
-        labs(y = "Campus locations",
-             x = "Number of classs",
-             title = "Distribution of class locations by subject area")
-
-      dist_plot
-    })
 })
