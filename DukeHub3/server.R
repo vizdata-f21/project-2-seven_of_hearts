@@ -529,16 +529,16 @@ shinyServer(function(session, input, output) {
 
 
     output$week <- renderPlot({
-      sched <- ggplot(data = weekwrangle(), aes(x = days_num, y = midpoint)) +
+      sched <- ggplot(data = weekwrangle(), aes(x = days_num, y = end_time)) +
         geom_rect(aes(xmin = plotting_st, xmax = plotting_end,
-                      ymax = start_time, ymin = end_time, fill = head))+
+                      ymax = end_time, ymin = start_time, fill = head))+
         geom_vline(xintercept = 0, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 2, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
-        geom_text(aes(label = head, colour = "#FFFFFF"))+
-        geom_text(aes(label = context, colour = "#FFFFFF"), size = 2, nudge_y = -.4)+
+        geom_text(aes(label = head, colour = "Green"), nudge_y = -0.5)+
+        geom_text(aes(label = context, colour = "Green"), size = 2, nudge_y = -1)+
         theme_bw() +
         theme(panel.border = element_blank(),
               panel.grid.major = element_blank(),
