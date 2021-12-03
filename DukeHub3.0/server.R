@@ -501,7 +501,7 @@ shinyServer(function(session, input, output) {
               legend.position='none')+
         xlim(0, 10)+
         scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
-        scale_y_continuous(breaks = seq(6, 22, 1), limits = c(6, 22))+
+        scale_y_continuous(breaks = seq(6, 24, 1))+
         coord_cartesian(ylim = c(6, 20))+
         labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week")
       plot(sched)
@@ -549,7 +549,28 @@ shinyServer(function(session, input, output) {
 
   observeEvent(input$calculate, {
 
-    weekwrangle <- reactive({
+    if(nrow(df) < 1){
+      print("empty")
+      shinyalert(
+        title = "Invalid Schedule",
+        text = "No classes selected",
+        size = "s",
+        closeOnEsc = TRUE,
+        closeOnClickOutside = FALSE,
+        html = FALSE,
+        type = "error",
+        showConfirmButton = TRUE,
+        showCancelButton = FALSE,
+        confirmButtonText = "OK",
+        confirmButtonCol = "red",
+        timer = 0,
+        imageUrl = "",
+        animation = TRUE
+      )}
+
+    if(nrow(df) >= 1){
+
+      weekwrangle <- reactive({
       df %>%
         mutate_at("days", str_replace, "M-F", "MTWTHF") %>%
         mutate_at("days", str_replace, "M-TH", "MTWTH") %>%
@@ -627,7 +648,7 @@ shinyServer(function(session, input, output) {
                                         axis.title.y = element_text(angle = 0, vjust = 0.5)) + coord_flip()
 
       distance_plot
-    })
+    })}
   })
 
 
