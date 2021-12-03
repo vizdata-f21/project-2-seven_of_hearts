@@ -88,14 +88,14 @@ notice, from the schedule, the smallest width rectangle is the
 discussion for Hindi. This qualitatively confirms which class is shorter
 in time and helps the reader have a more accurate understanding of their
 courses without needing to refer to the reference course list below. To
-seperate the days, we added vertical lines. Also, each course is colored
-differenly. Even though both hindi components are in the same department
-and course number, they are still seperate course components and we
-wanted to reflect that. This comes in very handy when there is a special
-topics class like AAAS 190S, where there are multiple unique courses
-with the same Course Number, but different sections.
+separate the days, we added vertical lines. Also, each course is colored
+differently. Even though both Hindi components are in the same
+department and course number, they are still separate course components
+and we wanted to reflect that. This comes in very handy when there is a
+special topics class like AAAS 190S, where there are multiple unique
+courses with the same Course Number, but different sections.
 
-*insert schedule picture*
+![plot](DukeHub3/www/calendar.jpg)
 
 ### Class information
 
