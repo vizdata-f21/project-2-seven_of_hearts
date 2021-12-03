@@ -484,25 +484,25 @@ shinyServer(function(session, input, output) {
     output$week <- renderPlot({
       sched <- ggplot(data = weekwrangle(), aes(x = days_num, y = midpoint)) +
         geom_rect(aes(xmin = plotting_st, xmax = plotting_end,
-                      ymax = mtg_start, ymin = mtg_end, fill = head))+
+                      ymax = time_start, ymin = time_end, fill = head))+
         geom_vline(xintercept = 0, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 2, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_text(aes(label = head))+
-        geom_text(aes(label = mtg_start), size = 2, nudge_y = -0.5)+
-        geom_text(aes(label = mtg_start), size = 2, nudge_y = 0.5)+
+        geom_text(aes(label = mtg_start), size = 2, nudge_y = -1)+
+        geom_text(aes(label = mtg_end), size = 2, nudge_y = 1)+
         theme_bw() +
         theme(panel.border = element_blank(),
               panel.grid.major = element_blank(),
               panel.grid.minor = element_blank(),
               axis.line = element_line(colour = "black"),
-              legend.position = "none")+
+              legend.position='none')+
         xlim(0, 10)+
         scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
-        scale_y_continuous(breaks = seq(6, 20, by = 1))+
-        #coord_cartesian(ylim = c(6, 20))+
+        scale_y_continuous(breaks = seq(6, 22, 1), limits = c(6, 22))+
+        coord_cartesian(ylim = c(6, 20))+
         labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week")
       plot(sched)
     })
