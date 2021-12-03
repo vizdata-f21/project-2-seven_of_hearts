@@ -470,12 +470,12 @@ shinyServer(function(session, input, output) {
           days == "F" ~ 9
         )) %>%
         mutate(days_num = as.numeric(days_num)) %>%
-        mutate(mtg_start= round(hour(mtg_start)+minute(mtg_start) / 60 + second(mtg_start) / 360,2)) %>%
-        mutate(mtg_end = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2)) %>%
+        mutate(time_start = round(hour(mtg_start)+minute(mtg_start) / 60 + second(mtg_start) / 360,2)) %>%
+        mutate(time_end  = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2)) %>%
         mutate(plotting_st = (days_num - 1)) %>%
         mutate(plotting_end = (days_num + 1)) %>%
-        mutate(midpoint = (mtg_start + mtg_end)/2) %>%
-        mutate(head = paste0(Subject, catalog_number, Section))
+        mutate(midpoint = (time_start + time_end)/2) %>%
+        mutate(head = paste0(Subject, catalog_number, " - ", Section))
     })
 
 
@@ -489,7 +489,9 @@ shinyServer(function(session, input, output) {
         geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
-        geom_text(aes(label = df$head))+
+        geom_text(aes(label = head))+
+        geom_text(aes(label = mtg_start), size = 2, nudge_y = -0.5)+
+        geom_text(aes(label = mtg_start), size = 2, nudge_y = 0.5)+
         theme_bw() +
         theme(panel.border = element_blank(),
               panel.grid.major = element_blank(),
