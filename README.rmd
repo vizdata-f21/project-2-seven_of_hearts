@@ -12,7 +12,7 @@ DukeHub is the academic portal used by Duke students, faculty, and advisers to r
 ## Interactive functions
 We designed 5 tabs for students to explore the nitty-gritty of their course schedules, which will be introduced in detail in the following sections.\n
 
-![plot](data/graphics/tab.jpg)
+![plot](DukeHub3/data/graphics/tab.jpg)
 * [Schedule builder](#schedule-builder)  
 * [Weekly calendar](#weekly-calendar)  
 * [Class information](#class-information)  
@@ -22,19 +22,19 @@ We designed 5 tabs for students to explore the nitty-gritty of their course sche
 ### Schedule builder
 Students can choose courses based on the specific subjects they would like to take. Like the DukeHub 2.0, students can validate their schedule to avoid time conflicts and overload limits (6 classes maximum), drop classes back to the shopping cart, and clear all selections. If the students didn't choose any classes, the schedule builder will also report invalid.\n
 
-![plot](data/graphics/invalid.jpg)
+![plot](DukeHub3/data/graphics/invalid.jpg)
 
 Our improvement from DukeHub 2.0 is that more information about classes is available on the same page. Take an example of a student who wants to choose African American Studies. In DukeHub 2.0, the dropdown list only contains the course catalog numbers and descriptions after choosing the subject. \n
 
-![plot](data/graphics/dukehub_old1.jpg)
+![plot](DukeHub3/data/graphics/dukehub_old1.jpg)
 
 Students need to click twice to see the time and location of a class, which are difficult to find.\n
 
-![plot](data/graphics/dukehub_old2.jpg)
+![plot](DukeHub3/data/graphics/dukehub_old2.jpg)
 
 Our shiny app displasy a comprehensive list of African American Studies classes, including course catalog, description, enrollment cap, location, time, teaching mode, etc. This will immediately give students an idea of how far away this class is from their dorms, whether they need to get up early to catch a bus, the class size, etc.\n
 
-![plot](data/graphics/newapp_aaas.jpg)
+![plot](DukeHub3/data/graphics/newapp_aaas.jpg)
 
 
 ### Weekly calendar
@@ -47,9 +47,9 @@ Here is an example of a schedule of 6 classes. We see that COMPSCI 201 is a big 
 
 We hope these visualizations will help students determine on a schedule with reasonable combination of classes sizes and subject areas and enjoy the liberal arts education environment at Duke.\n
 
-![plot](data/graphics/bar_chart.jpg)
+![plot](DukeHub3/data/graphics/bar_chart.jpg)
 
-![plot](data/graphics/pie_chart.jpg)
+![plot](DukeHub3/data/graphics/pie_chart.jpg)
 
 
 ### Distance
@@ -57,8 +57,8 @@ We hope these visualizations will help students determine on a schedule with rea
 ### Course Catalog Info
 The students are able to find higher-level information about all courses during that semester. Duke campus is huge and hard to navigate, so we want to show the students the location distribution of all classes. From the donut chart, we find that the places where the most classes are held are the main quad of West Campus (888 classes) and on Science Drive (535 classes). \n
 
-![plot](data/graphics/pie_dist.jpg)
+![plot](DukeHub3/data/graphics/pie_dist.jpg)
 
 The specific course students choose indicate their interest in that area, so it is also useful to know the distribution of locations by these subject areas. The example schedule in [Class information](#class-information) contains classes from four subject areas. The lollipop plot indicates that Arts & Humanities classes are mostly held on the main quad of West Campus as well as places between East and West (C-One Route), such as Rubinstein Arts Center, Nasher Museum of Art, and Smith Warehouse; Natural Sciences classes are mostly held on Science Drive; and Social Sciences classes are spread on both East and West campus.\n
 
-![plot](data/graphics/dist_plot.jpg)
+![plot](DukeHub3/data/graphics/dist_plot.jpg)
