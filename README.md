@@ -27,7 +27,8 @@ We designed 5 tabs for students to explore the nitty-gritty of their
 course schedules, which will be introduced in detail in the following
 sections.
 
-![plot](DukeHub3/www/tab.jpg) \* [Schedule builder](#schedule-builder)  
+![plot](DukeHub3/www/tabs.jpg) \* [Schedule
+builder](#schedule-builder)  
 \* [Weekly calendar](#weekly-calendar)  
 \* [Class information](#class-information)  
 \* [Distance](#distance)  

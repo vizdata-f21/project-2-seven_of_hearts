@@ -25,7 +25,7 @@ day based on the classes student select.\n
 ## Interactive functions
 We designed 5 tabs for students to explore the nitty-gritty of their course schedules, which will be introduced in detail in the following sections.\n
 
-![plot](DukeHub3/www/tab.jpg)
+![plot](DukeHub3/www/tabs.jpg)
 * [Schedule builder](#schedule-builder)  
 * [Weekly calendar](#weekly-calendar)  
 * [Class information](#class-information)  
