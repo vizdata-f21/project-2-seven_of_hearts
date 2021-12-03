@@ -23,7 +23,7 @@ classes student select.
 
 ## Interactive functions
 
-We designed 5 tabs for students to explore the nitty-gritty of their
+We designed 6 tabs for students to explore the nitty-gritty of their
 course schedules, which will be introduced in detail in the following
 sections.
 
