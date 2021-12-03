@@ -21,7 +21,6 @@ library(tidytext)
 library(ggrepel)
 library(geodist)
 library(geosphere)
-library(chron)
 
 
 #course_data <- read_csv(here::here("data/course_catalog.csv"))
@@ -514,17 +513,17 @@ shinyServer(function(session, input, output) {
         mutate(time_end  = round(hour(mtg_end) + minute(mtg_end) / 60 + second(mtg_end) / 360,2)) %>%
         mutate(plotting_st = (days_num - 1)) %>%
         mutate(plotting_end = (days_num + 1)) %>%
+        mutate(start_time = time_start) %>%
+        mutate(end_time = time_end)  %>%
         mutate(midpoint = (time_start + time_end)/2) %>%
-        mutate(time_am = chron::times(time_start/24)) %>%
-        mutate(time_end = chron::times(time_end/24)) %>%
         mutate(post = case_when(
           time_start < 12 ~ "AM",
-          time_start >= 12 ~ "PM",
+          time_start > 12 ~ "PM",
           time_end < 12 ~ "AM",
           time_end >= 12 ~ "PM"
         )) %>%
         mutate(head = paste0(Subject, catalog_number, " - ", Section)) %>%
-        mutate(context = paste0(time_am," ", post ," - ", time_end, post))
+        mutate(context = paste0(mtg_start," ", post ," - ", mtg_end, post))
     })
 
 
@@ -532,14 +531,14 @@ shinyServer(function(session, input, output) {
     output$week <- renderPlot({
       sched <- ggplot(data = weekwrangle(), aes(x = days_num, y = midpoint)) +
         geom_rect(aes(xmin = plotting_st, xmax = plotting_end,
-                      ymax = time_start, ymin = time_end, fill = head))+
+                      ymax = start_time, ymin = end_time, fill = head))+
         geom_vline(xintercept = 0, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 2, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
-        geom_text(aes(label = head, colour = "white"))+
-        geom_text(aes(label = context), size = 2, nudge_y = -1)+
+        geom_text(aes(label = head, colour = "#FFFFFF"))+
+        geom_text(aes(label = context, colour = "#FFFFFF"), size = 2, nudge_y = -.4)+
         theme_bw() +
         theme(panel.border = element_blank(),
               panel.grid.major = element_blank(),

@@ -157,6 +157,30 @@ ui <-  navbarPage("DukeHub 3.0",
                           ),
                  tabPanel("Project Info",
                           sidebarPanel("About our Project"),
+          mainPanel(
+  h1("Introduction"),
+  br(),
+p("DukeHub is the academic portal used by Duke students, faculty, and advisers
+to register for courses, make tuition payments, and view transcripts. Each
+semester, students spend much time crafting their schedules to optimize campus
+experience. The current DukeHub 2.0 has a “simple search” function to filter
+courses by term and subject area and an “advanced class search” to filter by
+course attributes, meeting times, instructor name, location, or the number of
+units. Although DukeHub 2.0, launched in 2020, has improved user experience and
+added more features compared to the previous version, our team would like to add
+several features that make the course selection process more convenient. Our
+DukeHub 3.0 is an R Shiny app that allows students to build their academic
+schedule from 2408 courses/sections and provides additional insights to their
+schedule through various visualizations. Once a student inputs their schedule,
+the app will provide different visualizations such as the enrollment caps,
+diversity of the subject areas they study, and the expected traveling during a
+day based on the classes student select."),
+  h1("Interactive functions"),
+  br(),
+p("We designed 5 tabs for students to explore the nitty-gritty of their course
+schedules, which will be introduced in detail in the following sections."),
+img(src = "tab.jpg")
+                          )
 
                           )
                  )
