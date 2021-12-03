@@ -150,8 +150,10 @@ ui <-  navbarPage("DukeHub 3.0",
                           plotOutput("location")),
                  tabPanel("Course Catalog Info",
                           mainPanel("An overview of the classes available"),
+                          plotOutput("subjectPlot"),
                           fluidRow(column(6, plotOutput("locinfo", width = "120%")),
-                                   column(6, plotOutput("distinfo")))
+                                   column(6, plotOutput("distinfo"))),
+
                           ),
                  tabPanel("Campus Map",
                           leafletOutput("dukemap", width = "120%", height = 800)
@@ -160,9 +162,15 @@ ui <-  navbarPage("DukeHub 3.0",
                           sidebarPanel("About our Project"),
 
                           mainPanel(
+<<<<<<< HEAD
                             fluidRow(column(2, includeMarkdown(here::here("README.md"))))),
                           # includeMarkdown(here::here("README.md"))
                             includeHTML(here::here("README.html"))
+=======
+                            fluidRow(column(2, includeHTML(here::here("README.html")))))
+                          # includeMarkdown(here::here("README.md"))
+                          #  includeHTML(here::here("README."))
+>>>>>>> 9865f3120c3fb82d2a449fae18174b3937f4ef00
                           )
                  )
 

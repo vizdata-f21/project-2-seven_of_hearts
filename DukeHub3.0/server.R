@@ -445,6 +445,24 @@ shinyServer(function(session, input, output) {
 
     })
 
+    output$subjectPlot <- renderPlot({
+
+
+      offered_by_subject <- course_data %>%
+        filter(!is.na(Area)) %>%
+        group_by(Area) %>%
+        summarise(Total = n())
+
+      by_subject <- ggplot(data = offered_by_subject, aes(x = Area, y = Total)) +
+        geom_point()
+
+      plot(by_subject)
+
+
+
+    })
+
+
 
     output$weekdata <- DT::renderDataTable({
       datatable(
@@ -511,7 +529,12 @@ shinyServer(function(session, input, output) {
 
 
 
+
+    # Do subject areas differ by location?
     output$distinfo <- renderPlot({
+
+
+
 
       dist <- course_data %>%
         filter(!is.na(Group_Category)) %>%
@@ -780,5 +803,7 @@ shinyServer(function(session, input, output) {
     loc_plot
   })
 
-  # Do subject areas differ by location?
+  #
+
+
 })
