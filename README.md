@@ -156,8 +156,7 @@ The students are able to find higher-level information about all courses
 during that semester. Duke campus is huge and hard to navigate, so we
 want to show the students the location distribution of all classes. From
 the donut chart, we find that the places where the most classes are held
-are the main quad of West Campus (888 classes) and on Science Drive (535
-classes).
+are the main quad of West Campus and on Science Drive.
 
 ![plot](DukeHub3/www/pie_dist.jpg)
 
