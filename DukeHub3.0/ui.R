@@ -160,8 +160,9 @@ ui <-  navbarPage("DukeHub 3.0",
                           sidebarPanel("About our Project"),
 
                           mainPanel(
-                            fluidRow(column(2, includeMarkdown(here::here("README.md")))))
+                            fluidRow(column(2, includeMarkdown(here::here("README.md"))))),
                           # includeMarkdown(here::here("README.md"))
+                            includeHTML(here::here("README.html"))
                           )
                  )
 

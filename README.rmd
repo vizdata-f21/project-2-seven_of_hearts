@@ -1,6 +1,8 @@
 ---
 title: "DukeHub 3.0"
-output: github_document
+output:
+  html_document: default
+  github_document: default
 ---
 
 ## Introduction
