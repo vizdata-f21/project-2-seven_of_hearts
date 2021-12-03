@@ -534,7 +534,7 @@ shinyServer(function(session, input, output) {
     output$week <- renderPlot({
       sched <- ggplot(data = weekwrangle(), aes(x = days_num, y = end_time)) +
         geom_rect(aes(xmin = plotting_st, xmax = plotting_end,
-                      ymax = end_time, ymin = start_time, color = head, fill = "grey20", alpha = 0.0))+
+                      ymax = end_time, ymin = start_time, colour = head))+
         geom_vline(xintercept = 0, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 2, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
