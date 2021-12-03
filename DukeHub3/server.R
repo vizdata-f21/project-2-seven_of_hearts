@@ -674,7 +674,8 @@ shinyServer(function(session, input, output) {
                                 days == "W" ~ "Wednesday",
                                 days == "D" ~ "Thursday",
                                 days == "F" ~ "Friday",
-                                TRUE ~ days))
+                                TRUE ~ days)) %>%
+      summarise(totalDist = sum(Distance))
 
 
 
@@ -686,8 +687,8 @@ shinyServer(function(session, input, output) {
     output$location <- renderPlot({
 
 
-      distance_plot <- ggplot(data = distTable, aes(x= days, y = Distance))+ geom_point(aes(size = Distance)) +
-        geom_segment( aes(x=days, xend=days, y=0, yend=Distance, colour= days)) +
+      distance_plot <- ggplot(data = distTable, aes(x= days, y = totalDist))+ geom_point(aes(size = totalDist)) +
+        geom_segment( aes(x=days, xend=days, y=0, yend=totalDist, colour= days, size = 2)) +
         labs(title = "Class Commuter Distance", x = "Day", y = "Distance (miles)") + theme_minimal() +
         scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
         scale_y_continuous(limits = c(0, NA)) +
