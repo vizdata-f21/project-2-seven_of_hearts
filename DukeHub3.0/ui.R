@@ -149,12 +149,11 @@ ui <-  navbarPage("DukeHub 3.0",
                           actionButton("calculate", "Calcuate Commuter Distance"),
                           plotOutput("location")),
                  tabPanel("Course Catalog Info",
-                          mainPanel("An overview of the classes available"),
-                          plotOutput("subjectPlot"),
-                          fluidRow(column(6, plotOutput("locinfo", width = "120%")),
-                                   column(6, plotOutput("distinfo"))),
-
-                          ),
+                          mainPanel("An overview of the class info"),
+                          fluidRow(column(12, plotOutput("subjectPlot")),
+                                   column(12, plotOutput("locinfo", height = 700)),
+                                   column(12, plotOutput("distinfo"))
+                                   )),
                  tabPanel("Campus Map",
                           leafletOutput("dukemap", width = "120%", height = 800)
                           ),

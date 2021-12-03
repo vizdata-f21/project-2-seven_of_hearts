@@ -413,7 +413,8 @@ shinyServer(function(session, input, output) {
         geom_col() +
         theme_minimal() +
         theme(panel.grid.minor = element_blank(),
-              legend.position = "none") +
+              legend.position = "none",
+              plot.title = element_text(face = "bold", hjust = 0.5)) +
         labs(title = "Enrollment cap of your classes",
              x = "Enrollment",
              y = "Course name") +
@@ -447,18 +448,29 @@ shinyServer(function(session, input, output) {
 
     output$subjectPlot <- renderPlot({
 
-
       offered_by_subject <- course_data %>%
-        filter(!is.na(Area)) %>%
-        group_by(Area) %>%
-        summarise(Total = n())
+        filter(!is.na(Subject)) %>%
+        group_by(Subject) %>%
+        summarise(Total = n()) %>%
+        arrange(desc(Total)) %>%
+        slice(1:30)
 
-      by_subject <- ggplot(data = offered_by_subject, aes(x = Area, y = Total)) +
-        geom_point()
+      by_subject <- ggplot(data = offered_by_subject) +
+        geom_segment(aes(x = 0, y = reorder(Subject, Total),
+                         xend = Total, yend = reorder(Subject, Total),
+                         color = Subject %in% df$Subject),
+                     size = 1) +
+        geom_point(aes(x = Total, y = reorder(Subject, Total),
+                       color = Subject %in% df$Subject)) +
+        theme_minimal() +
+        theme(legend.position = "none",
+              plot.title = element_text(face = "bold", hjust = 0.5)) +
+        labs(title = "The top 20 subjects that have the most classes",
+             x = "Number of classes",
+             y = "Subject") +
+        scale_color_viridis_d()
 
       plot(by_subject)
-
-
 
     })
 
@@ -556,7 +568,8 @@ shinyServer(function(session, input, output) {
         theme_minimal() +
         theme(strip.background = element_rect(fill = "#003087"),
               strip.text = element_text(colour = 'white'),
-              panel.grid.minor = element_blank()) +
+              panel.grid.minor = element_blank(),
+              plot.title = element_text(face = "bold", hjust = 0.5)) +
         labs(y = "Campus locations",
              x = "Number of classs",
              title = "Distribution of class locations by subject area")
@@ -788,14 +801,15 @@ shinyServer(function(session, input, output) {
                               xmax = 4, xmin = 3, fill = Group_Category,
                               label = label)) +
     geom_rect() +
-    geom_label_repel(x = 3.5, aes(y = labelPosition, label = label), size = 3) +
+    geom_label_repel(x = 3.5, aes(y = labelPosition, label = label), size = 4.5) +
      # geom_text(aes(x = 3.5, y = labelPosition),
      #           check_overlap = TRUE,
      #           vjust = -1.5) +
     coord_polar(theta = "y") +
     xlim(c(2.3, 4)) +
     theme_void() +
-    theme(legend.position = "none") +
+    theme(legend.position = "none",
+          plot.title = element_text(face = "bold", hjust = 0.5)) +
     labs(title = "Where are the classes located at?") +
     scale_fill_brewer(palette = "Paired")
 
