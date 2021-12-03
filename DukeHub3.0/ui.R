@@ -107,7 +107,7 @@ ui <-  navbarPage("DukeHub 3.0",
                                                   "Visual Media Studies",
                                                   "Writing"
                                       ),
-                                      multiple = FALSE),
+                                      multiple = FALSE)
 
                      ),
                      mainPanel(
@@ -160,5 +160,3 @@ ui <-  navbarPage("DukeHub 3.0",
 
                           )
                  )
-
-
