@@ -446,6 +446,7 @@ shinyServer(function(session, input, output) {
     })
 
 
+
     output$weekdata <- DT::renderDataTable({
       datatable(
         df %>%
@@ -507,10 +508,30 @@ shinyServer(function(session, input, output) {
       plot(sched)
     })
 
+    output$subjectPlot <- renderPlot({
+
+
+      offered_by_subject <- course_data %>%
+        filter(!is.na(Area)) %>%
+        group_by(Area) %>%
+        summarise(Total = n())
+
+      by_subject <- ggplot(data = offered_by_subject, aes(x = Area, y = Total)) +
+        geom_point()
+
+      plot(by_subject)
+
+
+
+    })
+
 
 
 
     output$distinfo <- renderPlot({
+
+
+
 
       dist <- course_data %>%
         filter(!is.na(Group_Category)) %>%

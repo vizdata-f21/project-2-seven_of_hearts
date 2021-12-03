@@ -141,7 +141,8 @@ ui <-  navbarPage("DukeHub 3.0",
                           mainPanel("Visualzation on the number of people in courses,
                             types of courses"),
                           fluidRow(column(6, plotOutput("barplot")),
-                                   column(6, plotOutput("piechart")))
+                                   column(6, plotOutput("piechart")),
+                                   column(6, plotOutput("subjectPlot")))
                           ),
                  tabPanel("Distance",
                           mainPanel("Visualization based on commuter distance"),
