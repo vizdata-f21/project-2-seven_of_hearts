@@ -3,6 +3,10 @@ library(shinyalert)
 library(leaflet)
 
 ui <-  navbarPage("DukeHub 3.0",
+                  theme = bslib::bs_theme(
+                    bg = "#FFFFFF", fg = "#000080", primary = "#2AA198",
+                    base_font = bslib::font_google("EB Garamond")
+                  ),
                  tabPanel("ScheduleBuilder",
 
                    sidebarLayout(
@@ -107,20 +111,26 @@ ui <-  navbarPage("DukeHub 3.0",
                                                   "Visual Media Studies",
                                                   "Writing"
                                       ),
-                                      multiple = FALSE)
+                                      multiple = FALSE,
+                                      width="200px"),
+                       width = 2
 
                      ),
                      mainPanel(
-                       "Schedule Builder",
+                       h1("Schedule Builder"),
                        # Output: HTML table with requested number of observations ----
                        verbatimTextOutput("Select Classes to add to Schedule"),
                        DT::dataTableOutput("view"),
                        actionButton("add", label = "Add Course To BookBag"),
-                       verbatimTextOutput("Selected Courses"),
-                       DT::dataTableOutput("filteredTableSelected"),
                        actionButton("clear", label = "Clear BookBag"),
                        useShinyalert(),
-                       actionButton("validate", label = "Validate Schedule")
+                       actionButton("validate", label = "Validate Schedule"),
+                       br(),
+                       verbatimTextOutput("Selected Courses"),
+                       br(),
+                       h1("Bookbag"),
+                       DT::dataTableOutput("filteredTableSelected")
+
 
 
                      )
@@ -142,10 +152,13 @@ ui <-  navbarPage("DukeHub 3.0",
                                    column(6, plotOutput("piechart")))
                           ),
                  tabPanel("Distance",
-                          mainPanel("Visualization based on commuter distance"),
-                          DT::dataTableOutput("distanceTable"),
-                          actionButton("calculate", "Calcuate Commuter Distance"),
-                          plotOutput("location")),
+                          mainPanel(actionButton("calculate", "Calcuate Commuter Distance",
+                                                 icon("calculator"),
+                                                 style="color: #fff; background-color: #337ab7; border-color: #2e6da4")),
+                          width = 12,
+                          plotOutput("location"),
+
+                          DT::dataTableOutput("distanceTable")),
                  tabPanel("Course Catalog Info",
                           mainPanel("An overview of the class info"),
                           fluidRow(column(12, plotOutput("subjectPlot")),
@@ -156,9 +169,9 @@ ui <-  navbarPage("DukeHub 3.0",
                           leafletOutput("dukemap", width = "120%", height = 800)
                           ),
                  tabPanel("Project Info",
-                          sidebarPanel("About our Project"),
           mainPanel(
-  h1("Introduction"),
+            h1("About Our Project"),
+  h2("Introduction"),
   br(),
 p("DukeHub is the academic portal used by Duke students, faculty, and advisers
 to register for courses, make tuition payments, and view transcripts. Each
@@ -180,9 +193,11 @@ day based on the classes student select."),
 p("We designed 5 tabs for students to explore the nitty-gritty of their course
 schedules, which will be introduced in detail in the following sections."),
 
-img(src = "tab.jpg", height = 10, width = 5),
+img(src = "tab.jpg", height = 70, width = 35,
+    title = "overview of all the tabs in web app",
+    subtitle = "overview of all the tabs in web app"),
 
-h1("Schedule builder"),
+h2("Schedule builder"),
 br(),
 p("Students can choose courses based on the specific subjects they would
 like to take. Like the DukeHub 2.0, students can validate their schedule
@@ -191,17 +206,23 @@ classes back to the shopping cart, and clear all selections. If the
 students didn’t choose any classes, the schedule builder will also
 report invalid."),
 
-img(src = "invalid.jpg", title = " alt text", caption = "alt _ text"),
+img(src = "invalid.jpg", height = 100, width = 50,
+    title = "image when classes aren't selected",
+    caption = "image when classes aren't selected"),
 
 p("Our improvement from DukeHub 2.0 is that more information about classes
 is available on the same page. Take an example of a student who wants to
 choose African American Studies. In DukeHub 2.0, the dropdown list only
 contains the course catalog numbers and descriptions after choosing the
 subject."),
-img(src = "dukehub_old1.jpg"),
+img(src = "dukehub_old1.jpg", height = 100, width = 50,
+    title = "preview of actual Dukehub 2.0 class",
+    caption = "preview of actual Dukehub 2.0 class"),
 p("Students need to click twice to see the time and location of a class,
 which are difficult to find."),
-img(src = "dukehub_old2.jpg"),
+img(src = "dukehub_old2.jpg", height = 100, width = 50,
+    title = "preview of actual Dukehub 2.0 more info window",
+    caption = "preview of actual Dukehub 2.0 more info window"),
 p("Our shiny app displays a comprehensive list of African American Studies
 classes, including course catalog, description, enrollment cap,
 location, time, teaching mode, etc. This will immediately give students
@@ -209,7 +230,7 @@ an idea of how far away this class is from their dorms, whether they
 need to get up early to catch a bus, the class size, etc."),
 img(src = "newapp_aaas.jpg"),
 
-h1("Weekly Calendar"),
+h2("Weekly Calendar"),
 p("Once validated from the previous tab and step, the weekly calendar tab plots
 the classes from Monday to Friday, 6AM - 10PM, colored by each individual
 course. For accessibility, the classes show up in each proper rectangle with
@@ -233,7 +254,7 @@ p("The image below is a picture of a sample course schedule. The plot covers
 #insert schedule
 p("The goal with the schedule and all the features we added is so that
   the user can have a better experience with choosing their courses."),
-h1("Class information"),
+h2("Class information"),
 p("The enrollment caps of the student’s classes are represented in a bar chart
 colored by subject areas. General areas include “Arts & Humanities”, “Natural
 Sciences”, “Social Sciences”, “Engineering”, “Language”, “Physical Education”,
@@ -255,7 +276,7 @@ arts education environment at Duke."),
 br(),
 img(src = "bar_chart.jpg"),
 img(src = "pie_chart.jpg"),
-h1("Distance"),
+h2("Distance"),
 br(),
 p("After understanding about one's schedule, the distance tab helps the user
   have a better idea of how much walking they can expect in a day, which is
@@ -278,7 +299,7 @@ p("There are nuances to understand about this graph. For a day where there is
   the Brodhead center. For our graph, there is a different color classification
   system as it is more important to color the bars by day rather than individual
   course code or subject area."),
-h1("Course Catalog Info"),
+h2("Course Catalog Info"),
 br(),
 p("The students are able to find higher-level information about all courses
 during that semester. Duke campus is huge and hard to navigate, so we want to
@@ -296,7 +317,7 @@ Warehouse; Natural Sciences classes are mostly held on Science Drive; and Social
 Sciences classes are spread on both East and West campus."),
 br(),
 img(src = "dist_plot.jpg"),
-h1("Campus Map"),
+h2("Campus Map"),
 br(),
 p("A common issue faced by first-years, based on those we've surveyed was the
   fact that it is time consuming to figure out where all of the buildings are.
@@ -316,7 +337,7 @@ p("Furthermore on our Duke Map, we added highlighter circles for different
   there."),
 img(src = "newmap.jpg"),
 br(),
-h1("Conclusion"),
+h2("Conclusion"),
 p("Ultimately, our goal was to create a better dukehub experience by offering
   new visualizations that actually matter to the user. A key tenet learned in
   the class on making good visualizations was the importance of talking to users.

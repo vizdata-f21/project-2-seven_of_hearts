@@ -21,7 +21,7 @@ library(tidytext)
 library(ggrepel)
 library(geodist)
 library(geosphere)
-
+library(thematic)
 
 #course_data <- read_csv(here::here("data/course_catalog.csv"))
 course_data <- read_csv("data/course_catalog.csv")
@@ -356,8 +356,16 @@ shinyServer(function(session, input, output) {
 
   # # Show the first "n" observations ----
   output$view <- renderDT(
-    datatable(datasetInput()
-    ))
+    datatable(datasetInput()%>%
+                select(-c(Mode, location, Area)) %>%
+                rename("Course #" = catalog_number,
+                       "Title" = Descr,
+                       "Max People" = enroll_cap,
+                       "Days" = days,
+                       "Start" = mtg_start,
+                       "End" = mtg_end,
+                       "Group Category" = Group_Category,
+                       "Group #" = Group_Number)))
 
 
   ## Add selectd rows in the dataframe to a
@@ -407,12 +415,13 @@ shinyServer(function(session, input, output) {
 
     output$barplot <- renderPlot({
       bar_plot <- ggplot(data = df %>%
-                           mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
+                           mutate(course_name = paste0(Subject, " ", catalog_number, " ", Section)) %>%
                            arrange(enroll_cap),
                          aes(x = enroll_cap, y = reorder(course_name, -enroll_cap),  # ordering not interactive
                              fill = Area)) +
         geom_col() +
         theme_minimal() +
+        geom_text(aes(label = enroll_cap, color = "white"),hjust = +5, size = 5)+
         theme(panel.grid.minor = element_blank(),
               legend.position = "none",
               plot.title = element_text(face = "bold", hjust = 0.5)) +
@@ -435,11 +444,10 @@ shinyServer(function(session, input, output) {
                         fill = Area)) +
         geom_bar(stat = "identity", width = 1, color = "white") +
         theme_minimal() +
-        theme(axis.title = element_blank(),
-              axis.text = element_blank(),
+        theme(axis.text = element_blank(),
               panel.grid.major = element_blank(),
               panel.grid.minor = element_blank()) +
-        labs(y = "Subject Area") +
+        labs(title = "Relative Proportion of Classes by Subject Area") +
         coord_polar("y", start = 0) +
         scale_fill_viridis_d(option = "plasma")
 
@@ -538,13 +546,14 @@ shinyServer(function(session, input, output) {
         geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_text(aes(label = head, colour = "Green"), nudge_y = -0.5)+
-        geom_text(aes(label = context, colour = "Green"), size = 2, nudge_y = -1)+
+        geom_text(aes(label = context, colour = "green"), size = 2, nudge_y = -1)+
         theme_bw() +
         theme(panel.border = element_blank(),
               panel.grid.major = element_blank(),
               panel.grid.minor = element_blank(),
               axis.line = element_line(colour = "black"),
-              legend.position='none')+
+              legend.position='none',
+              plot.title = element_text(face = "bold", hjust = 0.5))+
         xlim(0, 10)+
         scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
         scale_y_continuous(breaks = seq(6, 22, 1))+
@@ -557,7 +566,8 @@ shinyServer(function(session, input, output) {
         labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week")+
       scale_fill_viridis_d(option = "plasma")
       plot(sched)
-    })
+    }, width = 1000,
+        height = 400)
 
 
 
@@ -680,10 +690,12 @@ shinyServer(function(session, input, output) {
       distance_plot <- ggplot(data = distTable, aes(x= days, y = Distance))+ geom_col(aes(fill = factor(days))) +
         labs(title = "Class Commuter Distance", x = "Day", y = "Distance (miles)") + theme_minimal() +
         scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
-        scale_y_continuous(limits = c(0, max(distTable$Distance))) +
+        scale_y_continuous(limits = c(0, NA)) +
         scale_fill_viridis_d(option = "plasma") +
         theme(legend.position = "",
-              axis.title.y = element_text(angle = 0, vjust = 0.5)) + coord_flip()
+              axis.title.y = element_text(angle = 0, vjust = 0.5),
+              plot.title = element_text(face = "bold", hjust = 0.5),
+              axis.text.x = element_text(angle =90 )) + coord_flip()
 
       distance_plot
     })
