@@ -141,8 +141,7 @@ ui <-  navbarPage("DukeHub 3.0",
                           mainPanel("Visualzation on the number of people in courses,
                             types of courses"),
                           fluidRow(column(6, plotOutput("barplot")),
-                                   column(6, plotOutput("piechart")),
-                                   column(6, plotOutput("subjectPlot")))
+                                   column(6, plotOutput("piechart")))
                           ),
                  tabPanel("Distance",
                           mainPanel("Visualization based on commuter distance"),
@@ -151,8 +150,10 @@ ui <-  navbarPage("DukeHub 3.0",
                           plotOutput("location")),
                  tabPanel("Course Catalog Info",
                           mainPanel("An overview of the classes available"),
+                          plotOutput("subjectPlot"),
                           fluidRow(column(6, plotOutput("locinfo", width = "120%")),
-                                   column(6, plotOutput("distinfo")))
+                                   column(6, plotOutput("distinfo"))),
+
                           ),
                  tabPanel("Campus Map",
                           leafletOutput("dukemap", width = "120%", height = 800)
