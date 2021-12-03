@@ -23,11 +23,12 @@ classes student select.
 
 ## Interactive functions
 
-We designed 5 tabs for students to explore the nitty-gritty of their
+We designed 6 tabs for students to explore the nitty-gritty of their
 course schedules, which will be introduced in detail in the following
 sections.
 
-![plot](DukeHub3/www/tab.jpg) \* [Schedule builder](#schedule-builder)  
+![plot](DukeHub3/www/tabs.jpg) \* [Schedule
+builder](#schedule-builder)  
 \* [Weekly calendar](#weekly-calendar)  
 \* [Class information](#class-information)  
 \* [Distance](#distance)  
@@ -137,7 +138,7 @@ group 3. Based on the longitude and latitude of the midpoint of each
 group, we were able to find the cumulative distance among each class for
 the day.
 
-*insert distance plot*
+![plot](DukeHub3/www/lollipop.jpg)
 
 There are nuances to understand about this graph. For a day where there
 is only a single class, the bar is very short, but still present. This
