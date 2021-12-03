@@ -160,6 +160,12 @@ ui <-  navbarPage("DukeHub 3.0",
                           leafletOutput("dukemap", width = "120%", height = 800)
                           ),
                  tabPanel("Project Info",
-                          mainPanel("About our Project")))
+                          sidebarPanel("About our Project"),
+
+                          mainPanel(
+                            fluidRow(column(2, includeMarkdown(here::here("README.md")))))
+                          # includeMarkdown(here::here("README.md"))
+                          )
+                 )
 
 
