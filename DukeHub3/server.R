@@ -105,7 +105,6 @@ course_data <- course_data %>%
 course_data <- course_data %>%
   left_join(building_group, by = c("location" = "Location"))
 
-print(unique(course_data$Group_Category))
 
 course_data <- course_data %>%
   mutate(Area = case_when(
