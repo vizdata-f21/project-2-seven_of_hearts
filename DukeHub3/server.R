@@ -541,14 +541,14 @@ shinyServer(function(session, input, output) {
     output$week <- renderPlot({
       sched <- ggplot(data = weekwrangle(), aes(x = days_num, y = end_time)) +
         geom_rect(aes(xmin = plotting_st, xmax = plotting_end,
-                      ymax = end_time, ymin = start_time, color = head, size = 0.05))+
+                      ymax = end_time, ymin = start_time, color = head))+
         geom_vline(xintercept = 0, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 2, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
-        geom_text(aes(label = head, colour = "chartreuse"), nudge_y = -0.5)+
-        geom_text(aes(label = context, colour = "chartreuse"), size = 2, nudge_y = -1)+
+        geom_text(aes(label = head, colour = head), nudge_y = -0.5)+
+        geom_text(aes(label = context, colour = head), size = 2, nudge_y = -1)+
         theme_bw() +
         theme(panel.border = element_blank(),
               panel.grid.major = element_blank(),
@@ -569,7 +569,7 @@ shinyServer(function(session, input, output) {
         labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week")+
       scale_fill_viridis_d(option = "plasma")
       plot(sched)
-    }, width = 1000,
+    }, width = 1500,
         height = 400)
 
 
