@@ -541,14 +541,14 @@ shinyServer(function(session, input, output) {
     output$week <- renderPlot({
       sched <- ggplot(data = weekwrangle(), aes(x = days_num, y = end_time)) +
         geom_rect(aes(xmin = plotting_st, xmax = plotting_end,
-                      ymax = end_time, ymin = start_time, fill = head))+
+                      ymax = end_time, ymin = start_time, color = head, size = 0.3))+
         geom_vline(xintercept = 0, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 2, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
-        geom_text(aes(label = head, colour = "Green"), nudge_y = -0.5)+
-        geom_text(aes(label = context, colour = "Green"), size = 2, nudge_y = -1)+
+        geom_text(aes(label = head, colour = "chartreuse"), nudge_y = -0.5)+
+        geom_text(aes(label = context, colour = "chartreuse"), size = 2, nudge_y = -1)+
         theme_bw() +
         theme(panel.border = element_blank(),
               panel.grid.major = element_blank(),
@@ -660,7 +660,9 @@ shinyServer(function(session, input, output) {
 
     output$distanceTable <- DT::renderDataTable({
       datatable(
-        distTable,
+        distTable%>%
+          rename("Days" = days,
+                 "Total Distance" = totalDist),
         caption = "Tentative Course Schedule"
       )
     })
@@ -671,14 +673,15 @@ shinyServer(function(session, input, output) {
         arrange(desc(mtg_start)) %>%
         mutate(Distance = mapply(modified_distCosine, Longitude, Latitude, lag(Longitude), lag(Latitude)) * 0.000621371) %>%
         mutate(Distance = case_when(Distance > .10 ~ round(Distance, digits = 2),
-                                    Distance < .10 ~ 0,
+                                    Distance < .10 ~ .10,
                                     TRUE ~ Distance))%>%
         mutate(days = case_when(days == "M" ~ "Monday",
                                 days == "T" ~  "Tuesday",
                                 days == "W" ~ "Wednesday",
                                 days == "D" ~ "Thursday",
                                 days == "F" ~ "Friday",
-                                TRUE ~ days))
+                                TRUE ~ days))  %>%
+      summarise(totalDist = sum(Distance))
 
 
 
@@ -687,22 +690,22 @@ shinyServer(function(session, input, output) {
 
 
 
-    output$location <- renderPlot({
-
-
-      distance_plot <- ggplot(data = distTable, aes(x= days, y = Distance))+ geom_col(aes(fill = factor(days))) +
+    output$location <- renderPlot({distance_plot <- ggplot(data = distTable, aes(x= days, y = totalDist))+
+        geom_segment( aes(x=days, xend=days, y=0, yend=totalDist, colour= days)) +
+      geom_point(aes(size = totalDist * 3.0)) +
         labs(title = "Class Commuter Distance", x = "Day", y = "Distance (miles)") + theme_minimal() +
-        scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
-        scale_y_continuous(limits = c(0, NA)) +
-        scale_fill_viridis_d(option = "plasma") +
+        scale_x_discrete(limits=c("Monday", "-", "Tuesday", "-", "Wednesday", "-", "Thursday",  "-", "Friday"))+
+        scale_color_viridis_d(option = "plasma") +
+      geom_vline(xintercept = 2, color = "white")+
         theme(legend.position = "",
-              axis.title.y = element_text(angle = 0, vjust = 0.5),
-              plot.title = element_text(face = "bold", hjust = 0.5),
-              axis.text.x = element_text(angle =90 )) + coord_flip()
-
+              axis.title.y = element_text(angle = 0, vjust = 1.0 ),
+              plot.title = element_text(face = "bold", hjust = 0.5))+ coord_flip()
       distance_plot
     })
+
   })
+
+
 
 
 
