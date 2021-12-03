@@ -412,7 +412,8 @@ shinyServer(function(session, input, output) {
                              fill = Area)) +
         geom_col() +
         theme_minimal() +
-        theme(panel.grid.minor = element_blank()) +
+        theme(panel.grid.minor = element_blank(),
+              legend.position = "none") +
         labs(title = "Enrollment cap of your classes",
              x = "Enrollment",
              y = "Course name") +
