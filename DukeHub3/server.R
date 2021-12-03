@@ -25,8 +25,8 @@ library(geosphere)
 
 #course_data <- read_csv(here::here("data/course_catalog.csv"))
 course_data <- read_csv("data/course_catalog.csv")
-building_group <- read_csv(here::here("data/Building_Groups.csv"))
-coordinates <- read_csv(here::here("data/building_group_coordinates.csv"))
+building_group <- read_csv("data/Building_Groups.csv")
+coordinates <- read_csv("data/building_group_coordinates.csv")
 
 course_data <- course_data %>%
   rename(location = `Descr 1`,
@@ -419,7 +419,7 @@ shinyServer(function(session, input, output) {
         labs(title = "Enrollment cap of your classes",
              x = "Enrollment",
              y = "Course name") +
-        scale_fill_viridis_d(option = "magma")
+        scale_fill_viridis_d(option = "plasma")
       # facet_wrap(~ Area, scales = "free")
 
       plot(bar_plot)
@@ -441,7 +441,7 @@ shinyServer(function(session, input, output) {
               panel.grid.minor = element_blank()) +
         labs(y = "Subject Area") +
         coord_polar("y", start = 0) +
-        scale_fill_viridis_d(option = "magma")
+        scale_fill_viridis_d(option = "plasma")
 
       plot(pie, height = 500, width = 500)
 
@@ -535,7 +535,7 @@ shinyServer(function(session, input, output) {
         scale_y_continuous(breaks = seq(6, 22, 1),)+
         coord_cartesian(ylim = c(6, 20))+
         labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week")+
-      scale_fill_viridis_d(option = "magma")
+      scale_fill_viridis_d(option = "plasma")
       plot(sched)
     })
 
@@ -661,8 +661,9 @@ shinyServer(function(session, input, output) {
         labs(title = "Class Commuter Distance", x = "Day", y = "Distance (miles)") + theme_minimal() +
         scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
         scale_y_continuous(limits = c(0, max(distTable$Distance))) +
-        scale_color_viridis_b() + theme(legend.position = "",
-                                        axis.title.y = element_text(angle = 0, vjust = 0.5)) + coord_flip()
+        scale_fill_viridis_d(option = "plasma") +
+        theme(legend.position = "",
+              axis.title.y = element_text(angle = 0, vjust = 0.5)) + coord_flip()
 
       distance_plot
     })
