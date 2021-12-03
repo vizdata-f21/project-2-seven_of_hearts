@@ -198,7 +198,7 @@ day based on the classes student select."),
       p("We designed 5 tabs for students to explore the nitty-gritty of their course
 schedules, which will be introduced in detail in the following sections."),
       img(
-        src = "tab.jpg", height = 70, width = 35,
+        src = "tab.jpg", height = 250, width = 1300,
         title = "overview of all the tabs in web app",
         subtitle = "overview of all the tabs in web app"
       ),
@@ -211,7 +211,7 @@ classes back to the shopping cart, and clear all selections. If the
 students didn’t choose any classes, the schedule builder will also
 report invalid."),
       img(
-        src = "invalid.jpg", height = 100, width = 50,
+        src = "invalid.jpg", height = 500, width = 700,
         title = "image when classes aren't selected",
         caption = "image when classes aren't selected"
       ),
@@ -221,14 +221,14 @@ choose African American Studies. In DukeHub 2.0, the dropdown list only
 contains the course catalog numbers and descriptions after choosing the
 subject."),
       img(
-        src = "dukehub_old1.jpg", height = 100, width = 50,
+        src = "dukehub_old1.jpg", height = 500, width = 850,
         title = "preview of actual Dukehub 2.0 class",
         caption = "preview of actual Dukehub 2.0 class"
       ),
       p("Students need to click twice to see the time and location of a class,
 which are difficult to find."),
       img(
-        src = "dukehub_old2.jpg", height = 100, width = 50,
+        src = "dukehub_old2.jpg", height = 500, width = 800,
         title = "preview of actual Dukehub 2.0 more info window",
         caption = "preview of actual Dukehub 2.0 more info window"
       ),
@@ -237,7 +237,7 @@ classes, including course catalog, description, enrollment cap,
 location, time, teaching mode, etc. This will immediately give students
 an idea of how far away this class is from their dorms, whether they
 need to get up early to catch a bus, the class size, etc."),
-      img(src = "newapp_aaas.jpg"),
+      img(src = "newapp_aaas.jpg", height = 500, width = 800),
       h2("Weekly Calendar"),
       p("Once validated from the previous tab and step, the weekly calendar tab plots
 the classes from Monday to Friday, 6AM - 10PM, colored by each individual
@@ -282,8 +282,8 @@ Social Science, and Arts & Humanities as well."),
 reasonable combination of classes sizes and subject areas and enjoy the liberal
 arts education environment at Duke."),
       br(),
-      img(src = "bar_chart.jpg"),
-      img(src = "pie_chart.jpg"),
+      img(src = "bar_chart.jpg", height = 500, width = 800),
+      img(src = "pie_chart.jpg", height = 500, width = 800),
       h2("Distance"),
       br(),
       p("After understanding about one's schedule, the distance tab helps the user
@@ -324,7 +324,7 @@ held on the main quad of West Campus as well as places between East and West
 Warehouse; Natural Sciences classes are mostly held on Science Drive; and Social
 Sciences classes are spread on both East and West campus."),
       br(),
-      img(src = "dist_plot.jpg"),
+      img(src = "dist_plot.jpg", height = 500, width = 800),
       h2("Campus Map"),
       br(),
       p("A common issue faced by first-years, based on those we've surveyed was the
@@ -336,14 +336,14 @@ Sciences classes are spread on both East and West campus."),
   website to access their map. To save time, we included it as a
   different tab."),
       br(),
-      img(src = "originalmap.jpg"),
+      img(src = "originalmap.jpg", height = 500, width = 800),
       br(),
       p("Furthermore on our Duke Map, we added highlighter circles for different
   building groups like East Campus-Main, Main Quad, Fitness, etc. Since this
   info was already given in the previous tab, it makes it easier for the user
   to find the relative group that their destination is in and scroll around
   there."),
-      img(src = "newmap.jpg"),
+      img(src = "newmap.jpg", height = 500, width = 800),
       br(),
       h2("Conclusion"),
       p("Ultimately, our goal was to create a better dukehub experience by offering

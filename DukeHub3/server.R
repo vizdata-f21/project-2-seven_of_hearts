@@ -105,6 +105,7 @@ course_data <- course_data %>%
 course_data <- course_data %>%
   left_join(building_group, by = c("location" = "Location"))
 
+print(unique(course_data$Group_Category))
 
 course_data <- course_data %>%
   mutate(Area = case_when(
@@ -141,6 +142,7 @@ a <- c("Subject", "catalog_number", "Descr", "Section",
 df <- setNames(data.frame(matrix(ncol = 13, nrow = 0)), a)
 
 
+print(df)
 
 
 # Define server logic required to draw a histogram
@@ -166,6 +168,8 @@ shinyServer(function(session, input, output) {
            "Biology" = course_data %>% filter(Subject == "BIOLOGY") %>%
              select(a),
            "Biomedical Engineering" = course_data %>% filter(Subject == "BME") %>%
+             select(a),
+           "Brain and Society" = course_data %>% filter(Subject == "BRAINSOC") %>%
              select(a),
            "Civil and Environmental Engineering" = course_data %>% filter(Subject == "CEE") %>%
              select(a),
@@ -224,6 +228,8 @@ shinyServer(function(session, input, output) {
            "German" = course_data%>%filter(Subject == "GERMAN") %>%
              select(a),
            "Global Health" = course_data%>%filter(Subject == "GLHLTH") %>%
+             select(a),
+           "Greek" = course_data%>%filter(Subject == "Greek") %>%
              select(a),
            "Gender Sexuality & Feminist Studies" = course_data%>%filter(Subject == "GSF") %>%
              select(a),
@@ -389,6 +395,7 @@ shinyServer(function(session, input, output) {
     newRows <- datasetInput()[input$view_rows_selected, , drop = F]
      df <<- rbind(isolate(df), newRows) %>%
       distinct()
+    print(df)
     output$filteredTableSelected <- DT::renderDataTable({
       datatable(
         df,
@@ -534,14 +541,14 @@ shinyServer(function(session, input, output) {
     output$week <- renderPlot({
       sched <- ggplot(data = weekwrangle(), aes(x = days_num, y = end_time)) +
         geom_rect(aes(xmin = plotting_st, xmax = plotting_end,
-                      ymax = end_time, ymin = start_time, colour = head))+
+                      ymax = end_time, ymin = start_time, fill = head))+
         geom_vline(xintercept = 0, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 2, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
-        geom_text(aes(label = head, colour = "Black"), nudge_y = -0.5)+
-        geom_text(aes(label = context, colour = "Black"), size = 2, nudge_y = -1)+
+        geom_text(aes(label = head, colour = "Green"), nudge_y = -0.5)+
+        geom_text(aes(label = context, colour = "Green"), size = 2, nudge_y = -1)+
         theme_bw() +
         theme(panel.border = element_blank(),
               panel.grid.major = element_blank(),
@@ -653,9 +660,7 @@ shinyServer(function(session, input, output) {
 
     output$distanceTable <- DT::renderDataTable({
       datatable(
-        distTable%>%
-          rename("Days" = days,
-                 "Total Distance" = totalDist),
+        distTable,
         caption = "Tentative Course Schedule"
       )
     })
@@ -666,15 +671,14 @@ shinyServer(function(session, input, output) {
         arrange(desc(mtg_start)) %>%
         mutate(Distance = mapply(modified_distCosine, Longitude, Latitude, lag(Longitude), lag(Latitude)) * 0.000621371) %>%
         mutate(Distance = case_when(Distance > .10 ~ round(Distance, digits = 2),
-                                    Distance < .10 ~ .10,
+                                    Distance < .10 ~ 0,
                                     TRUE ~ Distance))%>%
         mutate(days = case_when(days == "M" ~ "Monday",
                                 days == "T" ~  "Tuesday",
                                 days == "W" ~ "Wednesday",
                                 days == "D" ~ "Thursday",
                                 days == "F" ~ "Friday",
-                                TRUE ~ days)) %>%
-      summarise(totalDist = sum(Distance))
+                                TRUE ~ days))
 
 
 
@@ -686,16 +690,15 @@ shinyServer(function(session, input, output) {
     output$location <- renderPlot({
 
 
-      distance_plot <- ggplot(data = distTable, aes(x= days, y = totalDist)) +
-        geom_segment( aes(x=days, xend=days, y=0, yend=totalDist, colour= days, size = .5)) +
-        geom_point(aes(size = totalDist * 3.0)) +
-        labs(title = "Class Commuter Distance", x = "Day of the Week", y = "Distance (miles)") + theme_minimal() +
-        scale_x_discrete(limits=c("Monday", "-", "Tuesday", "-", "Wednesday", "-", "Thursday",  "-", "Friday"))+
-        scale_color_viridis_d(option = "plasma") +
-        geom_vline(xintercept = 2, color = "white")+
+      distance_plot <- ggplot(data = distTable, aes(x= days, y = Distance))+ geom_col(aes(fill = factor(days))) +
+        labs(title = "Class Commuter Distance", x = "Day", y = "Distance (miles)") + theme_minimal() +
+        scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
+        scale_y_continuous(limits = c(0, NA)) +
+        scale_fill_viridis_d(option = "plasma") +
         theme(legend.position = "",
+              axis.title.y = element_text(angle = 0, vjust = 0.5),
               plot.title = element_text(face = "bold", hjust = 0.5),
-              axis.title.y = element_text(angle = 0, vjust = 1)) +  coord_flip()
+              axis.text.x = element_text(angle =90 )) + coord_flip()
 
       distance_plot
     })
@@ -718,6 +721,7 @@ shinyServer(function(session, input, output) {
 
 
     if(nrow(df) < 1){
+      print("empty")
       shinyalert(
         title = "Invalid Schedule",
         text = "No classes selected",
@@ -736,6 +740,8 @@ shinyServer(function(session, input, output) {
       )
     }
     if(TRUE %in% times$overlap2){
+
+      print("wrong)")
 
       shinyalert(
         title = "Invalid Schedule",
@@ -794,6 +800,7 @@ shinyServer(function(session, input, output) {
 
   observeEvent(input$clear, {
     df <<- df[0,]
+    print(df)
     output$filteredTableSelected <- DT::renderDataTable({
       datatable(
         df,
@@ -846,8 +853,4 @@ shinyServer(function(session, input, output) {
   output$locinfo <- renderPlot({
     loc_plot
   })
-
-  #
-
-
 })
