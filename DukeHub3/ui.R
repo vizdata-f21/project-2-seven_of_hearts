@@ -211,7 +211,7 @@ classes back to the shopping cart, and clear all selections. If the
 students didn’t choose any classes, the schedule builder will also
 report invalid."),
       img(
-        src = "invalid.jpg", height = 700, width = 300,
+        src = "invalid.jpg", height = 700, width = 800,
         title = "image when classes aren't selected",
         caption = "image when classes aren't selected"
       ),
@@ -221,14 +221,14 @@ choose African American Studies. In DukeHub 2.0, the dropdown list only
 contains the course catalog numbers and descriptions after choosing the
 subject."),
       img(
-        src = "dukehub_old1.jpg", height = 700, width = 300,
+        src = "dukehub_old1.jpg", height = 700, width = 850,
         title = "preview of actual Dukehub 2.0 class",
         caption = "preview of actual Dukehub 2.0 class"
       ),
       p("Students need to click twice to see the time and location of a class,
 which are difficult to find."),
       img(
-        src = "dukehub_old2.jpg", height = 700, width = 300,
+        src = "dukehub_old2.jpg", height = 700, width = 900,
         title = "preview of actual Dukehub 2.0 more info window",
         caption = "preview of actual Dukehub 2.0 more info window"
       ),
@@ -237,7 +237,9 @@ classes, including course catalog, description, enrollment cap,
 location, time, teaching mode, etc. This will immediately give students
 an idea of how far away this class is from their dorms, whether they
 need to get up early to catch a bus, the class size, etc."),
-      img(src = "newapp_aaas.jpg"),
+      img(src = "newapp_aaas.jpg", height = 900, width = 1500,
+          title = "image of how dukehub 3.0 looks",
+          caption = "image of how dukehub 3.0 looks"),
       h2("Weekly Calendar"),
       p("Once validated from the previous tab and step, the weekly calendar tab plots
 the classes from Monday to Friday, 6AM - 10PM, colored by each individual
@@ -245,7 +247,10 @@ course. For accessibility, the classes show up in each proper rectangle with
 the time interval of class start and ending time. This is so that the user
 is able to get all of the information they truly need without needing to look
 around the calendar too much."),
-      img(src = "calendar.jpg", height = 400, width = 1500),
+      img(src = "calendar.jpg", height = 400, width = 1500,
+          title = "custom daily course schedule with geom_rect",
+          caption = "custom daily course schedule with geom_rect"),
+      br(),
       br(),
       p("The image below is a picture of a sample course schedule. The plot covers
   Monday to Friday, even if there is no class on a certain day and from
@@ -283,8 +288,12 @@ Social Science, and Arts & Humanities as well."),
 reasonable combination of classes sizes and subject areas and enjoy the liberal
 arts education environment at Duke."),
       br(),
-      img(src = "bar_chart.jpg", height = 700, width = 300),
-      img(src = "pie_chart.jpg", height = 700, width = 300),
+      img(src = "bar_chart.jpg", height = 700, width = 900,
+          title = "bar chart of total cap of class",
+          caption = "bar chart of total cap of class"),
+      img(src = "pie_chart.jpg", height = 700, width = 900,
+          title = "relative percent of subject areas",
+          caption = "relative percent of subject areas"),
       h2("Distance"),
       br(),
       p("After understanding about one's schedule, the distance tab helps the user
@@ -298,7 +307,10 @@ arts education environment at Duke."),
   longitude and latitude of the midpoint of each group, we were able to find
   the cumulative distance among each class for the day."),
       br(),
-      img(src = "lollipop.jpg", height = 300, width = 800),
+      img(src = "lollipop.jpg", height = 300, width = 800,
+          title = "Lollipop plot of expected travelled distance per day",
+          caption = "Lollipop plot of expected travelled distance per day"
+          ),
       p("There are nuances to understand about this graph. For a day where there is
   only a single class, the bar is very short, but still present. This suggests
   that there should not be too much walking involved although it is
@@ -314,8 +326,9 @@ arts education environment at Duke."),
 during that semester. Duke campus is huge and hard to navigate, so we want to
 show the students the location distribution of all classes. From the donut
 chart, we find that the places where the most classes are held are the main
-quad of West Campus (888 classes) and on Science Drive (535 classes)."),
-      img(src = "pie_dist.jpg"),
+quad of West Campu and on Science Drive."),
+      img(src = "pie_dist.jpg", title = "pie chart of distribution of general class locations",
+          caption = "pie chart of distribution of general class locations"),
       p("The specific course students choose indicate their interest in that area, so
 it is also useful to know the distribution of locations by these subject areas.
 The example schedule in Class information contains classes from four subject
@@ -325,7 +338,9 @@ held on the main quad of West Campus as well as places between East and West
 Warehouse; Natural Sciences classes are mostly held on Science Drive; and Social
 Sciences classes are spread on both East and West campus."),
       br(),
-      img(src = "dist_plot.jpg", height = 700, width = 300),
+      img(src = "dist_plot.jpg", height = 700, width = 1100,
+          title = "Lollipop plot of expected travelled distance per day",
+          caption = "Lollipop plot of expected travelled distance per day"),
       h2("Campus Map"),
       br(),
       p("A common issue faced by first-years, based on those we've surveyed was the
@@ -337,14 +352,18 @@ Sciences classes are spread on both East and West campus."),
   website to access their map. To save time, we included it as a
   different tab."),
       br(),
-      img(src = "originalmap.jpg", height = 700, width = 300),
+      img(src = "originalmap.jpg", height = 700, width = 1100,
+          title = "access for duke maps is outside the login page",
+          caption = "access for duke maps is outside the login page"),
       br(),
       p("Furthermore on our Duke Map, we added highlighter circles for different
   building groups like East Campus-Main, Main Quad, Fitness, etc. Since this
   info was already given in the previous tab, it makes it easier for the user
   to find the relative group that their destination is in and scroll around
   there."),
-      img(src = "newmap.jpg", height = 700, width = 300),
+      img(src = "newmap.jpg", height = 700, width = 1000,
+          title = "map of all undergraduate buildings by group",
+          caption = "map of all undergraduate buildings by group"),
       br(),
       h2("Conclusion"),
       p("Ultimately, our goal was to create a better dukehub experience by offering
