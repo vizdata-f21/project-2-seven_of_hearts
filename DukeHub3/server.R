@@ -667,7 +667,7 @@ shinyServer(function(session, input, output) {
         arrange(desc(mtg_start)) %>%
         mutate(Distance = mapply(modified_distCosine, Longitude, Latitude, lag(Longitude), lag(Latitude)) * 0.000621371) %>%
         mutate(Distance = case_when(Distance > .10 ~ round(Distance, digits = 2),
-                                    Distance < .10 ~ 0,
+                                    Distance < .10 ~ .10,
                                     TRUE ~ Distance))%>%
         mutate(days = case_when(days == "M" ~ "Monday",
                                 days == "T" ~  "Tuesday",

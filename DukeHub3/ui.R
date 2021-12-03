@@ -160,7 +160,6 @@ ui <-  navbarPage("DukeHub 3.0",
 
                           DT::dataTableOutput("distanceTable")),
                  tabPanel("Course Catalog Info",
-                          mainPanel("An overview of the class info"),
                           fluidRow(column(12, plotOutput("subjectPlot")),
                                    column(12, plotOutput("locinfo", height = 700)),
                                    column(12, plotOutput("distinfo"))
