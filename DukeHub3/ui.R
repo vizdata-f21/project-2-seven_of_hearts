@@ -11,7 +11,7 @@ ui <-  navbarPage("DukeHub 3.0",
 
                    sidebarLayout(
                      sidebarPanel (
-                       selectizeInput(inputId = "dataset",
+                       selectInput(inputId = "Area",
                                       label = "Choose a Subject Area:",
                                       choices = c("African American Studies",
                                                   "Aerospace Studies",

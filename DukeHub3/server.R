@@ -148,7 +148,7 @@ print(df)
 # Define server logic required to draw a histogram
 shinyServer(function(session, input, output) {
   datasetInput <- reactive({
-    switch(input$dataset,
+    switch(input$Area,
            "African American Studies" = course_data %>% filter(Subject == "AAAS") %>%
              select(a),
            "Aerospace Studies" = course_data %>% filter(Subject == "AEROSCI") %>%
@@ -168,8 +168,6 @@ shinyServer(function(session, input, output) {
            "Biology" = course_data %>% filter(Subject == "BIOLOGY") %>%
              select(a),
            "Biomedical Engineering" = course_data %>% filter(Subject == "BME") %>%
-             select(a),
-           "Brain and Society" = course_data %>% filter(Subject == "BRAINSOC") %>%
              select(a),
            "Civil and Environmental Engineering" = course_data %>% filter(Subject == "CEE") %>%
              select(a),
@@ -228,8 +226,6 @@ shinyServer(function(session, input, output) {
            "German" = course_data%>%filter(Subject == "GERMAN") %>%
              select(a),
            "Global Health" = course_data%>%filter(Subject == "GLHLTH") %>%
-             select(a),
-           "Greek" = course_data%>%filter(Subject == "Greek") %>%
              select(a),
            "Gender Sexuality & Feminist Studies" = course_data%>%filter(Subject == "GSF") %>%
              select(a),
