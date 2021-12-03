@@ -412,7 +412,8 @@ shinyServer(function(session, input, output) {
                              fill = Area)) +
         geom_col() +
         theme_minimal() +
-        theme(panel.grid.minor = element_blank()) +
+        theme(panel.grid.minor = element_blank(),
+              legend.position = "none") +
         labs(title = "Enrollment cap of your classes",
              x = "Enrollment",
              y = "Course name") +
@@ -612,11 +613,16 @@ shinyServer(function(session, input, output) {
 
 
 
+
+
+
     output$location <- renderPlot({
 
 
       distance_plot <- ggplot(data = distTable, aes(x= days, y = Distance))+ geom_col(aes(fill = factor(days))) +
         labs(title = "Class Commuter Distance", x = "Day", y = "Distance (miles)") + theme_minimal() +
+        scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
+        scale_y_continuous(limits = c(0, max(distTable$Distance))) +
         scale_color_viridis_b() + theme(legend.position = "",
                                         axis.title.y = element_text(angle = 0, vjust = 0.5)) + coord_flip()
 
