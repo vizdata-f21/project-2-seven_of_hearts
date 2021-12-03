@@ -21,6 +21,7 @@ library(tidytext)
 library(ggrepel)
 library(geodist)
 library(geosphere)
+library(chron)
 
 
 #course_data <- read_csv(here::here("data/course_catalog.csv"))
@@ -481,7 +482,14 @@ shinyServer(function(session, input, output) {
       datatable(
         df %>%
           mutate(course_name = paste0(Subject, " ", catalog_number)) %>%
-          arrange(desc(enroll_cap)),
+          arrange(desc(enroll_cap)) %>%
+          rename("Section #" = Section,
+                 "Days" = days,
+                 "Starting Time" = mtg_start,
+                 "Ending Time" = mtg_end,
+                 "Course Name" = course_name) %>%
+          relocate("Course Name") %>%
+          select(-c(Subject, catalog_number, Descr, enroll_cap, Mode, location, Area, Group_Category, Group_Number)),
         caption = "Tentative Course Schedule"
       )
     })
@@ -507,7 +515,16 @@ shinyServer(function(session, input, output) {
         mutate(plotting_st = (days_num - 1)) %>%
         mutate(plotting_end = (days_num + 1)) %>%
         mutate(midpoint = (time_start + time_end)/2) %>%
-        mutate(head = paste0(Subject, catalog_number, " - ", Section))
+        mutate(time_am = chron::times(time_start/24)) %>%
+        mutate(time_end = chron::times(time_end/24)) %>%
+        mutate(post = case_when(
+          time_start < 12 ~ "AM",
+          time_start >= 12 ~ "PM",
+          time_end < 12 ~ "AM",
+          time_end >= 12 ~ "PM"
+        )) %>%
+        mutate(head = paste0(Subject, catalog_number, " - ", Section)) %>%
+        mutate(context = paste0(time_am," ", post ," - ", time_end, post))
     })
 
 
@@ -521,9 +538,8 @@ shinyServer(function(session, input, output) {
         geom_vline(xintercept = 4, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 6, colour = "gray", linetype = "longdash", alpha = 0.4)+
         geom_vline(xintercept = 8, colour = "gray", linetype = "longdash", alpha = 0.4)+
-        geom_text(aes(label = head))+
-        geom_text(aes(label = mtg_start), size = 2, nudge_y = -1)+
-        geom_text(aes(label = mtg_end), size = 2, nudge_y = 1)+
+        geom_text(aes(label = head, colour = "white"))+
+        geom_text(aes(label = context), size = 2, nudge_y = -1)+
         theme_bw() +
         theme(panel.border = element_blank(),
               panel.grid.major = element_blank(),
