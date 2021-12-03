@@ -27,7 +27,7 @@ We designed 5 tabs for students to explore the nitty-gritty of their
 course schedules, which will be introduced in detail in the following
 sections.
 
-![plot](data/graphics/tab.jpg) \* [Schedule
+![plot](DukeHub3/data/graphics/tab.jpg) \* [Schedule
 builder](#schedule-builder)  
 \* [Weekly calendar](#weekly-calendar)  
 \* [Class information](#class-information)  
@@ -43,7 +43,7 @@ classes back to the shopping cart, and clear all selections. If the
 students didn’t choose any classes, the schedule builder will also
 report invalid.
 
-![plot](data/graphics/invalid.jpg)
+![plot](DukeHub3/data/graphics/invalid.jpg)
 
 Our improvement from DukeHub 2.0 is that more information about classes
 is available on the same page. Take an example of a student who wants to
@@ -51,12 +51,12 @@ choose African American Studies. In DukeHub 2.0, the dropdown list only
 contains the course catalog numbers and descriptions after choosing the
 subject.
 
-![plot](data/graphics/dukehub_old1.jpg)
+![plot](DukeHub3/data/graphics/dukehub_old1.jpg)
 
 Students need to click twice to see the time and location of a class,
 which are difficult to find.
 
-![plot](data/graphics/dukehub_old2.jpg)
+![plot](DukeHub3/data/graphics/dukehub_old2.jpg)
 
 Our shiny app displasy a comprehensive list of African American Studies
 classes, including course catalog, description, enrollment cap,
@@ -64,7 +64,7 @@ location, time, teaching mode, etc. This will immediately give students
 an idea of how far away this class is from their dorms, whether they
 need to get up early to catch a bus, the class size, etc.
 
-![plot](data/graphics/newapp_aaas.jpg)
+![plot](DukeHub3/data/graphics/newapp_aaas.jpg)
 
 ### Weekly calendar
 
@@ -94,9 +94,9 @@ We hope these visualizations will help students determine on a schedule
 with reasonable combination of classes sizes and subject areas and enjoy
 the liberal arts education environment at Duke.
 
-![plot](data/graphics/bar_chart.jpg)
+![plot](DukeHub3/data/graphics/bar_chart.jpg)
 
-![plot](data/graphics/pie_chart.jpg)
+![plot](DukeHub3/data/graphics/pie_chart.jpg)
 
 ### Distance
 
@@ -109,7 +109,7 @@ the donut chart, we find that the places where the most classes are held
 are the main quad of West Campus (888 classes) and on Science Drive (535
 classes).
 
-![plot](data/graphics/pie_dist.jpg)
+![plot](DukeHub3/data/graphics/pie_dist.jpg)
 
 The specific course students choose indicate their interest in that
 area, so it is also useful to know the distribution of locations by
@@ -122,4 +122,4 @@ Museum of Art, and Smith Warehouse; Natural Sciences classes are mostly
 held on Science Drive; and Social Sciences classes are spread on both
 East and West campus.
 
-![plot](data/graphics/dist_plot.jpg)
+![plot](DukeHub3/data/graphics/dist_plot.jpg)
