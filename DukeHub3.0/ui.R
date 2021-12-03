@@ -158,7 +158,6 @@ ui <-  navbarPage("DukeHub 3.0",
                  tabPanel("Project Info",
                           sidebarPanel("About our Project"),
 
-                          mainPanel(
                           )
                  )
 
