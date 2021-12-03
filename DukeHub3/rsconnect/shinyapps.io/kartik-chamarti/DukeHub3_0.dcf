@@ -5,9 +5,9 @@ account: kartik-chamarti
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 5257898
-bundleId: 5322038
+bundleId: 5322043
 url: https://kartik-chamarti.shinyapps.io/DukeHub3_0/
-when: 1638503614.28083
-lastSyncTime: 1638503614.28084
+when: 1638503758.78055
+lastSyncTime: 1638503758.78057
 asMultiple: FALSE
 asStatic: FALSE
