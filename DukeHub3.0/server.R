@@ -509,7 +509,7 @@ shinyServer(function(session, input, output) {
 
 
 
-
+    # Do subject areas differ by location?
     output$distinfo <- renderPlot({
 
       dist <- course_data %>%
@@ -779,5 +779,7 @@ shinyServer(function(session, input, output) {
     loc_plot
   })
 
-  # Do subject areas differ by location?
+  #
+
+
 })
