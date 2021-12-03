@@ -297,7 +297,7 @@ arts education environment at Duke."),
   longitude and latitude of the midpoint of each group, we were able to find
   the cumulative distance among each class for the day."),
       br(),
-      img(src = "lollipop.jpg", height = 500, width = 800),
+      img(src = "lollipop.jpg", height = 300, width = 800),
       p("There are nuances to understand about this graph. For a day where there is
   only a single class, the bar is very short, but still present. This suggests
   that there should not be too much walking involved although it is
