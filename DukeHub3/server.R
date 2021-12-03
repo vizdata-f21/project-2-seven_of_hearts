@@ -532,8 +532,13 @@ shinyServer(function(session, input, output) {
               legend.position='none')+
         xlim(0, 10)+
         scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
-        scale_y_continuous(breaks = seq(6, 22, 1),)+
-        coord_cartesian(ylim = c(6, 20))+
+        scale_y_continuous(breaks = seq(6, 22, 1))+
+        scale_y_discrete(limits = c(" - "," - "," - "," - "," - ",
+                                    "6AM", "7AM", "8AM", "9AM","10AM",
+                                    "11AM", "12PM", "1PM", "2PM",
+                                    "3PM", "4PM", "5PM", "6PM", "7PM",
+                                    "8PM", "9PM", "10PM"))+
+        coord_cartesian(ylim = c(6, 22))+
         labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week")+
       scale_fill_viridis_d(option = "plasma")
       plot(sched)
@@ -782,8 +787,8 @@ shinyServer(function(session, input, output) {
       setView(lat = 36.000015, lng = -78.936033, zoom = 13) %>%
       addCircleMarkers(lng = coordinates$Longitude,
                        lat = coordinates$Latitude,
-                       popup  = coordinates$Group_Number,
-                       label = coordinates$Group_Number)})
+                       popup  = coordinates$Group_category,
+                       label = coordinates$Group_category)})
 
 
   # course_catalog table
