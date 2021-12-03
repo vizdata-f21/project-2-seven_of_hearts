@@ -112,8 +112,6 @@ ui <-  navbarPage("DukeHub 3.0",
                      ),
                      mainPanel(
                        "Schedule Builder",
-
-
                        # Output: HTML table with requested number of observations ----
                        verbatimTextOutput("Select Classes to add to Schedule"),
                        DT::dataTableOutput("view"),
@@ -161,15 +159,6 @@ ui <-  navbarPage("DukeHub 3.0",
                           sidebarPanel("About our Project"),
 
                           mainPanel(
-<<<<<<< HEAD
-                            fluidRow(column(2, includeMarkdown(here::here("README.md"))))),
-                          # includeMarkdown(here::here("README.md"))
-                            includeHTML(here::here("README.html"))
-=======
-                            fluidRow(column(2, includeHTML(here::here("README.html")))))
-                          # includeMarkdown(here::here("README.md"))
-                          #  includeHTML(here::here("README."))
->>>>>>> 9865f3120c3fb82d2a449fae18174b3937f4ef00
                           )
                  )
 

@@ -1,0 +1,13 @@
+name: DukeHub3
+title: DukeHub3
+username:
+account: kartik-chamarti
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5257727
+bundleId: 5321980
+url: https://kartik-chamarti.shinyapps.io/DukeHub3/
+when: 1638501559.71976
+lastSyncTime: 1638501559.71978
+asMultiple: FALSE
+asStatic: FALSE
