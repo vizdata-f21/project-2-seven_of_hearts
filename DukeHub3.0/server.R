@@ -23,9 +23,10 @@ library(geodist)
 library(geosphere)
 
 
-course_data <- read_csv(("data/course_catalog.csv"))
-building_group <- read_csv(("data/Building_Groups.csv"))
-coordinates <- read_csv(("data/building_group_coordinates.csv"))
+#course_data <- read_csv(here::here("data/course_catalog.csv"))
+course_data <- read_csv("data/course_catalog.csv")
+building_group <- read_csv(here::here("data/Building_Groups.csv"))
+coordinates <- read_csv(here::here("data/building_group_coordinates.csv"))
 
 course_data <- course_data %>%
   rename(location = `Descr 1`,
