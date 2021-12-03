@@ -138,7 +138,7 @@ group 3. Based on the longitude and latitude of the midpoint of each
 group, we were able to find the cumulative distance among each class for
 the day.
 
-*insert distance plot*
+![plot](DukeHub3/www/lollipop.jpg)
 
 There are nuances to understand about this graph. For a day where there
 is only a single class, the bar is very short, but still present. This

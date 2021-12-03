@@ -25,7 +25,7 @@ day based on the classes student select.\n
 ## Interactive functions
 We designed 6 tabs for students to explore the nitty-gritty of their course schedules, which will be introduced in detail in the following sections.\n
 
-![plot](DukeHub3/www/tabs.jpg)
+![plot](DukeHub3/www/tabs.jpg) 
 * [Schedule builder](#schedule-builder)  
 * [Weekly calendar](#weekly-calendar)  
 * [Class information](#class-information)  
@@ -105,7 +105,7 @@ sciences, and Rueben Cooke among others are assigned to group 3. Based on the
 longitude and latitude of the midpoint of each group, we were able to find
 the cumulative distance among each class for the day.\n 
   
-  *insert distance plot*
+![plot](DukeHub3/www/lollipop.jpg)
   
 There are nuances to understand about this graph. For a day where there is
 only a single class, the bar is very short, but still present. This suggests
