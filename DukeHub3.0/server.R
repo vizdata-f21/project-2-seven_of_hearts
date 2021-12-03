@@ -501,7 +501,7 @@ shinyServer(function(session, input, output) {
               legend.position='none')+
         xlim(0, 10)+
         scale_x_discrete(limits=c("Monday", " ", "Tuesday", " ", "Wednesday", " ", "Thursday",  " ", "Friday"))+
-        scale_y_continuous(breaks = seq(6, 22, 1), limits = c(6, 22))+
+        scale_y_continuous(breaks = seq(6, 22, 1)))+
         coord_cartesian(ylim = c(6, 20))+
         labs(title = "Tentative Course Schedule", y = "Hours of the Day", x = "Days of the week")
       plot(sched)
