@@ -198,7 +198,7 @@ day based on the classes student select."),
       p("We designed 5 tabs for students to explore the nitty-gritty of their course
 schedules, which will be introduced in detail in the following sections."),
       img(
-        src = "tab.jpg", height = 70, width = 35,
+        src = "tabs.jpg", height = 100, width = 1200,
         title = "overview of all the tabs in web app",
         subtitle = "overview of all the tabs in web app"
       ),
