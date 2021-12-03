@@ -447,7 +447,9 @@ shinyServer(function(session, input, output) {
         theme(axis.text = element_blank(),
               panel.grid.major = element_blank(),
               panel.grid.minor = element_blank()) +
-        labs(title = "Relative Proportion of Classes by Subject Area") +
+        labs(title = "Relative Proportion of Classes by Subject Area",
+             x = "",
+             y = "") +
         coord_polar("y", start = 0) +
         scale_fill_viridis_d(option = "plasma")
 

@@ -5,7 +5,7 @@ library(leaflet)
 ui <-  navbarPage("DukeHub 3.0",
                   theme = bslib::bs_theme(
                     bg = "#FFFFFF", fg = "#000080", primary = "#2AA198",
-                    base_font = bslib::font_google("EB Garamond")
+                    base_font = bslib::font_google("Verdana")
                   ),
                  tabPanel("ScheduleBuilder",
 
@@ -342,8 +342,16 @@ p("Ultimately, our goal was to create a better dukehub experience by offering
   new visualizations that actually matter to the user. A key tenet learned in
   the class on making good visualizations was the importance of talking to users.
   Taking this to heart, every feature and visualization we implemented was based
-  on what others suggested Duke could have done better.")
-
-
+  on what others suggested Duke could have done better."),
+br(),
+h3("Designing for accessibility"),
+p("With the goal of creating a better DukeHub experience, designing for
+  accessibility was even more crucial. To have a better understanding of the
+  comparisons between the actual Dukehub 3.0 and our own rshiny web application,
+  the alt text in the images of the write-up provided some really important
+  description and context. For our coloring scale, we also used a colorblind
+  friendly scale. We also used direct labeling for as many visualizations as
+  we could in order to make it faster to read. We also used an accessibility
+  tested font in Verdana.")
 
                  )))
