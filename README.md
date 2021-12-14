@@ -13,7 +13,7 @@ times, instructor name, location, or the number of units. Although
 DukeHub 2.0, launched in 2020, has improved user experience and added
 more features compared to the previous version, our team would like to
 add several features that make the course selection process more
-convenient. Our DukeHub 3.0 is an R Shiny app that allows students to
+convenient. Our [DukeHub 3.0](https://minecr.shinyapps.io/dukehub3/) is an R Shiny app that allows students to
 build their academic schedule from 2408 courses/sections and provides
 additional insights to their schedule through various visualizations.
 Once a student inputs their schedule, the app will provide different
